@@ -54,62 +54,62 @@ Namespace My
             End Get
         End Property
         
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("localhost")> _
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("localhost")>  _
         Public Property DBServer() As String
             Get
-                Return CType(Me("DBServer"), String)
+                Return CType(Me("DBServer"),String)
             End Get
-            Set(value As String)
+            Set
                 Me("DBServer") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property DBName() As String
             Get
-                Return CType(Me("DBName"), String)
+                Return CType(Me("DBName"),String)
             End Get
-            Set(value As String)
+            Set
                 Me("DBName") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("root")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("root")>  _
         Public Property UserName() As String
             Get
-                Return CType(Me("UserName"), String)
+                Return CType(Me("UserName"),String)
             End Get
-            Set(value As String)
+            Set
                 Me("UserName") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property UserPassword() As String
             Get
-                Return CType(Me("UserPassword"), String)
+                Return CType(Me("UserPassword"),String)
             End Get
-            Set(value As String)
+            Set
                 Me("UserPassword") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("MySql.Data.MySqlClient")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("MySql.Data.MySqlClient")>  _
         Public Property DBProvider() As String
             Get
-                Return CType(Me("DBProvider"), String)
+                Return CType(Me("DBProvider"),String)
             End Get
-            Set(value As String)
+            Set
                 Me("DBProvider") = value
             End Set
         End Property

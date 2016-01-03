@@ -165,7 +165,7 @@ Private Sub DBReport()
         bDisplayFieldType, bDisplayDefaultValue, bDisplayLinkName, _
         bSortColumns, bSortIndex, bSortLink, sUserLogin, sServer, sDBName, _
         sMsgDBOff, sMsgCompoMySQLNotInst) Then
-        Dim sPath$ = Application.StartupPath & "\DBReport.txt"
+        Dim sPath$ = Application.StartupPath & "\DBReport_" & sDBName & ".txt"
         If Not bWriteFile(sPath, sb) Then GoTo Fin
         LetOpenFile(sPath)
     End If
