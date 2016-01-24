@@ -5,28 +5,28 @@ Database report
 Login    : root
 Server   : localhost
 Database : northwind
-Index    : Sorted
+Indexes  : Sorted
 
 categories
   CategoryID (tinyint(5) unsigned) (autonumber)
-  CategoryName (varchar(15)) (not nullable without default value)
-  Description (mediumtext) (not nullable without default value)
-  Picture (varchar(50)) (not nullable without default value)
+  CategoryName (varchar(15))
+  Description (mediumtext)
+  Picture (varchar(50))
     Index   : CategoryID, Primary, Unique
     Index   : CategoryName, Unique
 
 customers
-  CustomerID (varchar(5)) (not nullable without default value)
-  CompanyName (varchar(40)) (not nullable without default value)
-  ContactName (varchar(30)) (Unknown) (not nullable)
-  ContactTitle (varchar(30)) (not nullable without default value)
-  Address (varchar(60)) (not nullable without default value)
-  City (varchar(15)) (not nullable without default value)
-  Region (varchar(15)) (not nullable without default value)
-  PostalCode (varchar(10)) (not nullable without default value)
-  Country (varchar(15)) (not nullable without default value)
-  Phone (varchar(24)) (not nullable without default value)
-  Fax (varchar(24)) (not nullable without default value)
+  CustomerID (varchar(5))
+  CompanyName (varchar(40))
+  ContactName (varchar(30)) (Unknown)
+  ContactTitle (varchar(30))
+  Address (varchar(60))
+  City (varchar(15))
+  Region (varchar(15))
+  PostalCode (varchar(10))
+  Country (varchar(15))
+  Phone (varchar(24))
+  Fax (varchar(24))
     Index   : City
     Index   : CompanyName
     Index   : PostalCode
@@ -35,20 +35,20 @@ customers
 
 employees
   EmployeeID (int(10) unsigned) (autonumber)
-  LastName (varchar(20)) (not nullable without default value)
-  FirstName (varchar(10)) (not nullable without default value)
-  Title (varchar(30)) (not nullable without default value)
-  TitleOfCourtesy (varchar(25)) (not nullable without default value)
-  BirthDate (datetime) (not nullable without default value)
-  HireDate (datetime) (not nullable without default value)
-  Address (varchar(60)) (not nullable without default value)
-  City (varchar(15)) (not nullable without default value)
-  Region (varchar(15)) (not nullable without default value)
-  PostalCode (varchar(10)) (not nullable without default value)
-  Country (varchar(15)) (not nullable without default value)
-  HomePhone (varchar(24)) (not nullable without default value)
-  Extension (varchar(4)) (not nullable without default value)
-  Photo (varchar(50)) (not nullable without default value)
+  LastName (varchar(20))
+  FirstName (varchar(10))
+  Title (varchar(30))
+  TitleOfCourtesy (varchar(25))
+  BirthDate (datetime)
+  HireDate (datetime)
+  Address (varchar(60))
+  City (varchar(15))
+  Region (varchar(15))
+  PostalCode (varchar(10))
+  Country (varchar(15))
+  HomePhone (varchar(24))
+  Extension (varchar(4))
+  Photo (varchar(50))
   Notes (mediumtext)
   ReportsTo (int(10) unsigned)
     Index   : LastName
@@ -58,19 +58,19 @@ employees
 
 orders
   OrderID (int(10) unsigned) (autonumber)
-  CustomerID (varchar(5)) (not nullable foreign key)
-  EmployeeID (int(10) unsigned) (not nullable foreign key)
-  OrderDate (datetime) (not nullable without default value)
+  CustomerID (varchar(5))
+  EmployeeID (int(10) unsigned)
+  OrderDate (datetime)
   RequiredDate (datetime)
   ShippedDate (datetime)
-  ShipVia (int(10) unsigned) (not nullable foreign key)
-  Freight (double) (0) (not nullable)
-  ShipName (varchar(40)) (not nullable without default value)
-  ShipAddress (varchar(60)) (not nullable without default value)
-  ShipCity (varchar(15)) (not nullable without default value)
-  ShipRegion (varchar(15)) (not nullable without default value)
-  ShipPostalCode (varchar(10)) (not nullable without default value)
-  ShipCountry (varchar(15)) (not nullable without default value)
+  ShipVia (int(10) unsigned)
+  Freight (double) (0)
+  ShipName (varchar(40))
+  ShipAddress (varchar(60))
+  ShipCity (varchar(15))
+  ShipRegion (varchar(15))
+  ShipPostalCode (varchar(10))
+  ShipCountry (varchar(15))
     Index   : CustomerID
     Index   : EmployeeID
     Index   : ShipVia
@@ -80,11 +80,11 @@ orders
 
 order_details
   ID (int(10) unsigned) (autonumber)
-  OrderID (int(10) unsigned) (not nullable foreign key)
-  ProductID (int(10) unsigned) (not nullable foreign key)
-  UnitPrice (double unsigned) (0) (not nullable)
-  Quantity (smallint(5) unsigned) (1) (not nullable)
-  Discount (float unsigned) (0) (not nullable)
+  OrderID (int(10) unsigned)
+  ProductID (int(10) unsigned)
+  UnitPrice (double unsigned) (0)
+  Quantity (smallint(5) unsigned) (1)
+  Discount (float unsigned) (0)
     Index   : ProductID
     Index   : ID, Primary, Unique
     Index   : Uidx_OrderID_ProductID, Unique, 2 fields :
@@ -93,15 +93,15 @@ order_details
 
 products
   ProductID (int(10) unsigned) (autonumber)
-  ProductName (varchar(40)) (not nullable without default value)
-  SupplierID (int(10) unsigned) (not nullable foreign key)
-  CategoryID (tinyint(5) unsigned) (not nullable foreign key)
-  QuantityPerUnit (varchar(20)) (not nullable without default value)
-  UnitPrice (double) (0) (not nullable)
-  UnitsInStock (smallint(5) unsigned) (0) (not nullable)
-  UnitsOnOrder (smallint(5) unsigned) (0) (not nullable)
-  ReorderLevel (smallint(5) unsigned) (0) (not nullable)
-  Discontinued (enum('y','n')) (n) (not nullable)
+  ProductName (varchar(40))
+  SupplierID (int(10) unsigned)
+  CategoryID (tinyint(5) unsigned)
+  QuantityPerUnit (varchar(20))
+  UnitPrice (double) (0)
+  UnitsInStock (smallint(5) unsigned) (0)
+  UnitsOnOrder (smallint(5) unsigned) (0)
+  ReorderLevel (smallint(5) unsigned) (0)
+  Discontinued (enum('y','n')) (n)
     Index   : CategoryID
     Index   : SupplierID
     Index   : ProductName
@@ -109,23 +109,23 @@ products
 
 shippers
   ShipperID (int(10) unsigned) (autonumber)
-  CompanyName (varchar(40)) (not nullable without default value)
-  Phone (varchar(24)) (not nullable without default value)
+  CompanyName (varchar(40))
+  Phone (varchar(24))
     Index   : ShipperID, Primary, Unique
 
 suppliers
   SupplierID (int(10) unsigned) (autonumber)
-  CompanyName (varchar(40)) (not nullable without default value)
-  ContactName (varchar(30)) (not nullable without default value)
-  ContactTitle (varchar(30)) (not nullable without default value)
-  Address (varchar(60)) (not nullable without default value)
-  City (varchar(15)) (not nullable without default value)
-  Region (varchar(15)) (not nullable without default value)
-  PostalCode (varchar(10)) (not nullable without default value)
-  Country (varchar(15)) (not nullable without default value)
-  Phone (varchar(24)) (not nullable without default value)
-  Fax (varchar(24)) (not nullable without default value)
-  HomePage (varchar(255)) (not nullable without default value)
+  CompanyName (varchar(40))
+  ContactName (varchar(30))
+  ContactTitle (varchar(30))
+  Address (varchar(60))
+  City (varchar(15))
+  Region (varchar(15))
+  PostalCode (varchar(10))
+  Country (varchar(15))
+  Phone (varchar(24))
+  Fax (varchar(24))
+  HomePage (varchar(255))
     Index   : PostalCode
     Index   : CompanyName
     Index   : SupplierID, Primary, Unique

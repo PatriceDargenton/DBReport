@@ -9,20 +9,32 @@ Public Const sMsgDBOff$ = "Could not connect to database !" & vbCrLf & _
     "Possible cause : the database server has not been started," & vbCrLf & _
     " or wrong database name or account used."
 Public Const sMsgCompoMySQLNotInst$ = _
-    "Possible cause : mysql-connector-net-6.8.3.msi is not installed"
+    "Possible cause : mysql-connector-net-6.9.8.msi is not installed"
 
-Public Function bCreateDBReport(delegMsg As clsDelegMsg, ByRef sb As StringBuilder, _
-    sConnection$, sDBProvider$, _
-    bDisplayFieldType As Boolean, bDisplayDefaultValue As Boolean, bDisplayLinkName As Boolean, _
-    bSortColumns As Boolean, bSortIndex As Boolean, bSortLink As Boolean, _
-    sUserLogin$, sServer$, sDBName$, sMsgErr$, sMsgErrPossibleCause$) As Boolean
+Public Class clsPrm
+
+    Public sConnection$, sDBProvider$, sUserLogin$, sServer$, sDBName$
+
+    Public bDisplayTableAndFieldDescription As Boolean
+    Public bDisplayFieldType As Boolean
+    Public bDisplayFieldDefaultValue As Boolean
+    Public bDisplayLinkName As Boolean
+    Public bSortColumns As Boolean
+    Public bSortIndexes As Boolean
+    Public bSortLinks As Boolean
+    Public bAlertNotNullable As Boolean
+
+End Class
+
+Public Function bCreateDBReport(prm As clsPrm, delegMsg As clsDelegMsg, _
+    sMsgErr$, sMsgErrPossibleCause$, ByRef sb As StringBuilder) As Boolean
 
     ' Library used : https://dbschemareader.codeplex.com
 
     Try
         delegMsg.ShowMsg("Connecting to database...")
         If delegMsg.m_bCancel Then Return False
-        Dim dbReader As New DatabaseSchemaReader.DatabaseReader(sConnection, sDBProvider)
+        Dim dbReader As New DatabaseSchemaReader.DatabaseReader(prm.sConnection, prm.sDBProvider)
 
         delegMsg.ShowMsg("Reading database schema...")
         If delegMsg.m_bCancel Then Return False
@@ -36,18 +48,18 @@ Public Function bCreateDBReport(delegMsg As clsDelegMsg, ByRef sb As StringBuild
         sb.AppendLine("Database report")
         sb.AppendLine("---------------")
         sb.AppendLine()
-        sb.AppendLine("Login    : " & sUserLogin)
-        sb.AppendLine("Server   : " & sServer)
-        sb.AppendLine("Database : " & sDBName)
-        If bSortColumns Then
+        sb.AppendLine("Login    : " & prm.sUserLogin)
+        sb.AppendLine("Server   : " & prm.sServer)
+        sb.AppendLine("Database : " & prm.sDBName)
+        If prm.bSortColumns Then
             sb.AppendLine("Columns  : Sorted")
         Else
             'sb.AppendLine("Columns  : Not sorted")
         End If
-        If bSortIndex Then
-            sb.AppendLine("Index    : Sorted")
+        If prm.bSortIndexes Then
+            sb.AppendLine("Indexes  : Sorted")
         Else
-            'sb.AppendLine("Index    : Not sorted")
+            'sb.AppendLine("Indexes  : Not sorted")
         End If
         sb.AppendLine()
         'GoTo Links
@@ -56,17 +68,20 @@ Public Function bCreateDBReport(delegMsg As clsDelegMsg, ByRef sb As StringBuild
         ' Build foreign key list to specify :
         ' "not nullable without default value" -> "not nullable foreign key"
         Dim hsForeignKeys As New HashSet(Of String)
-        For Each table In schema.Tables
-            For Each fk In table.ForeignKeys
-                Dim sId$ = fk.Columns(0)
-                Dim sCleFK2$ = table.Name & ":" & sId
-                hsForeignKeys.Add(sCleFK2)
+        If prm.bAlertNotNullable Then
+            For Each table In schema.Tables
+                For Each fk In table.ForeignKeys
+                    Dim sId$ = fk.Columns(0)
+                    Dim sCleFK2$ = table.Name & ":" & sId
+                    hsForeignKeys.Add(sCleFK2)
+                Next
             Next
-        Next
+        End If
 
         For Each table In schema.Tables
             Dim sTableTitle$ = table.Name
-            If table.Description.Length > 0 Then sTableTitle &= " : " & table.Description
+            If prm.bDisplayTableAndFieldDescription AndAlso table.Description.Length > 0 Then _
+                sTableTitle &= " : " & table.Description
             sb.AppendLine(sTableTitle)
 
             ' Noter tous les champs nullables pour alerter sur les clés uniques
@@ -78,27 +93,30 @@ Public Function bCreateDBReport(delegMsg As clsDelegMsg, ByRef sb As StringBuild
                 If col.Nullable Then hsNullablesCol.Add(sTitle)
                 Dim bDefVal As Boolean = False
                 If Not String.IsNullOrEmpty(col.DefaultValue) Then bDefVal = True
-                If bDisplayFieldType Then sTitle &= " (" & col.DbDataType & ")"
-                If bDisplayDefaultValue AndAlso bDefVal Then _
+                If prm.bDisplayFieldType Then sTitle &= " (" & col.DbDataType & ")"
+                If prm.bDisplayFieldDefaultValue AndAlso bDefVal Then _
                     sTitle &= " (" & col.DefaultValue & ")"
-                If col.Description.Length > 0 Then sTitle &= " : " & col.Description
+                If prm.bDisplayTableAndFieldDescription AndAlso col.Description.Length > 0 Then _
+                    sTitle &= " : " & col.Description
                 If col.IsAutoNumber Then
                     sTitle &= " (autonumber)"
                 ElseIf Not col.Nullable Then
-                    If Not bDefVal Then
-                        Dim sCleFK$ = table.Name & ":" & col.Name
-                        If hsForeignKeys.Contains(sCleFK) Then
-                            sTitle &= " (not nullable foreign key)"
+                    If prm.bAlertNotNullable Then
+                        If Not bDefVal Then
+                            Dim sCleFK$ = table.Name & ":" & col.Name
+                            If hsForeignKeys.Contains(sCleFK) Then
+                                sTitle &= " (not nullable foreign key)"
+                            Else
+                                sTitle &= " (not nullable without default value)"
+                            End If
                         Else
-                            sTitle &= " (not nullable without default value)"
+                            sTitle &= " (not nullable)"
                         End If
-                    Else
-                        sTitle &= " (not nullable)"
                     End If
                 End If
                 lstCol.Add(sTitle)
             Next
-            If bSortColumns Then lstCol.Sort()
+            If prm.bSortColumns Then lstCol.Sort()
             For Each sCol In lstCol
                 sb.AppendLine("  " & sCol)
             Next
@@ -109,7 +127,7 @@ Public Function bCreateDBReport(delegMsg As clsDelegMsg, ByRef sb As StringBuild
             Next
 
             Dim sSorting$ = ""
-            If bSortIndex Then sSorting = "Name"
+            If prm.bSortIndexes Then sSorting = "Name"
 
             For Each ind In dico.Sort(sSorting)
                 Dim sUnique$ = ""
@@ -126,7 +144,7 @@ Public Function bCreateDBReport(delegMsg As clsDelegMsg, ByRef sb As StringBuild
                 ' MySQL (5.6) can't guarantee uniqueness (unicity) if one field of a unique key 
                 '  is nullable, you can have duplicates records in the table
                 Dim sWarnNF$ = ""
-                Const sWarnNFTxt = " (nullable field for an unique index)"
+                Const sWarnNFTxt = " (nullable field for a unique index)"
                 If ind.Columns.Count = 1 Then
                     If ind.IsUnique AndAlso hsNullablesCol.Contains(ind.Columns(0).Name) Then _
                         sWarnNF = sWarnNFTxt
@@ -153,7 +171,8 @@ Public Function bCreateDBReport(delegMsg As clsDelegMsg, ByRef sb As StringBuild
         For Each table In schema.Tables
             sb.AppendLine()
             Dim sTableTitle$ = table.Name
-            If table.Description.Length > 0 Then sTableTitle &= " : " & table.Description
+            If prm.bDisplayTableAndFieldDescription AndAlso table.Description.Length > 0 Then _
+                sTableTitle &= " : " & table.Description
             sb.AppendLine(sTableTitle)
 
             Dim dico As New SortDic(Of String, clsLink)
@@ -169,8 +188,8 @@ Public Function bCreateDBReport(delegMsg As clsDelegMsg, ByRef sb As StringBuild
                 dico.Add(sKey, l0)
             Next
             Dim sSorting$ = ""
-            If bSortLink Then
-                If bDisplayLinkName Then
+            If prm.bSortLinks Then
+                If prm.bDisplayLinkName Then
                     sSorting = "Name"
                 Else
                     sSorting = "Table, Id"
@@ -181,7 +200,7 @@ Public Function bCreateDBReport(delegMsg As clsDelegMsg, ByRef sb As StringBuild
                 Dim sId$ = fk.Columns(0)
                 Dim sLinkTable$ = fk.RefersToTable
                 Dim sLinkName$ = ""
-                If bDisplayLinkName Then sLinkName = " : " & fk.Name
+                If prm.bDisplayLinkName Then sLinkName = " : " & fk.Name
                 Dim sDelRule$ = ""
                 Dim sUpdRule$ = ""
                 Const sRestrict$ = "RESTRICT"
