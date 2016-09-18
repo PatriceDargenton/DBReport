@@ -1,4 +1,7 @@
 ﻿
+' File modDBReport.vb
+' -------------------
+
 Imports System.Text ' StringBuilder
 
 Public Module modDBReport
@@ -10,6 +13,29 @@ Public Const sMsgDBOff$ = "Could not connect to database !" & vbCrLf & _
     " or wrong database name or account used."
 Public Const sMsgCompoMySQLNotInst$ = _
     "Possible cause : mysql-connector-net-6.9.8.msi is not installed"
+
+Private m_dTimeStart As Date
+Private m_delegMsg As clsDelegMsg
+Private WithEvents m_dbReader As DatabaseSchemaReader.DatabaseReader
+Private Sub ShowMessageDeleg(sender As Object, e As DatabaseSchemaReader.ReaderEventArgs) _
+    Handles m_dbReader.ReaderProgress
+
+    If bDebug Then
+        Debug.WriteLine("")
+        Debug.WriteLine("")
+        Debug.WriteLine("Reading database schema : " & e.ProgressType.ToString & ", " & _
+            e.SchemaObjectType.ToString) ' & ", " & e.Name & ", " & e.Index & ", " & e.Count)
+        Dim dTimeEnd = Now
+        Dim ts = dTimeEnd - m_dTimeStart
+        Const sDateTimeFormat = "dd\/MM\/yyyy HH:mm:ss"
+        Dim sTime$ = m_dTimeStart.ToString(sDateTimeFormat) & " -> " & _
+            dTimeEnd.ToString(sDateTimeFormat) & " : " & sDisplayTime(ts.TotalSeconds)
+        Debug.WriteLine(sTime)
+    End If
+    m_delegMsg.ShowMsg("Reading database schema : " & e.ProgressType.ToString & ", " & _
+        e.SchemaObjectType.ToString) ' & ", " & e.Name & ", " & e.Index & ", " & e.Count)
+
+End Sub
 
 Public Class clsPrm
 
@@ -34,11 +60,25 @@ Public Function bCreateDBReport(prm As clsPrm, delegMsg As clsDelegMsg, _
     Try
         delegMsg.ShowMsg("Connecting to database...")
         If delegMsg.m_bCancel Then Return False
-        Dim dbReader As New DatabaseSchemaReader.DatabaseReader(prm.sConnection, prm.sDBProvider)
+        'Dim dbReader As New DatabaseSchemaReader.DatabaseReader(prm.sConnection, prm.sDBProvider)
+        m_dbReader = New DatabaseSchemaReader.DatabaseReader(prm.sConnection, prm.sDBProvider)
+        m_dbReader.Owner = prm.sDBName ' 22/08/2016
+        m_delegMsg = delegMsg
 
         delegMsg.ShowMsg("Reading database schema...")
         If delegMsg.m_bCancel Then Return False
-        Dim schema = dbReader.ReadAll()
+
+        m_dTimeStart = Now
+        Dim schema = m_dbReader.ReadAll
+        Const sDateTimeFormat = "dd\/MM\/yyyy HH:mm:ss"
+        If bDebug Then
+            Dim dTimeEnd = Now
+            Dim ts = dTimeEnd - m_dTimeStart
+            Dim sTime$ = m_dTimeStart.ToString(sDateTimeFormat) & " -> " & _
+                dTimeEnd.ToString(sDateTimeFormat) & " : " & sDisplayTime(ts.TotalSeconds)
+            Debug.WriteLine(sTime & " : ReadAll")
+        End If
+
         delegMsg.ShowMsg("Building database report...")
         If delegMsg.m_bCancel Then Return False
 
@@ -167,7 +207,7 @@ Public Function bCreateDBReport(prm As clsPrm, delegMsg As clsDelegMsg, _
         sb.AppendLine()
 
 'Links:
-        sb.AppendLine("Links")
+        sb.AppendLine("Links") ' Relationships between tables
         For Each table In schema.Tables
             sb.AppendLine()
             Dim sTableTitle$ = table.Name
@@ -179,12 +219,22 @@ Public Function bCreateDBReport(prm As clsPrm, delegMsg As clsDelegMsg, _
             For Each fk In table.ForeignKeys
                 Dim sId$ = fk.Columns(0)
                 Dim sLinkTable$ = fk.RefersToTable
+                Dim iCount% = 1
                 Dim sKey$ = sLinkTable & " : " & sId
+Retry:          ' 04/09/2016 A constraint may be duplicated
+                If iCount > 1 Then
+                    sKey = sLinkTable & " : " & sId & ":" & iCount
+                End If
                 Dim l0 As New clsLink
                 l0.Id = sId
                 l0.Name = fk.Name
                 l0.Table = sLinkTable
                 l0.dc = fk
+                l0.Count = iCount
+                If dico.ContainsKey(sKey) Then
+                    iCount += 1
+                    GoTo Retry
+                End If
                 dico.Add(sKey, l0)
             Next
             Dim sSorting$ = ""
@@ -200,7 +250,12 @@ Public Function bCreateDBReport(prm As clsPrm, delegMsg As clsDelegMsg, _
                 Dim sId$ = fk.Columns(0)
                 Dim sLinkTable$ = fk.RefersToTable
                 Dim sLinkName$ = ""
-                If prm.bDisplayLinkName Then sLinkName = " : " & fk.Name
+                Dim sCount$ = ""
+                If prm.bDisplayLinkName Then
+                    sLinkName = " : " & fk.Name
+                ElseIf fk0.Count > 1 Then
+                    sCount = " (" & fk0.Count & ")" ' 04/09/2016
+                End If
                 Dim sDelRule$ = ""
                 Dim sUpdRule$ = ""
                 Const sRestrict$ = "RESTRICT"
@@ -209,12 +264,20 @@ Public Function bCreateDBReport(prm As clsPrm, delegMsg As clsDelegMsg, _
                 If fk.UpdateRule <> sRestrict Then sUpdRule = " (Update rule : " & _
                     CStr(IIf(String.IsNullOrEmpty(fk.UpdateRule), "undefined", fk.UpdateRule)) & ")"
                 sb.AppendLine("  " & sLinkTable & " : " & _
-                    sId & sLinkName & sDelRule & sUpdRule)
+                    sId & sCount & sLinkName & sDelRule & sUpdRule)
             Next
         Next
 
         delegMsg.ShowMsg(sMsgDone)
         delegMsg.ShowLongMsg("")
+
+        Dim dTimeEnd2 = Now()
+        Dim ts2 = dTimeEnd2 - m_dTimeStart
+        Dim sTime2$ = m_dTimeStart.ToString(sDateTimeFormat) & " -> " & _
+            dTimeEnd2.ToString(sDateTimeFormat) & " : " & sDisplayTime(ts2.TotalSeconds)
+        sb.AppendLine()
+        sb.AppendLine("Report created : " & sTime2)
+
         Return True
 
     Catch ex As Exception
@@ -228,10 +291,11 @@ Public Function bCreateDBReport(prm As clsPrm, delegMsg As clsDelegMsg, _
 
 End Function
 
-Public Class clsLink
+Public Class clsLink ' Relationship between two tables
     Public Id$ = ""
     Public Name$ = ""
     Public Table$ = ""
+    Public Count% = 0
     Public dc As DatabaseSchemaReader.DataSchema.DatabaseConstraint
 End Class
 

@@ -1,6 +1,6 @@
 ﻿
 ' File modUtil.vb : Utility module
-' ------------
+' ---------------
 
 Module modUtil
 

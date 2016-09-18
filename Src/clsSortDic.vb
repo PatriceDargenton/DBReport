@@ -1,6 +1,6 @@
 ﻿
 ' File clsSortDic.vb : Sortable dictionary class
-' ---------------
+' ------------------
 
 Public Class SortDic(Of TKey, TValue) : Inherits Dictionary(Of TKey, TValue)
 

@@ -1,21 +1,21 @@
 ﻿
-' DBReport : DataBase Reporting tool for DataBase Administrator
-' -------------------------------------------------------------
+' DBReport : A DataBase structure Reporting tool for database administrators
+' --------------------------------------------------------------------------
 ' Documentation : DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.vbproj.html
-' Version 1.02 - 24/01/2016
+' Version 1.03 - 18/09/2016
 ' By Patrice Dargenton : mailto:patrice.dargenton@free.fr
 ' http://patrice.dargenton.free.fr/index.html
 ' http://patrice.dargenton.free.fr/CodesSources/index.html
-' ------------------------------------------------------------------
+' --------------------------------------------------------------------------
 
 ' Naming convention :
 ' -----------------
 ' b for Boolean (True or False)
 ' i for Integer : %
 ' l for Long : &
-' r for Real number (Single!, Double# ou Decimal : D)
+' r for Real number (Single!, Double# or Decimal : D)
 ' s for String : $
 ' c for Char or Byte
 ' d for Date
@@ -27,10 +27,10 @@
 ' cls for Class
 ' mod for Module
 ' ...
-' ------------------------------------
+' -----------------
 
 ' File frmDBReport.vb : Main form
-' ----------------
+' -------------------
 
 Imports System.Text ' for StringBuilder
 

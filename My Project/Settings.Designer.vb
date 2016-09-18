@@ -113,99 +113,99 @@ Namespace My
                 Me("DBProvider") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property DisplayTableAndFieldDescription() As Boolean
             Get
-                Return CType(Me("DisplayTableAndFieldDescription"), Boolean)
+                Return CType(Me("DisplayTableAndFieldDescription"),Boolean)
             End Get
-            Set(value As Boolean)
+            Set
                 Me("DisplayTableAndFieldDescription") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property DisplayFieldType() As Boolean
             Get
-                Return CType(Me("DisplayFieldType"), Boolean)
+                Return CType(Me("DisplayFieldType"),Boolean)
             End Get
-            Set(value As Boolean)
+            Set
                 Me("DisplayFieldType") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property DisplayFieldDefaultValue() As Boolean
             Get
-                Return CType(Me("DisplayFieldDefaultValue"), Boolean)
+                Return CType(Me("DisplayFieldDefaultValue"),Boolean)
             End Get
-            Set(value As Boolean)
+            Set
                 Me("DisplayFieldDefaultValue") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property DisplayLinkName() As Boolean
             Get
-                Return CType(Me("DisplayLinkName"), Boolean)
+                Return CType(Me("DisplayLinkName"),Boolean)
             End Get
-            Set(value As Boolean)
+            Set
                 Me("DisplayLinkName") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property SortColumns() As Boolean
             Get
-                Return CType(Me("SortColumns"), Boolean)
+                Return CType(Me("SortColumns"),Boolean)
             End Get
-            Set(value As Boolean)
+            Set
                 Me("SortColumns") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property SortIndexes() As Boolean
             Get
-                Return CType(Me("SortIndexes"), Boolean)
+                Return CType(Me("SortIndexes"),Boolean)
             End Get
-            Set(value As Boolean)
+            Set
                 Me("SortIndexes") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property SortLinks() As Boolean
             Get
-                Return CType(Me("SortLinks"), Boolean)
+                Return CType(Me("SortLinks"),Boolean)
             End Get
-            Set(value As Boolean)
+            Set
                 Me("SortLinks") = value
             End Set
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property AlertNotNullable() As Boolean
             Get
-                Return CType(Me("AlertNotNullable"), Boolean)
+                Return CType(Me("AlertNotNullable"),Boolean)
             End Get
-            Set(value As Boolean)
+            Set
                 Me("AlertNotNullable") = value
             End Set
         End Property

@@ -1,6 +1,6 @@
 
 ' File UniversalComparer.vb : Generic comparer for any class
-' ----------------------
+' -------------------------
 
 Imports System.Collections.Generic
 Imports System.Reflection
@@ -53,7 +53,7 @@ Public Function Compare(o1 As T, o2 As T) As Integer _
 
     ' Implementation of IComparer(Of T).Compare
 
-    ' Deal with simplest cases first.
+    ' Deal with the simplest cases first.
     If o1 Is Nothing Then
         ' Two null objects are equal.
         If o2 Is Nothing Then Return 0
