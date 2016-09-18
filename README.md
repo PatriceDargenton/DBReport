@@ -14,7 +14,7 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
 - Table and field description are displayed, if available ;
 - Index and links are sorted and displayed (nobody needs to care about index order) ;
 - Update and delete rules for relationships are displayed, if they are different to the default RESTRICT mode ;
-- Duplicate constraints are displayed : the same constraint can be added several times, and can be hard to detect using an old version of phpMyAdmin (e.g. the version 4.1.4).
+- Duplicate constraints are displayed : the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin (e.g. the version 4.1.4).
 
 #Example with the classical Northwind database
 
@@ -204,7 +204,7 @@ MySQL (5.6) can't guarantee uniqueness (unicity) if one field of a unique key is
 
 ##Version 1.03 - 18/09/2016
 - Report generation time added to the end of the report ;
-- Duplicate constraints bug fixed (the same constraint can be added several times, and can be hard to detect using an old version of phpMyAdmin) ;
+- Duplicate constraints bug fixed (the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin) ;
 - DbReader.ReaderProgress handled ;
 - DbReader version 1.3.7.0 -> 2.1.1.2 (faster !) ;
 - DotNet 4.0 -> DotNet 4.5.
