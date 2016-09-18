@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # DBReport : A DataBase structure Reporting tool for database administrators
-=======
-# DBReport : DataBase Reporting tool for DataBase Administrator
->>>>>>> origin/master
 
 [DBReport.html](http://patrice.dargenton.free.fr/CodesSources/DBReport.html)  
 [DBReport.vbproj.html](http://patrice.dargenton.free.fr/CodesSources/DBReport.vbproj.html)  
@@ -17,13 +13,8 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
 - Field types and (if available) default values are displayed ;
 - Table and field description are displayed, if available ;
 - Index and links are sorted and displayed (nobody needs to care about index order) ;
-<<<<<<< HEAD
 - Update and delete rules for relationships are displayed, if they are different to the default RESTRICT mode ;
 - Duplicate constraint are displayed : the same constraint can be added several times, and can be hard to detect using an old version of phpMyAdmin (e.g. the version 4.1.4).
-=======
-- Update and delete rules for relationships are displayed, if they are different to the default RESTRICT mode.
-
->>>>>>> origin/master
 
 #Example with the classical Northwind database
 
@@ -210,7 +201,6 @@ MySQL (5.6) can't guarantee uniqueness (unicity) if one field of a unique key is
  
  
 #Versions
-<<<<<<< HEAD
 
 ##Version 1.03 - 18/09/2016
 - Report generation time added to the end of the report ;
@@ -219,9 +209,6 @@ MySQL (5.6) can't guarantee uniqueness (unicity) if one field of a unique key is
 - DbReader version 1.3.7.0 -> 2.1.1.2 (faster !) ;
 - DotNet 4.0 -> DotNet 4.5.
 
-=======
- 
->>>>>>> origin/master
 ##Version 1.02 - 24/01/2016
 - DB report change : 'an unique index' -> 'a unique index' ;
 - MouseOver control messages : disabled ;
@@ -243,10 +230,5 @@ MySQL (5.6) can't guarantee uniqueness (unicity) if one field of a unique key is
  
 ##See also
  
-<<<<<<< HEAD
 - (french) [DBComp2](http://patrice.dargenton.free.fr/CodesSources/DBComp.html) : le comparateur de structure de base de données Access  
   Source code : [DBComp.vbp.html](http://patrice.dargenton.free.fr/CodesSources/DBComp.vbp.html)  
-=======
-- (french) [DBComp2](http://patrice.dargenton.free.fr/CodesSources/DBComp.html) : le comparateur de structure de base de donnÃ©es Access  
-  Source code : [DBComp.vbp.html](http://patrice.dargenton.free.fr/CodesSources/DBComp.vbp.html)  
->>>>>>> origin/master
