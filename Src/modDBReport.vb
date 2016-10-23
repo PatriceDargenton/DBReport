@@ -39,7 +39,7 @@ End Sub
 
 Public Class clsPrm
 
-    Public sConnection$, sDBProvider$, sUserLogin$, sServer$, sDBName$
+    Public sConnection$, sDBProvider$, sUserLogin$, sServer$, sDBName$, sDBReportVersion$
 
     Public bDisplayTableAndFieldDescription As Boolean
     Public bDisplayFieldType As Boolean
@@ -85,8 +85,8 @@ Public Function bCreateDBReport(prm As clsPrm, delegMsg As clsDelegMsg, _
         sb = New StringBuilder()
 
         sb.AppendLine()
-        sb.AppendLine("Database report")
-        sb.AppendLine("---------------")
+        sb.AppendLine("Database report " & prm.sDBReportVersion) ' 23/10/2016
+        sb.AppendLine("--------------------")
         sb.AppendLine()
         sb.AppendLine("Login    : " & prm.sUserLogin)
         sb.AppendLine("Server   : " & prm.sServer)
@@ -132,10 +132,17 @@ Public Function bCreateDBReport(prm As clsPrm, delegMsg As clsDelegMsg, _
                 Dim sTitle$ = col.Name
                 If col.Nullable Then hsNullablesCol.Add(sTitle)
                 Dim bDefVal As Boolean = False
-                If Not String.IsNullOrEmpty(col.DefaultValue) Then bDefVal = True
+
+                ' 23/10/2016 Distinguish empty string to null
+                'If Not String.IsNullOrEmpty(col.DefaultValue) Then bDefVal = True
+                If Not IsNothing(col.DefaultValue) Then bDefVal = True
+
                 If prm.bDisplayFieldType Then sTitle &= " (" & col.DbDataType & ")"
-                If prm.bDisplayFieldDefaultValue AndAlso bDefVal Then _
-                    sTitle &= " (" & col.DefaultValue & ")"
+                If prm.bDisplayFieldDefaultValue AndAlso bDefVal Then
+                    Dim sDisplay$ = col.DefaultValue
+                    If sDisplay.Length = 0 Then sDisplay = "''" ' ' 23/10/2016
+                    sTitle &= " (" & sDisplay & ")"
+                End If
                 If prm.bDisplayTableAndFieldDescription AndAlso col.Description.Length > 0 Then _
                     sTitle &= " : " & col.Description
                 If col.IsAutoNumber Then

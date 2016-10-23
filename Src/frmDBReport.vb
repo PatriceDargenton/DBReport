@@ -4,7 +4,7 @@
 ' Documentation : DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.vbproj.html
-' Version 1.03 - 18/09/2016
+' Version 1.04 - 23/10/2016
 ' By Patrice Dargenton : mailto:patrice.dargenton@free.fr
 ' http://patrice.dargenton.free.fr/index.html
 ' http://patrice.dargenton.free.fr/CodesSources/index.html
@@ -257,6 +257,7 @@ Private Sub DBReport()
     prm.sDBName = sDBName
     prm.sServer = sServer
     prm.sUserLogin = sUserLogin
+    prm.sDBReportVersion = sAppVersion ' 23/10/2016
     prm.bDisplayTableAndFieldDescription = Me.chkDisplayDescription.Checked
     prm.bDisplayFieldDefaultValue = Me.chkDisplayFieldDefaultValue.Checked
     prm.bDisplayFieldType = Me.chkDisplayFieldType.Checked

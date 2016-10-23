@@ -202,6 +202,10 @@ MySQL (5.6) can't guarantee uniqueness (unicity) if one field of a unique key is
  
 #Versions
 
+##Version 1.04 - 23/10/2016
+- DBReport version added in the report ;
+- Default value for String : the empty string is distinguished from the null string.
+
 ##Version 1.03 - 18/09/2016
 - Report generation time added to the end of the report ;
 - Duplicate constraints bug fixed (the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin) ;

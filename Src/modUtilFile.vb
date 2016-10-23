@@ -163,11 +163,11 @@ Public Function GetEncoding(filename As String) As Encoding
 
 End Function
 
-Public Function asReadFile(ByVal sFilePath$, _
-    Optional ByVal bReadOnly As Boolean = False, _
-    Optional ByVal bCheckCrCrLf As Boolean = False, _
-    Optional ByVal bUnicodeUTF8 As Boolean = False, _
-    Optional ByVal bWindows1252 As Boolean = False, _
+Public Function asReadFile(sFilePath$, _
+    Optional bReadOnly As Boolean = False, _
+    Optional bCheckCrCrLf As Boolean = False, _
+    Optional bUnicodeUTF8 As Boolean = False, _
+    Optional bWindows1252 As Boolean = False, _
     Optional encod As Encoding = Nothing) As String()
 
     ' Read and return the file content as an array of String
@@ -209,7 +209,7 @@ Public Function asReadFile(ByVal sFilePath$, _
 
 End Function
 
-Public Function bLetOpenFile(sFilePath$, Optional ByVal bCheckFile As Boolean = True, _
+Public Function bLetOpenFile(sFilePath$, Optional bCheckFile As Boolean = True, _
     Optional sInfo$ = "") As Boolean
 
     ' Don't check file if it is a URL, for example
@@ -292,7 +292,7 @@ Public Function sDisplaySizeInBytes$(lSizeInBytes&, _
 
 End Function
 
-Public Function sDisplayTime$(ByVal rNbSeconds#)
+Public Function sDisplayTime$(rNbSeconds#)
 
     ' Return a during time in a String
 
@@ -494,11 +494,11 @@ Public Class clsStringStream
     Private c13 As Char = ChrW(13) ' vbCr
     Private c10 As Char = ChrW(10) ' vbLf
 
-    Public Sub New(ByVal sString$)
+    Public Sub New(sString$)
         m_sString = sString
     End Sub
 
-    Public Function asLines(Optional ByVal bCheckCrCrLf As Boolean = False) As String()
+    Public Function asLines(Optional bCheckCrCrLf As Boolean = False) As String()
 
         Dim lst As New Collections.Generic.List(Of String)
         Dim iNumLine2% = 0
@@ -514,7 +514,7 @@ Public Class clsStringStream
 
     ' Attribute for inline to avoid function overhead
     <MethodImpl(MethodImplOptions.AggressiveInlining)> _
-    Public Function StringReadLine$(Optional ByVal bCheckCrCrLf As Boolean = False)
+    Public Function StringReadLine$(Optional bCheckCrCrLf As Boolean = False)
 
         If String.IsNullOrEmpty(m_sString) Then Return Nothing
 
@@ -567,7 +567,7 @@ End Class
 
 #End Region
 
-Public Function asCmdLineArg(ByVal sCmdLine$, Optional ByVal bRemoveSpaces As Boolean = True) As String()
+Public Function asCmdLineArg(sCmdLine$, Optional bRemoveSpaces As Boolean = True) As String()
 
     ' Return arguments of the command line
 
@@ -582,53 +582,60 @@ Public Function asCmdLineArg(ByVal sCmdLine$, Optional ByVal bRemoveSpaces As Bo
         Exit Function
     End If
 
-    'MsgBox "Arguments : " & Command, vbInformation, sTitreMsg
-
+    Dim lstArgs As New List(Of String) ' 16/10/2016
     Const iASCQuotes% = 34
     Const sDbleQuote$ = """" ' Only one " in fact : Chr$(34)
-    Dim iNbArg%, sFile$, sDelimiter$
-    Dim sCmd$, iLen%, iEnd%, iStart%, iStart2%
+    Dim sFile$, sDelimiter$
+    Dim sCmd$, iCmdLen%, iEnd%, iStart%, iStart2%
     Dim bEnd As Boolean, bQuotedFile As Boolean
+    Dim iNextCar% = 1
     sCmd = sCmdLine
-    iLen = Len(sCmd)
+    iCmdLen = Len(sCmd)
     iStart = 1
     Do
 
         bQuotedFile = False : sDelimiter = " "
 
-        If Mid$(sCmd, iStart, 2) = sDbleQuote & sDbleQuote Then
+        If Mid(sCmd, iStart, 2) = sDbleQuote & sDbleQuote Then
             bQuotedFile = True : sDelimiter = sDbleQuote
             iEnd = iStart + 1
             GoTo NextItem
         End If
 
-        If Mid$(sCmd, iStart, 1) = sDbleQuote Then bQuotedFile = True : sDelimiter = sDbleQuote
+        If Mid(sCmd, iStart, 1) = sDbleQuote Then bQuotedFile = True : sDelimiter = sDbleQuote
 
         iStart2 = iStart
-        If bQuotedFile AndAlso iStart2 < iLen Then iStart2 += 1
+        If bQuotedFile AndAlso iStart2 < iCmdLen Then iStart2 += 1
         iEnd = InStr(iStart2 + 1, sCmd, sDelimiter)
-        If iEnd = 0 Then bEnd = True : iEnd = iLen + 1
-        sFile = Mid$(sCmd, iStart2, iEnd - iStart2)
-        If bRemoveSpaces Then sFile = Trim$(sFile)
 
-        If sFile <> "" Then
-            ReDim Preserve asArgs(iNbArg)
-            asArgs(iNbArg) = sFile
-            iNbArg += 1
+        ' 16/10/2016 DblQuote " can replace space
+        iNextCar = 1
+        Dim iQuotedEnd% = InStr(iStart2 + 1, sCmd, sDbleQuote)
+        If iQuotedEnd > 0 AndAlso iEnd > 0 AndAlso iQuotedEnd < iEnd Then
+            iEnd = iQuotedEnd : bQuotedFile = True : sDelimiter = sDbleQuote : iNextCar = 0
         End If
 
-        If bEnd Or iEnd = iLen Then Exit Do
+        If iEnd = 0 Then bEnd = True : iEnd = iCmdLen + 1
+        sFile = Mid(sCmd, iStart2, iEnd - iStart2)
+        If bRemoveSpaces Then sFile = Trim$(sFile)
+
+        If sFile.Length > 0 Then lstArgs.Add(sFile)
+
+        If bEnd Or iEnd = iCmdLen Then Exit Do
 
 NextItem:
-        iStart = iEnd + 1
-        If bQuotedFile Then iStart = iEnd + 2
-        If iStart > iLen Then Exit Do
+        iStart = iEnd + iNextCar ' 1
+        ' 16/10/2016 DblQuote " can replace space
+        'If bQuotedFile Then iStart = iEnd + 2
+        If iStart > iCmdLen Then Exit Do
 
     Loop
 
+    asArgs = lstArgs.ToArray()
     For iNumArg As Integer = 0 To UBound(asArgs)
         Dim sArg$ = asArgs(iNumArg)
-        If Len(sArg) = 1 AndAlso Asc(sArg.Chars(0)) = iASCQuotes Then asArgs(iNumArg) = ""
+        Dim iLen% = Len(sArg)
+        If iLen = 1 AndAlso Asc(sArg.Chars(0)) = iASCQuotes Then asArgs(iNumArg) = ""
     Next iNumArg
 
     Return asArgs
