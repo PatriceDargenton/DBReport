@@ -211,24 +211,24 @@ MySQL (5.6) can't guarantee uniqueness (unicity) if one field of a unique key is
 
 If the database provider corresponds to MySql ("MySql.Data.MySqlClient"), then the following main MySql parameters are displayed in the report, but only if they are different form their default value : sql_mode, innodb_strict_mode, collation, table engine, timeout.
 
-List of all system variables and options :
-https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html
-https://dev.mysql.com/doc/refman/5.7/en/server-options.html
+List of all system variables and options :  
+https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html  
+https://dev.mysql.com/doc/refman/5.7/en/server-options.html  
 
 ###sql_mode
-sql_mode controls what SQL syntax MySQL accepts, and determines whether it silently ignores errors, or validates input syntax and data values. For example, if sql_mode is empty, implicit conversions can be performed without error (but only with warnings), see full documentation :
-https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html
-https://dev.mysql.com/doc/refman/5.7/en/server-options.html#option_mysqld_sql-mode
-https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_sql_mode
+sql_mode controls what SQL syntax MySQL accepts, and determines whether it silently ignores errors, or validates input syntax and data values. For example, if sql_mode is empty, implicit conversions can be performed without error (but only with warnings), see full documentation :  
+https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html  
+https://dev.mysql.com/doc/refman/5.7/en/server-options.html#option_mysqld_sql-mode  
+https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_sql_mode  
 The main default values are : "STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION".
 
-To understand the strict versus not strict sql_mode with a sample, see the section titled "The Effect of Strict SQL Mode on Statement Execution" there :
-https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html
+To understand the strict versus not strict sql_mode with a sample, see the section titled "The Effect of Strict SQL Mode on Statement Execution" there :  
+https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html  
 
 ###innodb_strict_mode
-When innodb_strict_mode is ON, InnoDB returns errors rather than warnings for certain conditions. This is analogous to sql_mode in MySQL, it enables additional error checks for InnoDB tables :
-https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html
-https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html#sysvar_innodb_strict_mode
+When innodb_strict_mode is ON, InnoDB returns errors rather than warnings for certain conditions. This is analogous to sql_mode in MySQL, it enables additional error checks for InnoDB tables :  
+https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html  
+https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html#sysvar_innodb_strict_mode  
 The default value is ON since MySQL 5.7.7.
 
 "Oracle recommends enabling innodb_strict_mode when using ROW_FORMAT and KEY_BLOCK_SIZE clauses in CREATE TABLE, ALTER TABLE, and CREATE INDEX statements. When innodb_strict_mode is disabled, InnoDB ignores conflicting clauses and creates the table or index with only a warning in the message log. The resulting table might have different characteristics than intended, such as lack of compression support when attempting to create a compressed table. When innodb_strict_mode is enabled, such problems generate an immediate error and the table or index is not created."
@@ -301,7 +301,7 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
 #Versions
 
 ##Version 1.05 - 05/03/2017
-- Main MySql parameters added in the report : sql_mode, innodb_strict_mode, collation, table engine, timeout ;
+- Main MySql parameters added in the report : sql_mode, innodb_strict_mode, collation, table engine, timeout ;
 - ForeignKeyDeleteRule, ForeignKeyUpdateRule : default value are now configurable.
 
 ##Version 1.04 - 23/10/2016
