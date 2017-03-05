@@ -248,15 +248,15 @@ The actual session level value for net_read_timeout and net_write_timeout are di
 
 Here are the queries for these MySql parameters for the Northwind database (schema_name and table_schema are the database name) :
 
-SHOW VARIABLES WHERE Variable_Name IN ('version', 'version_comment', 'protocol_version', 'sql_mode', 'innodb_strict_mode', 'net_read_timeout', 'net_write_timeout');
-
-SHOW VARIABLES LIKE 'collation_server';
-
-SELECT 'DEFAULT_COLLATION_NAME', DEFAULT_COLLATION_NAME FROM information_schema.SCHEMATA WHERE schema_name = 'northwind';
-
-SELECT TABLE_NAME, ENGINE, COLLATION_NAME FROM information_schema.`TABLES` T, information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA WHERE CCSA.collation_name = T.table_collation AND T.table_schema = 'northwind';
-
-SELECT table_name, C.column_name, COLLATION_NAME FROM information_schema.`COLUMNS` C WHERE table_schema = 'northwind';
+    SHOW VARIABLES WHERE Variable_Name IN ('version', 'version_comment', 'protocol_version', 'sql_mode', 'innodb_strict_mode', 'net_read_timeout', 'net_write_timeout');
+    
+    SHOW VARIABLES LIKE 'collation_server';
+    
+    SELECT 'DEFAULT_COLLATION_NAME', DEFAULT_COLLATION_NAME FROM information_schema.SCHEMATA WHERE schema_name = 'northwind';
+    
+    SELECT TABLE_NAME, ENGINE, COLLATION_NAME FROM information_schema.`TABLES` T, information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA WHERE CCSA.collation_name = T.table_collation AND T.table_schema = 'northwind';
+    
+    SELECT table_name, C.column_name, COLLATION_NAME FROM information_schema.`COLUMNS` C WHERE table_schema = 'northwind';
 
 ###How to change the server collation ?
 
