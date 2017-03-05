@@ -41,5 +41,47 @@
     <Setting Name="AlertNotNullable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="ForeignKeyDeleteRule" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RESTRICT</Value>
+    </Setting>
+    <Setting Name="ForeignKeyUpdateRule" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RESTRICT</Value>
+    </Setting>
+    <Setting Name="MySqlTableEngine" Type="System.String" Scope="User">
+      <Value Profile="(Default)">InnoDB</Value>
+    </Setting>
+    <Setting Name="MySqlServerCollation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">utf8_general_ci</Value>
+    </Setting>
+    <Setting Name="MySqlDatabaseCollation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">utf8_general_ci</Value>
+    </Setting>
+    <Setting Name="MySqlTableCollation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">utf8_general_ci</Value>
+    </Setting>
+    <Setting Name="MySqlColumnCollation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">utf8_general_ci</Value>
+    </Setting>
+    <Setting Name="MySqlSQLMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION</Value>
+    </Setting>
+    <Setting Name="MySqlInnodbStrictMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ON</Value>
+    </Setting>
+    <Setting Name="MySqlTimeOutMaxSec" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">99999</Value>
+    </Setting>
+    <Setting Name="MySqlNetReadTimeoutSec" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
+    <Setting Name="MySqlNetWriteTimeoutSec" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
+    <Setting Name="MySqlDisplayTableEngine" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MySqlDisplayCollation" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

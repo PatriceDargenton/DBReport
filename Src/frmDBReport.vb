@@ -4,7 +4,7 @@
 ' Documentation : DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.vbproj.html
-' Version 1.04 - 23/10/2016
+' Version 1.05 - 05/03/2017
 ' By Patrice Dargenton : mailto:patrice.dargenton@free.fr
 ' http://patrice.dargenton.free.fr/index.html
 ' http://patrice.dargenton.free.fr/CodesSources/index.html
@@ -49,6 +49,8 @@ Private Const bDisplayDefaultValueDef As Boolean = True
 Private Const bDisplayLinkNameDef As Boolean = False
 Private Const bSortLinksDef As Boolean = True ' To make the comparison easier
 Private Const bAlertNotNullableDef As Boolean = True
+Private Const bDisplayTableEngineDef As Boolean = True
+Private Const bDisplayCollationDef As Boolean = True
 
 #End Region
 
@@ -73,6 +75,8 @@ Private Const sMsgDisplayFieldType$ = "Display field type of each field"
 Private Const sMsgDisplayLinkName$ = "Display the name of links between two tables"
 Private Const sMsgDisplayDescription$ = "Display the description of tables and fields, if available"
 Private Const sMsgAlertNotNullable$ = "Alert about non-nullable field risks"
+Private Const sMsgDisplayTableEngine$ = "Display the table engine for a MySql database (MyISAM, InnoDB, ...)"
+Private Const sMsgDisplayCollation$ = "Display the collation for a MySql database (utf8_general_ci, ...)"
 
 Private WithEvents m_delegMsg As New clsDelegMsg
 
@@ -111,13 +115,16 @@ Private Sub frmRapportBD_Load(sender As Object, e As EventArgs) Handles Me.Load
     Me.ToolTip1.SetToolTip(Me.chkSortColumns, sMsgSortColumns)
     Me.ToolTip1.SetToolTip(Me.chkSortIndexes, sMsgSortIndexes)
     Me.ToolTip1.SetToolTip(Me.chkSortLinks, sMsgSortLinks)
+    Me.ToolTip1.SetToolTip(Me.chkDisplayTableEngine, sMsgDisplayTableEngine)
+    Me.ToolTip1.SetToolTip(Me.chkDisplayCollation, sMsgDisplayCollation)
 
     If bDebug Then
-        'Me.tbDBProvider.Text = "MySql.Data.MySqlClient"
-        'Me.tbDBServer.Text = "localhost"
+        Me.tbDBProvider.Text = sMySqlClient
+        Me.tbDBServer.Text = "localhost"
         Me.tbDBName.Text = "northwind"
-        'Me.tbUserName.Text = "root"
-        'Me.tbUserPassword.Text = ""
+        Me.chkAlertNotNullable.Checked = False ' northwind
+        Me.tbUserName.Text = "root"
+        Me.tbUserPassword.Text = ""
     End If
 
 End Sub
@@ -129,6 +136,7 @@ End Sub
 Private Sub SaveAndRestoreSettings(bSave As Boolean)
 
     If bSave Then
+
         My.Settings.DBProvider = Me.tbDBProvider.Text
         My.Settings.DBServer = Me.tbDBServer.Text
         My.Settings.DBName = Me.tbDBName.Text
@@ -144,7 +152,11 @@ Private Sub SaveAndRestoreSettings(bSave As Boolean)
         My.Settings.SortIndexes = Me.chkSortIndexes.Checked
         My.Settings.SortLinks = Me.chkSortLinks.Checked
         My.Settings.AlertNotNullable = Me.chkAlertNotNullable.Checked
+        My.Settings.MySqlDisplayTableEngine = Me.chkDisplayTableEngine.Checked
+        My.Settings.MySqlDisplayCollation = Me.chkDisplayCollation.Checked
+
     Else
+
         Me.tbDBProvider.Text = My.Settings.DBProvider
         Me.tbDBServer.Text = My.Settings.DBServer
         Me.tbDBName.Text = My.Settings.DBName
@@ -159,6 +171,9 @@ Private Sub SaveAndRestoreSettings(bSave As Boolean)
         Me.chkSortIndexes.Checked = My.Settings.SortIndexes
         Me.chkSortLinks.Checked = My.Settings.SortLinks
         Me.chkAlertNotNullable.Checked = My.Settings.AlertNotNullable
+        Me.chkDisplayTableEngine.Checked = My.Settings.MySqlDisplayTableEngine
+        Me.chkDisplayCollation.Checked = My.Settings.MySqlDisplayCollation
+
     End If
 
 End Sub
@@ -176,6 +191,8 @@ Private Sub ResetDisplaySettings()
     Me.chkSortIndexes.Checked = bSortIndexesDef
     Me.chkSortLinks.Checked = bSortLinksDef
     Me.chkAlertNotNullable.Checked = bAlertNotNullableDef
+    Me.chkDisplayTableEngine.Checked = bDisplayTableEngineDef
+    Me.chkDisplayCollation.Checked = bDisplayCollationDef
 End Sub
 
 Private Sub Activation(bActivate As Boolean)
@@ -198,6 +215,8 @@ Private Sub Activation(bActivate As Boolean)
     Me.chkSortIndexes.Enabled = bActivate
     Me.chkSortLinks.Enabled = bActivate
     Me.chkAlertNotNullable.Enabled = bActivate
+    Me.chkDisplayTableEngine.Enabled = bActivate
+    Me.chkDisplayCollation.Enabled = bActivate
 
 End Sub
 
@@ -246,18 +265,22 @@ Private Sub DBReport()
 
     Activation(bActivate:=False)
     m_delegMsg.m_bCancel = False
-    If Not bFileExists(Application.StartupPath & "\DatabaseSchemaReader.dll", _
-        bPrompt:=True) Then GoTo Fin
+    If Not bFileExists(Application.StartupPath & "\DatabaseSchemaReader.dll", bPrompt:=True) Then GoTo Fin
+
+    If sDBProvider = sMySqlClient Then
+        If Not bFileExists(Application.StartupPath & "\MySql.Data.dll", bPrompt:=True) Then GoTo Fin
+    End If
 
     Dim sb = New StringBuilder()
 
-    Dim prm As New clsPrm
+    Dim prm As New clsPrmDBR
     prm.sConnection = sConnection
     prm.sDBProvider = sDBProvider
     prm.sDBName = sDBName
     prm.sServer = sServer
     prm.sUserLogin = sUserLogin
     prm.sDBReportVersion = sAppVersion ' 23/10/2016
+
     prm.bDisplayTableAndFieldDescription = Me.chkDisplayDescription.Checked
     prm.bDisplayFieldDefaultValue = Me.chkDisplayFieldDefaultValue.Checked
     prm.bDisplayFieldType = Me.chkDisplayFieldType.Checked
@@ -266,6 +289,45 @@ Private Sub DBReport()
     prm.bSortIndexes = Me.chkSortIndexes.Checked
     prm.bSortLinks = Me.chkSortLinks.Checked
     prm.bAlertNotNullable = Me.chkAlertNotNullable.Checked
+
+    prm.sForeignKeyDeleteRuleDef = My.Settings.ForeignKeyDeleteRule ' 05/03/2017 RESTRICT
+    prm.sForeignKeyUpdateRuleDef = My.Settings.ForeignKeyUpdateRule ' 05/03/2017 RESTRICT
+
+    ' 05/03/2017
+
+    'prm.mySqlprm.sSQLModeDef = "STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"
+    'prm.mySqlprm.sInnodbStrictModeDef = "ON"
+    'prm.mySqlprm.iTimeOutMaxDef = 99999
+    'prm.mySqlprm.iNetReadTimeoutSecDef = iNoDefaultTimeOut
+    'prm.mySqlprm.iNetWriteTimeoutSecDef = iNoDefaultTimeOut
+    'prm.mySqlprm.sTableEngineDef = "InnoDB"
+    'prm.mySqlprm.sServerCollationDef = "utf8_general_ci"
+    'prm.mySqlprm.sDatabaseCollationDef = "utf8_general_ci"
+    'prm.mySqlprm.sTableCollationDef = "utf8_general_ci"
+    'prm.mySqlprm.sColumnCollationDef = "utf8_general_ci"
+
+    prm.mySqlprm.sSQLModeDef = My.Settings.MySqlSQLMode
+    prm.mySqlprm.sInnodbStrictModeDef = My.Settings.MySqlInnodbStrictMode
+    prm.mySqlprm.iTimeOutMaxDef = My.Settings.MySqlTimeOutMaxSec
+    prm.mySqlprm.iNetReadTimeoutSecDef = My.Settings.MySqlNetReadTimeoutSec
+    prm.mySqlprm.iNetWriteTimeoutSecDef = My.Settings.MySqlNetWriteTimeoutSec
+    prm.mySqlprm.sTableEngineDef = My.Settings.MySqlTableEngine
+    prm.mySqlprm.sServerCollationDef = My.Settings.MySqlServerCollation
+    prm.mySqlprm.sDatabaseCollationDef = My.Settings.MySqlDatabaseCollation
+    prm.mySqlprm.sTableCollationDef = My.Settings.MySqlTableCollation
+    prm.mySqlprm.sColumnCollationDef = My.Settings.MySqlColumnCollation
+
+    prm.mySqlprm.bDisplayTableEngine = Me.chkDisplayTableEngine.Checked
+    prm.mySqlprm.bDisplayCollation = Me.chkDisplayCollation.Checked
+
+    If bDebug Then
+        ' For Norhwind :
+        prm.mySqlprm.sColumnCollationDef = "utf8_unicode_ci"
+        'prm.mySqlprm.sTableCollationDef = "utf8_general_ci"
+        'prm.mySqlprm.sDatabaseCollationDef = "utf8_general_ci"
+        'prm.mySqlprm.sServerCollationDef = "utf8_general_ci"
+        'prm.mySqlprm.sTableEngineDef = "InnoDB"
+    End If
 
     If bCreateDBReport(prm, m_delegMsg, sMsgDBOff, sMsgCompoMySQLNotInst, sb) Then
         Dim sPath$ = Application.StartupPath & "\DBReport_" & sDBName & ".txt"
@@ -302,8 +364,7 @@ End Sub
 Private Sub tbUserPassword_Enter(sender As Object, e As EventArgs) Handles tbUserPassword.Enter
     ShowLongMessage(sMsgUserPassword)
 End Sub
-
-Private Sub cmdDBReport_GotFocus(sender As Object, e As EventArgs) Handles cmdDBReport.GotFocus
+Private Sub cmdDBReport_Enter(sender As Object, e As EventArgs) Handles cmdDBReport.Enter
     ShowLongMessage(sMsgDBReport)
 End Sub
 Private Sub cmdResetSettings_Enter(sender As Object, e As EventArgs) Handles cmdResetSettings.Enter
@@ -333,4 +394,11 @@ End Sub
 Private Sub chkDisplayDescription_Enter(sender As Object, e As EventArgs) Handles chkDisplayDescription.Enter
     ShowLongMessage(sMsgDisplayDescription)
 End Sub
+Private Sub chkDisplayTableEngine_Enter(sender As Object, e As EventArgs) Handles chkDisplayTableEngine.Enter
+    ShowLongMessage(sMsgDisplayTableEngine)
+End Sub
+Private Sub chkDisplayCollation_Enter(sender As Object, e As EventArgs) Handles chkDisplayCollation.Enter
+    ShowLongMessage(sMsgDisplayCollation)
+End Sub
+
 End Class

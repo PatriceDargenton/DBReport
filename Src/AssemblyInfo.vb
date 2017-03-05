@@ -8,8 +8,8 @@ Imports System.Reflection
 <Assembly: AssemblyDescription("DBReport : A DataBase structure Reporting tool for database administrators")> 
 <Assembly: AssemblyCompany("ORS Production")> 
 <Assembly: AssemblyProduct("DBReport")> 
-<Assembly: AssemblyCopyright("Copyright © ORS Production 2016")> 
+<Assembly: AssemblyCopyright("Copyright © ORS Production 2017")> 
 <Assembly: AssemblyTrademark("DBReport")> 
 
-<Assembly: AssemblyVersion("1.0.4.*")> 
+<Assembly: AssemblyVersion("1.0.5.*")> 
 

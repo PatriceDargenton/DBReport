@@ -6,13 +6,15 @@ By Patrice Dargenton (patrice.dargenton@free.fr)
 [My website](http://patrice.dargenton.free.fr/index.html)  
 [My source codes](http://patrice.dargenton.free.fr/CodesSources/index.html)  
 
+Version 1.05 - 05/03/2017
+
 Database Administrators needs to compare database structures. Using [WinMerge](http://winmerge.org) on sql database structure files, it is difficult to compare because a lot of differences appear, whereas only a few of them are meaningful. DBReport shows only (and all) significant information that makes sense for daily administrator work.
 
 #Features
 - Tables, fields and table relations (links) are displayed ;
 - Field types and (if available) default values are displayed ;
 - Table and field description are displayed, if available ;
-- Index and links are sorted and displayed (nobody needs to care about index order) ;
+- Index and links (relationships between tables) are sorted and displayed (nobody needs to care about index order) ;
 - Update and delete rules for relationships are displayed, if they are different to the default RESTRICT mode ;
 - Duplicate constraints are displayed : the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin (e.g. the version 4.1.4).
 
@@ -23,85 +25,95 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
 ![Northwind database relationship in MS-Access](http://wemadeitcharlotte.com/writings/accessapps_html_m5a21d901.png)
 
  
-    Database report
-    ---------------
-     
+    Database report 1.05
+    --------------------
+    
     Login    : root
     Server   : localhost
     Database : northwind
     Indexes  : Sorted
-     
+    
+    MySql parameters :
+    version_comment : MySQL Community Server (GPL)
+    version : 5.6.15-log
+    protocol_version : 10
+    sql_mode : NO_ENGINE_SUBSTITUTION (Default : STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION)
+    innodb_strict_mode : OFF (Default : ON)
+    net_read_timeout : 30 (30 sec.)
+    net_write_timeout : 60 (1 mn)
+    Database default collation (DEFAULT_COLLATION_NAME) : utf8_unicode_ci (Default : utf8_general_ci)
+    
     categories
       CategoryID (tinyint(5) unsigned) (autonumber)
-      CategoryName (varchar(15))
+      CategoryName (varchar(15)) ('')
       Description (mediumtext)
-      Picture (varchar(50))
+      Picture (varchar(50)) ('')
         Index   : CategoryID, Primary, Unique
         Index   : CategoryName, Unique
-     
+    
     customers
-      CustomerID (varchar(5))
-      CompanyName (varchar(40))
+      CustomerID (varchar(5)) ('')
+      CompanyName (varchar(40)) ('')
       ContactName (varchar(30)) (Unknown)
-      ContactTitle (varchar(30))
-      Address (varchar(60))
-      City (varchar(15))
-      Region (varchar(15))
-      PostalCode (varchar(10))
-      Country (varchar(15))
-      Phone (varchar(24))
-      Fax (varchar(24))
+      ContactTitle (varchar(30)) ('')
+      Address (varchar(60)) ('')
+      City (varchar(15)) ('')
+      Region (varchar(15)) ('')
+      PostalCode (varchar(10)) ('')
+      Country (varchar(15)) ('')
+      Phone (varchar(24)) ('')
+      Fax (varchar(24)) ('')
         Index   : City
         Index   : CompanyName
         Index   : PostalCode
         Index   : Region
         Index   : CustomerID, Primary, Unique
-     
+    
     employees
       EmployeeID (int(10) unsigned) (autonumber)
-      LastName (varchar(20))
-      FirstName (varchar(10))
-      Title (varchar(30))
-      TitleOfCourtesy (varchar(25))
+      LastName (varchar(20)) ('')
+      FirstName (varchar(10)) ('')
+      Title (varchar(30)) ('')
+      TitleOfCourtesy (varchar(25)) ('')
       BirthDate (datetime)
       HireDate (datetime)
-      Address (varchar(60))
-      City (varchar(15))
-      Region (varchar(15))
-      PostalCode (varchar(10))
-      Country (varchar(15))
-      HomePhone (varchar(24))
-      Extension (varchar(4))
-      Photo (varchar(50))
+      Address (varchar(60)) ('')
+      City (varchar(15)) ('')
+      Region (varchar(15)) ('')
+      PostalCode (varchar(10)) ('')
+      Country (varchar(15)) ('')
+      HomePhone (varchar(24)) ('')
+      Extension (varchar(4)) ('')
+      Photo (varchar(50)) ('')
       Notes (mediumtext)
       ReportsTo (int(10) unsigned)
         Index   : LastName
         Index   : PostalCode
         Index   : ReportsTo
         Index   : EmployeeID, Primary, Unique
-     
+    
     orders
       OrderID (int(10) unsigned) (autonumber)
-      CustomerID (varchar(5))
+      CustomerID (varchar(5)) ('')
       EmployeeID (int(10) unsigned)
       OrderDate (datetime)
       RequiredDate (datetime)
       ShippedDate (datetime)
       ShipVia (int(10) unsigned)
       Freight (double) (0)
-      ShipName (varchar(40))
-      ShipAddress (varchar(60))
-      ShipCity (varchar(15))
-      ShipRegion (varchar(15))
-      ShipPostalCode (varchar(10))
-      ShipCountry (varchar(15))
+      ShipName (varchar(40)) ('')
+      ShipAddress (varchar(60)) ('')
+      ShipCity (varchar(15)) ('')
+      ShipRegion (varchar(15)) ('')
+      ShipPostalCode (varchar(10)) ('')
+      ShipCountry (varchar(15)) ('')
         Index   : CustomerID
         Index   : EmployeeID
         Index   : ShipVia
         Index   : ShipPostalCode
         Index   : ShippedDate
         Index   : OrderID, Primary, Unique
-     
+    
     order_details
       ID (int(10) unsigned) (autonumber)
       OrderID (int(10) unsigned)
@@ -114,13 +126,13 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
         Index   : Uidx_OrderID_ProductID, Unique, 2 fields :
           field : OrderID
           field : ProductID
-     
+    
     products
       ProductID (int(10) unsigned) (autonumber)
-      ProductName (varchar(40))
+      ProductName (varchar(40)) ('')
       SupplierID (int(10) unsigned)
       CategoryID (tinyint(5) unsigned)
-      QuantityPerUnit (varchar(20))
+      QuantityPerUnit (varchar(20)) ('')
       UnitPrice (double) (0)
       UnitsInStock (smallint(5) unsigned) (0)
       UnitsOnOrder (smallint(5) unsigned) (0)
@@ -130,57 +142,58 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
         Index   : SupplierID
         Index   : ProductName
         Index   : ProductID, Primary, Unique
-     
+    
     shippers
       ShipperID (int(10) unsigned) (autonumber)
-      CompanyName (varchar(40))
-      Phone (varchar(24))
+      CompanyName (varchar(40)) ('')
+      Phone (varchar(24)) ('')
         Index   : ShipperID, Primary, Unique
-     
+    
     suppliers
       SupplierID (int(10) unsigned) (autonumber)
-      CompanyName (varchar(40))
-      ContactName (varchar(30))
-      ContactTitle (varchar(30))
-      Address (varchar(60))
-      City (varchar(15))
-      Region (varchar(15))
-      PostalCode (varchar(10))
-      Country (varchar(15))
-      Phone (varchar(24))
-      Fax (varchar(24))
-      HomePage (varchar(255))
+      CompanyName (varchar(40)) ('')
+      ContactName (varchar(30)) ('')
+      ContactTitle (varchar(30)) ('')
+      Address (varchar(60)) ('')
+      City (varchar(15)) ('')
+      Region (varchar(15)) ('')
+      PostalCode (varchar(10)) ('')
+      Country (varchar(15)) ('')
+      Phone (varchar(24)) ('')
+      Fax (varchar(24)) ('')
+      HomePage (varchar(255)) ('') (collation : utf8_general_ci)
         Index   : PostalCode
         Index   : CompanyName
         Index   : SupplierID, Primary, Unique
-     
-     
+    
+    
     Links
-     
+    
     categories
-     
+    
     customers
-     
+    
     employees
       employees : ReportsTo
-     
+    
     orders
       customers : CustomerID
       employees : EmployeeID
       shippers : ShipVia
-     
+    
     order_details
       orders : OrderID
       products : ProductID
-     
+    
     products
       categories : CategoryID
       suppliers : SupplierID
-     
+    
     shippers
-     
+    
     suppliers
-
+    
+    Report created : 19/02/2017 12:14:11 -> 19/02/2017 12:14:12 : 1.5 sec.
  
  
 #Explanation
@@ -193,14 +206,103 @@ This information reminds that this field needs to be filled, otherwise an error 
  
 ##Nullable field for a unique index
 MySQL (5.6) can't guarantee uniqueness (unicity) if one field of a unique key is nullable, you can have duplicates records in the table. Consider using a conventional mnemonic code instead, for example '_ALL' for 'all the items' of this field, and set it to not nullable.
- 
- 
+
+##MySql parameters
+
+If the database provider corresponds to MySql ("MySql.Data.MySqlClient"), then the following main MySql parameters are displayed in the report, but only if they are different form their default value : sql_mode, innodb_strict_mode, collation, table engine, timeout.
+
+List of all system variables and options :
+https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html
+https://dev.mysql.com/doc/refman/5.7/en/server-options.html
+
+###sql_mode
+sql_mode controls what SQL syntax MySQL accepts, and determines whether it silently ignores errors, or validates input syntax and data values. For example, if sql_mode is empty, implicit conversions can be performed without error (but only with warnings), see full documentation :
+https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html
+https://dev.mysql.com/doc/refman/5.7/en/server-options.html#option_mysqld_sql-mode
+https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_sql_mode
+The main default values are : "STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION".
+
+To understand the strict versus not strict sql_mode with a sample, see the section titled "The Effect of Strict SQL Mode on Statement Execution" there :
+https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html
+
+###innodb_strict_mode
+When innodb_strict_mode is ON, InnoDB returns errors rather than warnings for certain conditions. This is analogous to sql_mode in MySQL, it enables additional error checks for InnoDB tables :
+https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html
+https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html#sysvar_innodb_strict_mode
+The default value is ON since MySQL 5.7.7.
+
+"Oracle recommends enabling innodb_strict_mode when using ROW_FORMAT and KEY_BLOCK_SIZE clauses in CREATE TABLE, ALTER TABLE, and CREATE INDEX statements. When innodb_strict_mode is disabled, InnoDB ignores conflicting clauses and creates the table or index with only a warning in the message log. The resulting table might have different characteristics than intended, such as lack of compression support when attempting to create a compressed table. When innodb_strict_mode is enabled, such problems generate an immediate error and the table or index is not created."
+
+###collation
+Once the default collation is set for DBReport, the database default collation is displayed if it is different from the default collation. The table collation is displayed in the same way, and finally each column collation.
+
+Column collation is important because adding a foreign key may fail if the collation of columns is not the same.
+
+###table engine
+Once the default engine is set for DBReport, the table engine is displayed if it is different from the default table engine.
+
+###timeout
+The actual session level value for net_read_timeout and net_write_timeout are displayed. They have the same value as the global variable, if no session level instruction changes their value.
+
+###Queries
+
+Here are the queries for these MySql parameters for the Northwind database (schema_name and table_schema are the database name) :
+
+SHOW VARIABLES WHERE Variable_Name IN ('version', 'version_comment', 'protocol_version', 'sql_mode', 'innodb_strict_mode', 'net_read_timeout', 'net_write_timeout');
+
+SHOW VARIABLES LIKE 'collation_server';
+
+SELECT 'DEFAULT_COLLATION_NAME', DEFAULT_COLLATION_NAME FROM information_schema.SCHEMATA WHERE schema_name = 'northwind';
+
+SELECT TABLE_NAME, ENGINE, COLLATION_NAME FROM information_schema.`TABLES` T, information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA WHERE CCSA.collation_name = T.table_collation AND T.table_schema = 'northwind';
+
+SELECT table_name, C.column_name, COLLATION_NAME FROM information_schema.`COLUMNS` C WHERE table_schema = 'northwind';
+
+###How to change the server collation ?
+
+See there : http://kosalads.blogspot.fr/2013/03/mysql-55-how-to-change-mysql-default.html
+
+If you run :
+show variables like '%collation%'
+
+you get :
+collation_connection = utf8mb4_general_ci
+collation_database = latin1_swedish_ci
+collation_server = latin1_swedish_ci
+
+If you create a new database, it's collation will be : latin1_swedish_ci
+
+Add this in my.ini at the [mysqld] section :
+init_connect='SET collation_connection = utf8_general_ci'
+init_connect='SET NAMES utf8'
+character-set-server=utf8
+collation-server=utf8_general_ci
+skip-character-set-client-handshake
+
+Shut down MySql and restart it, and do again the test :
+
+If you run :
+show variables like '%collation%'
+
+you get :
+collation_connection = utf8mb4_general_ci
+collation_database = utf8_general_ci
+collation_server = utf8_general_ci
+
+If you create a new database, it's collation will be : utf8_general_ci
+
+Be careful because if you miss some parameters for MySql (for exemple init_connect), you will crash MySql, PhpMyAdmin, and your databases, make backup for all of them before changing this config !
+
 #Projects
  
 - ListBox or ComboBox to recall a list of databases recently used, instead of only the last one.
  
  
 #Versions
+
+##Version 1.05 - 05/03/2017
+- Main MySql parameters added in the report : sql_mode, innodb_strict_mode, collation, table engine, timeout ;
+- ForeignKeyDeleteRule, ForeignKeyUpdateRule : default value are now configurable.
 
 ##Version 1.04 - 23/10/2016
 - DBReport version added in the report ;

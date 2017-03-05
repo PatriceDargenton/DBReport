@@ -209,6 +209,174 @@ Namespace My
                 Me("AlertNotNullable") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("RESTRICT")>  _
+        Public Property ForeignKeyDeleteRule() As String
+            Get
+                Return CType(Me("ForeignKeyDeleteRule"),String)
+            End Get
+            Set
+                Me("ForeignKeyDeleteRule") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("RESTRICT")>  _
+        Public Property ForeignKeyUpdateRule() As String
+            Get
+                Return CType(Me("ForeignKeyUpdateRule"),String)
+            End Get
+            Set
+                Me("ForeignKeyUpdateRule") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("InnoDB")>  _
+        Public Property MySqlTableEngine() As String
+            Get
+                Return CType(Me("MySqlTableEngine"),String)
+            End Get
+            Set
+                Me("MySqlTableEngine") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("utf8_general_ci")>  _
+        Public Property MySqlServerCollation() As String
+            Get
+                Return CType(Me("MySqlServerCollation"),String)
+            End Get
+            Set
+                Me("MySqlServerCollation") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("utf8_general_ci")>  _
+        Public Property MySqlDatabaseCollation() As String
+            Get
+                Return CType(Me("MySqlDatabaseCollation"),String)
+            End Get
+            Set
+                Me("MySqlDatabaseCollation") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("utf8_general_ci")>  _
+        Public Property MySqlTableCollation() As String
+            Get
+                Return CType(Me("MySqlTableCollation"),String)
+            End Get
+            Set
+                Me("MySqlTableCollation") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("utf8_general_ci")>  _
+        Public Property MySqlColumnCollation() As String
+            Get
+                Return CType(Me("MySqlColumnCollation"),String)
+            End Get
+            Set
+                Me("MySqlColumnCollation") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION")>  _
+        Public Property MySqlSQLMode() As String
+            Get
+                Return CType(Me("MySqlSQLMode"),String)
+            End Get
+            Set
+                Me("MySqlSQLMode") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("ON")>  _
+        Public Property MySqlInnodbStrictMode() As String
+            Get
+                Return CType(Me("MySqlInnodbStrictMode"),String)
+            End Get
+            Set
+                Me("MySqlInnodbStrictMode") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("99999")>  _
+        Public Property MySqlTimeOutMaxSec() As Integer
+            Get
+                Return CType(Me("MySqlTimeOutMaxSec"),Integer)
+            End Get
+            Set
+                Me("MySqlTimeOutMaxSec") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("-1")>  _
+        Public Property MySqlNetReadTimeoutSec() As Integer
+            Get
+                Return CType(Me("MySqlNetReadTimeoutSec"),Integer)
+            End Get
+            Set
+                Me("MySqlNetReadTimeoutSec") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("-1")>  _
+        Public Property MySqlNetWriteTimeoutSec() As Integer
+            Get
+                Return CType(Me("MySqlNetWriteTimeoutSec"),Integer)
+            End Get
+            Set
+                Me("MySqlNetWriteTimeoutSec") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property MySqlDisplayTableEngine() As Boolean
+            Get
+                Return CType(Me("MySqlDisplayTableEngine"),Boolean)
+            End Get
+            Set
+                Me("MySqlDisplayTableEngine") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property MySqlDisplayCollation() As Boolean
+            Get
+                Return CType(Me("MySqlDisplayCollation"),Boolean)
+            End Get
+            Set
+                Me("MySqlDisplayCollation") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

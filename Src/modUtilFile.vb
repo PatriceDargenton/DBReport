@@ -321,9 +321,14 @@ Public Function sDisplayTime$(rNbSeconds#)
         sDisplay &= sSep & iNbMn & " mn" : sSep = " "
         rNbSeconds -= iNbMn * 60
     End If
+
     Dim rNbSecondsSng! = CSng(rNbSeconds)
-    If rNbSeconds >= 0 Then sDisplay &= sSep & _
-        sDisplayNumeric(rNbSecondsSng, bRemoveDot0:=True) & " sec."
+    ' 14/12/2016 Hide 0 sec. if there are mn, h or days
+    If rNbSecondsSng = 0 AndAlso (iNbMn > 0 OrElse iNbHours > 0 OrElse iNbDays > 0) Then
+        ' Display nothing else
+    ElseIf rNbSeconds >= 0 Then
+        sDisplay &= sSep & sDisplayNumeric(rNbSecondsSng, bRemoveDot0:=True) & " sec."
+    End If
 
     Return sDisplay
 
