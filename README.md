@@ -262,32 +262,32 @@ SELECT table_name, C.column_name, COLLATION_NAME FROM information_schema.`COLUMN
 
 See there : http://kosalads.blogspot.fr/2013/03/mysql-55-how-to-change-mysql-default.html
 
-If you run :
-show variables like '%collation%'
+If you run :  
+show variables like '%collation%'  
 
-you get :
-collation_connection = utf8mb4_general_ci
-collation_database = latin1_swedish_ci
-collation_server = latin1_swedish_ci
+you get :  
+collation_connection = utf8mb4_general_ci  
+collation_database = latin1_swedish_ci  
+collation_server = latin1_swedish_ci  
 
-If you create a new database, it's collation will be : latin1_swedish_ci
+If you create a new database, it's collation will be : latin1_swedish_ci  
 
-Add this in my.ini at the [mysqld] section :
-init_connect='SET collation_connection = utf8_general_ci'
-init_connect='SET NAMES utf8'
-character-set-server=utf8
-collation-server=utf8_general_ci
-skip-character-set-client-handshake
+Add this in my.ini at the [mysqld] section :  
+init_connect='SET collation_connection = utf8_general_ci'  
+init_connect='SET NAMES utf8'  
+character-set-server=utf8  
+collation-server=utf8_general_ci  
+skip-character-set-client-handshake  
 
-Shut down MySql and restart it, and do again the test :
+Shut down MySql and restart it, and do again the test :  
 
-If you run :
-show variables like '%collation%'
+If you run :  
+show variables like '%collation%'  
 
-you get :
-collation_connection = utf8mb4_general_ci
-collation_database = utf8_general_ci
-collation_server = utf8_general_ci
+you get :  
+collation_connection = utf8mb4_general_ci  
+collation_database = utf8_general_ci  
+collation_server = utf8_general_ci  
 
 If you create a new database, it's collation will be : utf8_general_ci
 
