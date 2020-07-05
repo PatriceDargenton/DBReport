@@ -51,7 +51,7 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
 
 [www.geeksengine.com/article/export-access-to-mysql.html](http://www.geeksengine.com/article/export-access-to-mysql.html)  
 [www.geeksengine.com/lg.php?i=northwind-sql](http://www.geeksengine.com/lg.php?i=northwind-sql)  
-![Northwind database relationship in MS-Access](http://wemadeitcharlotte.com/writings/accessapps_html_m5a21d901.png)
+![Northwind database relationship in MS-Access](http://patrice.dargenton.free.fr/CodesSources/DBReport_fichiers/NorthwindDatabaseStructure)
 
  
     Database report 1.05
