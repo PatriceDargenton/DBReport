@@ -1,4 +1,5 @@
-# DBReport : A DataBase structure Reporting tool for database administrators
+DBReport: A DataBase structure Reporting tool for database administrators
+---
 
 [DBReport.html](http://patrice.dargenton.free.fr/CodesSources/DBReport.html)  
 [DBReport.vbproj.html](http://patrice.dargenton.free.fr/CodesSources/DBReport.vbproj.html)  
@@ -10,15 +11,43 @@ Version 1.05 - 05/03/2017
 
 Database Administrators needs to compare database structures. Using [WinMerge](http://winmerge.org) on sql database structure files, it is difficult to compare because a lot of differences appear, whereas only a few of them are meaningful. DBReport shows only (and all) significant information that makes sense for daily administrator work.
 
-#Features
-- Tables, fields and table relations (links) are displayed ;
-- Field types and (if available) default values are displayed ;
-- Table and field description are displayed, if available ;
-- Index and links (relationships between tables) are sorted and displayed (nobody needs to care about index order) ;
-- Update and delete rules for relationships are displayed, if they are different to the default RESTRICT mode ;
-- Duplicate constraints are displayed : the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin (e.g. the version 4.1.4).
+<!-- TOC -->
 
-#Example with the classical Northwind database
+- [Features](#features)
+- [Example with the classical Northwind database](#example-with-the-classical-northwind-database)
+- [Explanation](#explanation)
+    - [Not nullable foreign key](#not-nullable-foreign-key)
+    - [Not nullable without default value](#not-nullable-without-default-value)
+    - [Nullable field for a unique index](#nullable-field-for-a-unique-index)
+    - [MySql parameters](#mysql-parameters)
+        - [sql_mode](#sql_mode)
+        - [innodb_strict_mode](#innodb_strict_mode)
+        - [collation](#collation)
+        - [table engine](#table-engine)
+        - [timeout](#timeout)
+        - [Queries](#queries)
+        - [How to change the server collation?](#how-to-change-the-server-collation)
+- [Projects](#projects)
+- [Versions](#versions)
+    - [Version 1.05 - 05/03/2017](#version-105---05032017)
+    - [Version 1.04 - 23/10/2016](#version-104---23102016)
+    - [Version 1.03 - 18/09/2016](#version-103---18092016)
+    - [Version 1.02 - 24/01/2016](#version-102---24012016)
+    - [Version 1.01 - 03/01/2016: First version](#version-101---03012016-first-version)
+- [Links](#links)
+    - [See also](#see-also)
+
+<!-- /TOC -->
+
+# Features
+- Tables, fields and table relations (links) are displayed;
+- Field types and (if available) default values are displayed;
+- Table and field description are displayed, if available;
+- Index and links (relationships between tables) are sorted and displayed (nobody needs to care about index order);
+- Update and delete rules for relationships are displayed, if they are different to the default RESTRICT mode;
+- Duplicate constraints are displayed: the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin (e.g. the version 4.1.4).
+
+# Example with the classical Northwind database
 
 [www.geeksengine.com/article/export-access-to-mysql.html](http://www.geeksengine.com/article/export-access-to-mysql.html)  
 [www.geeksengine.com/lg.php?i=northwind-sql](http://www.geeksengine.com/lg.php?i=northwind-sql)  
@@ -196,57 +225,57 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
     Report created : 19/02/2017 12:14:11 -> 19/02/2017 12:14:12 : 1.5 sec.
  
  
-#Explanation
+# Explanation
  
-##Not nullable foreign key
+## Not nullable foreign key
 This information reminds that this field needs to be filled, otherwise an error will be thrown.
  
-##Not nullable without default value
+## Not nullable without default value
 This information reminds that this field needs to be filled, otherwise an error may or may not be thrown, according to the database server setting. For example, see the [MySql strict mode](http://dev.mysql.com/doc/refman/5.7/en/sql-mode.html#sql-mode-strict). If you provide a default value for all fields in this case, you will avoid this trap, and you won't have this warning anymore. Otherwise, it is safe to set the same strict mode setting for your development environment as your production environment.
  
-##Nullable field for a unique index
+## Nullable field for a unique index
 MySQL (5.6) can't guarantee uniqueness (unicity) if one field of a unique key is nullable, you can have duplicates records in the table. Consider using a conventional mnemonic code instead, for example '_ALL' for 'all the items' of this field, and set it to not nullable.
 
-##MySql parameters
+## MySql parameters
 
-If the database provider corresponds to MySql ("MySql.Data.MySqlClient"), then the following main MySql parameters are displayed in the report, but only if they are different form their default value : sql_mode, innodb_strict_mode, collation, table engine, timeout.
+If the database provider corresponds to MySql ("MySql.Data.MySqlClient"), then the following main MySql parameters are displayed in the report, but only if they are different form their default value: sql_mode, innodb_strict_mode, collation, table engine, timeout.
 
-List of all system variables and options :  
+List of all system variables and options:  
 https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html  
 https://dev.mysql.com/doc/refman/5.7/en/server-options.html  
 
-###sql_mode
-sql_mode controls what SQL syntax MySQL accepts, and determines whether it silently ignores errors, or validates input syntax and data values. For example, if sql_mode is empty, implicit conversions can be performed without error (but only with warnings), see full documentation :  
+### sql_mode
+sql_mode controls what SQL syntax MySQL accepts, and determines whether it silently ignores errors, or validates input syntax and data values. For example, if sql_mode is empty, implicit conversions can be performed without error (but only with warnings), see full documentation:  
 https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html  
 https://dev.mysql.com/doc/refman/5.7/en/server-options.html#option_mysqld_sql-mode  
 https://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html#sysvar_sql_mode  
-The main default values are : "STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION".
+The main default values are: "STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION".
 
-To understand the strict versus not strict sql_mode with a sample, see the section titled "The Effect of Strict SQL Mode on Statement Execution" there :  
+To understand the strict versus not strict sql_mode with a sample, see the section titled "The Effect of Strict SQL Mode on Statement Execution" there:  
 https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html  
 
-###innodb_strict_mode
-When innodb_strict_mode is ON, InnoDB returns errors rather than warnings for certain conditions. This is analogous to sql_mode in MySQL, it enables additional error checks for InnoDB tables :  
+### innodb_strict_mode
+When innodb_strict_mode is ON, InnoDB returns errors rather than warnings for certain conditions. This is analogous to sql_mode in MySQL, it enables additional error checks for InnoDB tables:  
 https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html  
 https://dev.mysql.com/doc/refman/5.7/en/innodb-parameters.html#sysvar_innodb_strict_mode  
 The default value is ON since MySQL 5.7.7.
 
 "Oracle recommends enabling innodb_strict_mode when using ROW_FORMAT and KEY_BLOCK_SIZE clauses in CREATE TABLE, ALTER TABLE, and CREATE INDEX statements. When innodb_strict_mode is disabled, InnoDB ignores conflicting clauses and creates the table or index with only a warning in the message log. The resulting table might have different characteristics than intended, such as lack of compression support when attempting to create a compressed table. When innodb_strict_mode is enabled, such problems generate an immediate error and the table or index is not created."
 
-###collation
+### collation
 Once the default collation is set for DBReport, the database default collation is displayed if it is different from the default collation. The table collation is displayed in the same way, and finally each column collation.
 
 Column collation is important because adding a foreign key may fail if the collation of columns is not the same.
 
-###table engine
+### table engine
 Once the default engine is set for DBReport, the table engine is displayed if it is different from the default table engine.
 
-###timeout
+### timeout
 The actual session level value for net_read_timeout and net_write_timeout are displayed. They have the same value as the global variable, if no session level instruction changes their value.
 
-###Queries
+### Queries
 
-Here are the queries for these MySql parameters for the Northwind database (schema_name and table_schema are the database name) :
+Here are the queries for these MySql parameters for the Northwind database (schema_name and table_schema are the database name):
 
     SHOW VARIABLES WHERE Variable_Name IN ('version', 'version_comment', 'protocol_version', 'sql_mode', 'innodb_strict_mode', 'net_read_timeout', 'net_write_timeout');
     
@@ -258,83 +287,83 @@ Here are the queries for these MySql parameters for the Northwind database (sche
     
     SELECT table_name, C.column_name, COLLATION_NAME FROM information_schema.`COLUMNS` C WHERE table_schema = 'northwind';
 
-###How to change the server collation ?
+### How to change the server collation?
 
-See there : http://kosalads.blogspot.fr/2013/03/mysql-55-how-to-change-mysql-default.html
+See there: http://kosalads.blogspot.fr/2013/03/mysql-55-how-to-change-mysql-default.html
 
-If you run :  
+If you run:  
 show variables like '%collation%'  
 
-you get :  
+you get:  
 collation_connection = utf8mb4_general_ci  
 collation_database = latin1_swedish_ci  
 collation_server = latin1_swedish_ci  
 
-If you create a new database, it's collation will be : latin1_swedish_ci  
+If you create a new database, it's collation will be: latin1_swedish_ci  
 
-Add this in my.ini at the [mysqld] section :  
+Add this in my.ini at the [mysqld] section:  
 init_connect='SET collation_connection = utf8_general_ci'  
 init_connect='SET NAMES utf8'  
 character-set-server=utf8  
 collation-server=utf8_general_ci  
 skip-character-set-client-handshake  
 
-Shut down MySql and restart it, and do again the test :  
+Shut down MySql and restart it, and do again the test:  
 
-If you run :  
+If you run:  
 show variables like '%collation%'  
 
-you get :  
+you get:  
 collation_connection = utf8mb4_general_ci  
 collation_database = utf8_general_ci  
 collation_server = utf8_general_ci  
 
-If you create a new database, it's collation will be : utf8_general_ci
+If you create a new database, it's collation will be: utf8_general_ci
 
-Be careful because if you miss some parameters for MySql (for exemple init_connect), you will crash MySql, PhpMyAdmin, and your databases, make backup for all of them before changing this config !
+Be careful because if you miss some parameters for MySql (for exemple init_connect), you will crash MySql, PhpMyAdmin, and your databases, make backup for all of them before changing this config!
 
-#Projects
+# Projects
  
 - ListBox or ComboBox to recall a list of databases recently used, instead of only the last one.
  
  
-#Versions
+# Versions
 
-##Version 1.05 - 05/03/2017
-- Main MySql parameters added in the report : sql_mode, innodb_strict_mode, collation, table engine, timeout ;
-- ForeignKeyDeleteRule, ForeignKeyUpdateRule : default value are now configurable.
+## Version 1.05 - 05/03/2017
+- Main MySql parameters added in the report: sql_mode, innodb_strict_mode, collation, table engine, timeout;
+- ForeignKeyDeleteRule, ForeignKeyUpdateRule: default value are now configurable.
 
-##Version 1.04 - 23/10/2016
-- DBReport version added in the report ;
-- Default value for String : the empty string is distinguished from the null string.
+## Version 1.04 - 23/10/2016
+- DBReport version added in the report;
+- Default value for String: the empty string is distinguished from the null string.
 
-##Version 1.03 - 18/09/2016
-- Report generation time added to the end of the report ;
-- Duplicate constraints bug fixed (the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin) ;
-- DbReader.ReaderProgress handled ;
-- DbReader version 1.3.7.0 -> 2.1.1.2 (faster !) ;
+## Version 1.03 - 18/09/2016
+- Report generation time added to the end of the report;
+- Duplicate constraints bug fixed (the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin);
+- DbReader.ReaderProgress handled;
+- DbReader version 1.3.7.0 -> 2.1.1.2 (faster!);
 - DotNet 4.0 -> DotNet 4.5.
 
-##Version 1.02 - 24/01/2016
-- DB report change : 'an unique index' -> 'a unique index' ;
-- MouseOver control messages : disabled ;
-- Reset settings button ;
-- Cancel button ;
-- Check boxes for options ;
+## Version 1.02 - 24/01/2016
+- DB report change: 'an unique index' -> 'a unique index';
+- MouseOver control messages: disabled;
+- Reset settings button;
+- Cancel button;
+- Check boxes for options;
 - Option to display or hide the description of tables and fields.
  
-##Version 1.01 - 03/01/2016 : First version
+## Version 1.01 - 03/01/2016: First version
  
  
-#Links
+# Links
  
 - The classical Northwind database  
   [www.geeksengine.com/article/export-access-to-mysql.html](http://www.geeksengine.com/article/export-access-to-mysql.html)  
   [www.geeksengine.com/lg.php?i=northwind-sql](http://www.geeksengine.com/lg.php?i=northwind-sql)
  
-- Library used : [https://dbschemareader.codeplex.com](https://dbschemareader.codeplex.com)
+- Library used: [https://dbschemareader.codeplex.com](https://dbschemareader.codeplex.com)
  
-##See also
+## See also
  
-- (french) [DBComp2](http://patrice.dargenton.free.fr/CodesSources/DBComp.html) : le comparateur de structure de base de données Access  
-  Source code : [DBComp.vbp.html](http://patrice.dargenton.free.fr/CodesSources/DBComp.vbp.html)  
+- (french) [DBComp2](http://patrice.dargenton.free.fr/CodesSources/DBComp.html): le comparateur de structure de base de donnÃ©es Access  
+  Source code: [DBComp.vbp.html](http://patrice.dargenton.free.fr/CodesSources/DBComp.vbp.html)  
