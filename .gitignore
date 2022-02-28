@@ -45,3 +45,12 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+/obj
+/.vs/DBReport/v17
+MySql.Data.dll
+DBReport.exe
+DBReport.exe.config
+DBReport.pdb
+DBReport.xml
+MySql.Data.xml
