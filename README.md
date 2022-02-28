@@ -329,6 +329,9 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
  
 # Versions
 
+## Version 1.06 - 28/02/2022
+- Exe, dll and html doc out from source code, and inside release.
+
 ## Version 1.05 - 05/03/2017
 - Main MySql parameters added in the report: sql_mode, innodb_strict_mode, collation, table engine, timeout;
 - ForeignKeyDeleteRule, ForeignKeyUpdateRule: default value are now configurable.
