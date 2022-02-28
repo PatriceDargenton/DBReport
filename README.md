@@ -7,7 +7,7 @@ By Patrice Dargenton (patrice.dargenton@free.fr)
 [My website](http://patrice.dargenton.free.fr/index.html)  
 [My source codes](http://patrice.dargenton.free.fr/CodesSources/index.html)  
 
-Version 1.05 - 05/03/2017
+Version 1.06 - 28/02/2022
 
 Database Administrators needs to compare database structures. Using [WinMerge](http://winmerge.org) on sql database structure files, it is difficult to compare because a lot of differences appear, whereas only a few of them are meaningful. DBReport shows only (and all) significant information that makes sense for daily administrator work.
 
