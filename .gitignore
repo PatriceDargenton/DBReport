@@ -53,4 +53,5 @@ DBReport.exe
 DBReport.exe.config
 DBReport.pdb
 DBReport.xml
+DBReport.html
 MySql.Data.xml
