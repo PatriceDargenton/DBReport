@@ -84,6 +84,7 @@ Public Class clsPrmMySql
     Public sDatabaseCollationDef$
     Public sTableCollationDef$
     Public sColumnCollationDef$
+    Public sforeign_key_checksDef$ ' 04/03/2022
 End Class
 
 ' http://dev.mysql.com/doc/refman/5.7/en/server-system-variables.html
@@ -105,6 +106,8 @@ Public Class enumMySqlPrm
 
     Public Const net_read_timeout_sec = "net_read_timeout"
     Public Const net_write_timeout_sec = "net_write_timeout"
+
+    Public Const foreign_key_checks$ = "foreign_key_checks" ' 04/03/2022
 
 End Class
 
@@ -237,6 +240,13 @@ Private Sub ShowMySqlInfos(sb As StringBuilder, prm As clsPrmDBR, _
             If sVal <> prm.mySqlprm.sInnodbStrictModeDef Then
                 If sVal.Length = 0 Then sVal = sMsgEmpty
                 sVal &= " (Default : " & prm.mySqlprm.sInnodbStrictModeDef & ")"
+            End If
+        End If
+        ' 04/03/2022
+        If sPrm = enumMySqlPrm.foreign_key_checks Then
+            If sVal <> prm.mySqlprm.sforeign_key_checksDef Then
+                If sVal.Length = 0 Then sVal = sMsgEmpty
+                sVal &= " (Default : " & prm.mySqlprm.sforeign_key_checksDef & ")"
             End If
         End If
 
@@ -524,15 +534,16 @@ Public Function bGetMySqlParameters(sMySQLConnectionString$, sDbName$, _
             lstMySqlPrm.Add("version")
             lstMySqlPrm.Add("protocol_version")
             lstMySqlPrm.Add("sql_mode")
+            lstMySqlPrm.Add("foreign_key_checks") ' 04/03/2022
             lstMySqlPrm.Add("innodb_strict_mode")
             lstMySqlPrm.Add("net_read_timeout")
             lstMySqlPrm.Add("net_write_timeout")
             lstMySqlPrm.Add("collation_server")
             lstMySqlPrm.Add("DEFAULT_COLLATION_NAME")
 
-            lstSQL.Add("SHOW VARIABLES WHERE Variable_Name IN (" & _
-                "'version', 'version_comment', 'protocol_version', 'sql_mode', " & _
-                "'innodb_strict_mode', 'net_read_timeout', 'net_write_timeout');")
+            lstSQL.Add("SHOW VARIABLES WHERE Variable_Name IN (" &
+                "'version', 'version_comment', 'protocol_version', 'sql_mode', " &
+                "'foreign_key_checks', 'innodb_strict_mode', 'net_read_timeout', 'net_write_timeout');")
             lstSQL.Add("SELECT 'DEFAULT_COLLATION_NAME', DEFAULT_COLLATION_NAME FROM " & _
                 "information_schema.SCHEMATA WHERE schema_name = '" & sDbName & "';")
             lstSQL.Add("SHOW VARIABLES LIKE 'collation_server'")

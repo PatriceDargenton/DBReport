@@ -4,7 +4,7 @@
 ' Documentation : DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.vbproj.html
-' Version 1.05 - 05/03/2017
+' Version 1.07 - 04/03/2022
 ' By Patrice Dargenton : mailto:patrice.dargenton@free.fr
 ' http://patrice.dargenton.free.fr/index.html
 ' http://patrice.dargenton.free.fr/CodesSources/index.html
@@ -319,6 +319,8 @@ Private Sub DBReport()
 
     prm.mySqlprm.bDisplayTableEngine = Me.chkDisplayTableEngine.Checked
     prm.mySqlprm.bDisplayCollation = Me.chkDisplayCollation.Checked
+
+    prm.mySqlprm.sforeign_key_checksDef = "ON" ' 04/03/2022
 
     If bDebug Then
         ' For Norhwind :

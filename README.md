@@ -7,7 +7,7 @@ By Patrice Dargenton (patrice.dargenton@free.fr)
 [My website](http://patrice.dargenton.free.fr/index.html)  
 [My source codes](http://patrice.dargenton.free.fr/CodesSources/index.html)  
 
-Version 1.06 - 28/02/2022
+Version 1.07 - 04/03/2022
 
 Database Administrators needs to compare database structures. Using [WinMerge](http://winmerge.org) on sql database structure files, it is difficult to compare because a lot of differences appear, whereas only a few of them are meaningful. DBReport shows only (and all) significant information that makes sense for daily administrator work.
 
@@ -29,6 +29,8 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
         - [How to change the server collation?](#how-to-change-the-server-collation)
 - [Projects](#projects)
 - [Versions](#versions)
+    - [Version 1.07 - 04/03/2022](#version-107---04032022)
+    - [Version 1.06 - 28/02/2022](#version-106---28022022)
     - [Version 1.05 - 05/03/2017](#version-105---05032017)
     - [Version 1.04 - 23/10/2016](#version-104---23102016)
     - [Version 1.03 - 18/09/2016](#version-103---18092016)
@@ -328,6 +330,10 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
  
  
 # Versions
+
+## Version 1.07 - 04/03/2022
+- MySql parameter added: foreign_key_checks;
+- DatabaseSchemaReader NuGet package added, version=2.7.11.
 
 ## Version 1.06 - 28/02/2022
 - Exe, dll and html doc out from source code, and inside release.

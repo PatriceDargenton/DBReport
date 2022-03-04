@@ -55,3 +55,6 @@ DBReport.pdb
 DBReport.xml
 DBReport.html
 MySql.Data.xml
+/packages
+DatabaseSchemaReader.dll
+DatabaseSchemaReader.xml
