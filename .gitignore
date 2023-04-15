@@ -50,8 +50,8 @@ Temporary Items
 /packages
 /.vs
 
-/bin
-# Exclude all files after /bin, except this file
+bin/*
+# Exclude all files after bin/, except this file
 #!/bin/*/DBReport_northwind_ok.txt 
-!/bin/Debug/DBReport_northwind_ok.txt
-!/bin/Release/DBReport_northwind_ok.txt
+!bin/Debug/DBReport_northwind_ok.txt
+!bin/Release/DBReport_northwind_ok.txt
