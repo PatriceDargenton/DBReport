@@ -56,7 +56,7 @@ Public Class frmDBReport
 
     Private Const sMsgDBProvider$ =
         "Name of the database provider installed in the DotNet Framework" &
-        " (e.g. 'MySql.Data.MySqlClient' if mysql-connector-net-6.9.8.msi is used)"
+        " (e.g. 'MySql.Data.MySqlClient' if mysql-connector-net-6.9.x.msi is used)"
     Private Const sMsgDBServer$ = "Name of the server (e.g. 'localhost' or '127.0.0.1')"
     Private Const sMsgDBName$ = "Name of the database for which you want to export the structure"
     Private Const sMsgUserName$ =
@@ -267,9 +267,10 @@ Public Class frmDBReport
         m_delegMsg.m_bCancel = False
         If Not bFileExists(Application.StartupPath & "\DatabaseSchemaReader.dll", bPrompt:=True) Then GoTo Fin
 
-        If sDBProvider = sMySqlClient Then
-            If Not bFileExists(Application.StartupPath & "\MySql.Data.dll", bPrompt:=True) Then GoTo Fin
-        End If
+        ' 15/04/2023 No more needed, using NuGet MySqlConnector 2.2.5 instead of mysql-connector-net-6.9.x.msi
+        'If sDBProvider = sMySqlClient Then
+        '    If Not bFileExists(Application.StartupPath & "\MySql.Data.dll", bPrompt:=True) Then GoTo Fin
+        'End If
 
         Dim sb = New StringBuilder()
 

@@ -3,7 +3,9 @@
 ' -------------------
 
 Imports System.Text ' StringBuilder
-Imports MySql.Data.MySqlClient
+
+Imports MySqlConnector ' NuGet MySqlConnector 2.2.5
+'Imports MySql.Data.MySqlClient ' mysql-connector-net-6.9.x.msi
 
 Public Module modDBReport
 
@@ -15,7 +17,7 @@ Public Module modDBReport
         "Possible cause : the database server has not been started," & vbCrLf &
         " or wrong database name or account used."
     Public Const sMsgCompoMySQLNotInst$ =
-        "Possible cause : mysql-connector-net-6.9.8.msi is not installed"
+        "Possible cause : mysql-connector-net-6.9.x.msi is not installed"
 
     Private Const iNoDefaultTimeOut% = -1
 
@@ -519,7 +521,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
         ShowMsg("Loading MySql parameters...")
         Try
 
-            Using oConnMySQL As New MySql.Data.MySqlClient.MySqlConnection
+            Using oConnMySQL As New MySqlConnection
                 oConnMySQL.ConnectionString = sMySQLConnectionString
                 oConnMySQL.Open()
 
@@ -589,7 +591,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
         ShowMsg("Loading MySql tables collation...")
         Try
 
-            Using oConnMySQL As New MySql.Data.MySqlClient.MySqlConnection
+            Using oConnMySQL As New MySqlConnection
                 oConnMySQL.ConnectionString = sMySQLConnectionString
                 oConnMySQL.Open()
 
@@ -634,7 +636,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
         ShowMsg("Loading MySql columns collation...")
         Try
 
-            Using oConnMySQL As New MySql.Data.MySqlClient.MySqlConnection
+            Using oConnMySQL As New MySqlConnection ' MySql.Data.MySqlClient.MySqlConnection
                 oConnMySQL.ConnectionString = sMySQLConnectionString
                 oConnMySQL.Open()
 
