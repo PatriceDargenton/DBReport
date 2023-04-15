@@ -4,7 +4,7 @@
 ' Documentation : DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.vbproj.html
-' Version 1.08 - 01/10/2022
+' Version 1.09 - 15/04/2023
 ' By Patrice Dargenton : mailto:patrice.dargenton@free.fr
 ' http://patrice.dargenton.free.fr/index.html
 ' http://patrice.dargenton.free.fr/CodesSources/index.html
