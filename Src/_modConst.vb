@@ -10,8 +10,8 @@ Module _modConst
     Public Const bDebug As Boolean = True
     Public Const bRelease As Boolean = False
 #Else
-        Public Const bDebug As Boolean = False
-        Public Const bRelease As Boolean = True
+    Public Const bDebug As Boolean = False
+    Public Const bRelease As Boolean = True
 #End If
 
     Public ReadOnly sAppVersion$ =
