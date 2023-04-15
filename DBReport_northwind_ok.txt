@@ -1,5 +1,5 @@
 
-Database report 1.05
+Database report 1.08
 --------------------
 
 Login    : root
@@ -12,7 +12,8 @@ version_comment : MySQL Community Server (GPL)
 version : 5.6.15-log
 protocol_version : 10
 sql_mode : NO_ENGINE_SUBSTITUTION (Default : STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION)
-innodb_strict_mode : OFF (Default : ON)
+foreign_key_checks : ON
+innodb_strict_mode : ON
 net_read_timeout : 30 (30 sec.)
 net_write_timeout : 60 (1 mn)
 Database default collation (DEFAULT_COLLATION_NAME) : utf8_unicode_ci (Default : utf8_general_ci)
@@ -167,4 +168,4 @@ shippers
 
 suppliers
 
-Report created : 26/02/2017 11:24:51 -> 26/02/2017 11:24:54 : 2.9 sec.
+Report created : 15/04/2023 10:43:39 -> 15/04/2023 10:43:51 : 12.6 sec.

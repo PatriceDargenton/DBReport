@@ -11,5 +11,5 @@ Imports System.Reflection
 <Assembly: AssemblyCopyright("Copyright © ORS Production 2022")>
 <Assembly: AssemblyTrademark("DBReport")>
 
-<Assembly: AssemblyVersion("1.0.7.*")>
+<Assembly: AssemblyVersion("1.0.8.*")>
 
