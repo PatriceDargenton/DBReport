@@ -47,18 +47,8 @@ Temporary Items
 .apdisk
 
 /obj
-MySql.Data.dll
-DBReport.exe
-DBReport.exe.config
-DBReport.pdb
-DBReport.xml
-DBReport.html
-MySql.Data.xml
 /packages
-DatabaseSchemaReader.dll
-DatabaseSchemaReader.xml
-/DBReport_fichiers
-
 /.vs
-/Bin/*/DBReport_northwind.txt
+
 /Bin
+!/Bin/*/DBReport_northwind_ok.txt # Exclude all files after /Bin, except this file
