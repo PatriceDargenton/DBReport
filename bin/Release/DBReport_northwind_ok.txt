@@ -20,24 +20,24 @@ Database default collation (DEFAULT_COLLATION_NAME) : utf8_unicode_ci (Default :
 
 categories
   CategoryID (tinyint(5) unsigned) (autonumber)
-  CategoryName (varchar(15)) ('')
-  Description (mediumtext)
-  Picture (varchar(50)) ('')
+  CategoryName (varchar(15)) ('') (collation : utf8_unicode_ci)
+  Description (mediumtext) (collation : utf8_unicode_ci)
+  Picture (varchar(50)) ('') (collation : utf8_unicode_ci)
     Index   : CategoryID, Primary, Unique
     Index   : CategoryName, Unique
 
 customers
-  CustomerID (varchar(5)) ('')
-  CompanyName (varchar(40)) ('')
-  ContactName (varchar(30)) (Unknown)
-  ContactTitle (varchar(30)) ('')
-  Address (varchar(60)) ('')
-  City (varchar(15)) ('')
-  Region (varchar(15)) ('')
-  PostalCode (varchar(10)) ('')
-  Country (varchar(15)) ('')
-  Phone (varchar(24)) ('')
-  Fax (varchar(24)) ('')
+  CustomerID (varchar(5)) ('') (collation : utf8_unicode_ci)
+  CompanyName (varchar(40)) ('') (collation : utf8_unicode_ci)
+  ContactName (varchar(30)) (Unknown) (collation : utf8_unicode_ci)
+  ContactTitle (varchar(30)) ('') (collation : utf8_unicode_ci)
+  Address (varchar(60)) ('') (collation : utf8_unicode_ci)
+  City (varchar(15)) ('') (collation : utf8_unicode_ci)
+  Region (varchar(15)) ('') (collation : utf8_unicode_ci)
+  PostalCode (varchar(10)) ('') (collation : utf8_unicode_ci)
+  Country (varchar(15)) ('') (collation : utf8_unicode_ci)
+  Phone (varchar(24)) ('') (collation : utf8_unicode_ci)
+  Fax (varchar(24)) ('') (collation : utf8_unicode_ci)
     Index   : City
     Index   : CompanyName
     Index   : PostalCode
@@ -46,21 +46,21 @@ customers
 
 employees
   EmployeeID (int(10) unsigned) (autonumber)
-  LastName (varchar(20)) ('')
-  FirstName (varchar(10)) ('')
-  Title (varchar(30)) ('')
-  TitleOfCourtesy (varchar(25)) ('')
+  LastName (varchar(20)) ('') (collation : utf8_unicode_ci)
+  FirstName (varchar(10)) ('') (collation : utf8_unicode_ci)
+  Title (varchar(30)) ('') (collation : utf8_unicode_ci)
+  TitleOfCourtesy (varchar(25)) ('') (collation : utf8_unicode_ci)
   BirthDate (datetime)
   HireDate (datetime)
-  Address (varchar(60)) ('')
-  City (varchar(15)) ('')
-  Region (varchar(15)) ('')
-  PostalCode (varchar(10)) ('')
-  Country (varchar(15)) ('')
-  HomePhone (varchar(24)) ('')
-  Extension (varchar(4)) ('')
-  Photo (varchar(50)) ('')
-  Notes (mediumtext)
+  Address (varchar(60)) ('') (collation : utf8_unicode_ci)
+  City (varchar(15)) ('') (collation : utf8_unicode_ci)
+  Region (varchar(15)) ('') (collation : utf8_unicode_ci)
+  PostalCode (varchar(10)) ('') (collation : utf8_unicode_ci)
+  Country (varchar(15)) ('') (collation : utf8_unicode_ci)
+  HomePhone (varchar(24)) ('') (collation : utf8_unicode_ci)
+  Extension (varchar(4)) ('') (collation : utf8_unicode_ci)
+  Photo (varchar(50)) ('') (collation : utf8_unicode_ci)
+  Notes (mediumtext) (collation : utf8_unicode_ci)
   ReportsTo (int(10) unsigned)
     Index   : LastName
     Index   : PostalCode
@@ -69,19 +69,19 @@ employees
 
 orders
   OrderID (int(10) unsigned) (autonumber)
-  CustomerID (varchar(5)) ('')
+  CustomerID (varchar(5)) ('') (collation : utf8_unicode_ci)
   EmployeeID (int(10) unsigned)
   OrderDate (datetime)
   RequiredDate (datetime)
   ShippedDate (datetime)
   ShipVia (int(10) unsigned)
   Freight (double) (0)
-  ShipName (varchar(40)) ('')
-  ShipAddress (varchar(60)) ('')
-  ShipCity (varchar(15)) ('')
-  ShipRegion (varchar(15)) ('')
-  ShipPostalCode (varchar(10)) ('')
-  ShipCountry (varchar(15)) ('')
+  ShipName (varchar(40)) ('') (collation : utf8_unicode_ci)
+  ShipAddress (varchar(60)) ('') (collation : utf8_unicode_ci)
+  ShipCity (varchar(15)) ('') (collation : utf8_unicode_ci)
+  ShipRegion (varchar(15)) ('') (collation : utf8_unicode_ci)
+  ShipPostalCode (varchar(10)) ('') (collation : utf8_unicode_ci)
+  ShipCountry (varchar(15)) ('') (collation : utf8_unicode_ci)
     Index   : CustomerID
     Index   : EmployeeID
     Index   : ShipVia
@@ -104,15 +104,15 @@ order_details
 
 products
   ProductID (int(10) unsigned) (autonumber)
-  ProductName (varchar(40)) ('')
+  ProductName (varchar(40)) ('') (collation : utf8_unicode_ci)
   SupplierID (int(10) unsigned)
   CategoryID (tinyint(5) unsigned)
-  QuantityPerUnit (varchar(20)) ('')
+  QuantityPerUnit (varchar(20)) ('') (collation : utf8_unicode_ci)
   UnitPrice (double) (0)
   UnitsInStock (smallint(5) unsigned) (0)
   UnitsOnOrder (smallint(5) unsigned) (0)
   ReorderLevel (smallint(5) unsigned) (0)
-  Discontinued (enum('y','n')) (n)
+  Discontinued (enum('y','n')) (n) (collation : utf8_unicode_ci)
     Index   : CategoryID
     Index   : SupplierID
     Index   : ProductName
@@ -120,23 +120,23 @@ products
 
 shippers
   ShipperID (int(10) unsigned) (autonumber)
-  CompanyName (varchar(40)) ('')
-  Phone (varchar(24)) ('')
+  CompanyName (varchar(40)) ('') (collation : utf8_unicode_ci)
+  Phone (varchar(24)) ('') (collation : utf8_unicode_ci)
     Index   : ShipperID, Primary, Unique
 
 suppliers
   SupplierID (int(10) unsigned) (autonumber)
-  CompanyName (varchar(40)) ('')
-  ContactName (varchar(30)) ('')
-  ContactTitle (varchar(30)) ('')
-  Address (varchar(60)) ('')
-  City (varchar(15)) ('')
-  Region (varchar(15)) ('')
-  PostalCode (varchar(10)) ('')
-  Country (varchar(15)) ('')
-  Phone (varchar(24)) ('')
-  Fax (varchar(24)) ('')
-  HomePage (varchar(255)) ('') (collation : utf8_general_ci)
+  CompanyName (varchar(40)) ('') (collation : utf8_unicode_ci)
+  ContactName (varchar(30)) ('') (collation : utf8_unicode_ci)
+  ContactTitle (varchar(30)) ('') (collation : utf8_unicode_ci)
+  Address (varchar(60)) ('') (collation : utf8_unicode_ci)
+  City (varchar(15)) ('') (collation : utf8_unicode_ci)
+  Region (varchar(15)) ('') (collation : utf8_unicode_ci)
+  PostalCode (varchar(10)) ('') (collation : utf8_unicode_ci)
+  Country (varchar(15)) ('') (collation : utf8_unicode_ci)
+  Phone (varchar(24)) ('') (collation : utf8_unicode_ci)
+  Fax (varchar(24)) ('') (collation : utf8_unicode_ci)
+  HomePage (varchar(255)) ('')
     Index   : PostalCode
     Index   : CompanyName
     Index   : SupplierID, Primary, Unique
@@ -168,4 +168,4 @@ shippers
 
 suppliers
 
-Report created : 15/04/2023 10:43:39 -> 15/04/2023 10:43:51 : 12.6 sec.
+Report created : 15/04/2023 12:57:59 -> 15/04/2023 12:58:09 : 9.3 sec.
