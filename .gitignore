@@ -47,7 +47,6 @@ Temporary Items
 .apdisk
 
 /obj
-/.vs/DBReport/v17
 MySql.Data.dll
 DBReport.exe
 DBReport.exe.config
@@ -59,3 +58,8 @@ MySql.Data.xml
 DatabaseSchemaReader.dll
 DatabaseSchemaReader.xml
 /DBReport_fichiers
+
+/.vs
+*.dll
+*.xml
+/DBReport_northwind.txt
