@@ -60,6 +60,5 @@ DatabaseSchemaReader.xml
 /DBReport_fichiers
 
 /.vs
-*.dll
-*.xml
-/DBReport_northwind.txt
+/Bin/*/DBReport_northwind.txt
+/Bin
