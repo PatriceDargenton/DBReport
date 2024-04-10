@@ -2,7 +2,10 @@
 ' File modDBReport.vb
 ' -------------------
 
+Imports System.Net
 Imports System.Text ' StringBuilder
+Imports Microsoft.SqlServer
+Imports System.Threading.Tasks
 
 Imports MySqlConnector ' NuGet MySqlConnector 2.2.5
 'Imports MySql.Data.MySqlClient ' mysql-connector-net-6.9.x.msi
@@ -10,6 +13,7 @@ Imports MySqlConnector ' NuGet MySqlConnector 2.2.5
 Public Module modDBReport
 
     Public Const sMySqlClient$ = "MySql.Data.MySqlClient"
+    Public Const sOracleClient$ = "System.Data.OracleClient" ' 10/04/2024
 
     Public Const sMsgError$ = "Error !"
     Public Const sMsgDone$ = "Done."
@@ -57,6 +61,7 @@ Public Module modDBReport
     Public Class clsPrmDBR
 
         Public sConnection$, sDBProvider$, sUserLogin$, sServer$, sDBName$, sDBReportVersion$
+        Public sUserPassword$, sInstanceName$, sPort$ ' 10/04/2024 Oracle
 
         Public bDisplayTableAndFieldDescription As Boolean
         Public bDisplayFieldType As Boolean
@@ -149,6 +154,22 @@ Public Module modDBReport
                 GetMySqlColumnsCollation(prm.sConnection, prm.sDBName, dicSqlCC)
             End If
 
+            ' 10/04/2024 Oracle
+            If prm.sDBProvider = sOracleClient Then
+
+                Dim sLogin$ = prm.sUserLogin
+                Dim sPW$ = prm.sUserPassword
+                Dim sServer$ = prm.sServer
+                Dim sSID = prm.sInstanceName
+                Dim sPort$ = prm.sPort
+
+                prm.sConnection =
+                    "USER ID=" + sLogin + ";PASSWORD=" + sPW +
+                    ";DATA SOURCE=(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = " + sServer +
+                    " )(PORT = " + sPort +
+                    " )))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = " + sSID + " )))"
+            End If
+
             m_dbReader = New DatabaseSchemaReader.DatabaseReader(prm.sConnection, prm.sDBProvider)
             m_dbReader.Owner = prm.sDBName ' 22/08/2016
 
@@ -210,6 +231,12 @@ Public Module modDBReport
         sb.AppendLine("Login    : " & prm.sUserLogin)
         sb.AppendLine("Server   : " & prm.sServer)
         sb.AppendLine("Database : " & prm.sDBName)
+
+        If prm.sDBProvider = sOracleClient Then ' 10/04/2024
+            sb.AppendLine("Instance : " & prm.sInstanceName)
+            sb.AppendLine("Port     : " & prm.sPort)
+        End If
+
         If prm.bSortColumns Then
             sb.AppendLine("Columns  : Sorted")
         Else
@@ -330,7 +357,7 @@ Public Module modDBReport
 
         For Each table In schema.Tables
             Dim sTableTitle$ = table.Name
-            If prm.bDisplayTableAndFieldDescription AndAlso table.Description.Length > 0 Then _
+            If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(table.Description) AndAlso table.Description.Length > 0 Then _
                 sTableTitle &= " : " & table.Description
             If bMySql Then
                 If prm.mySqlprm.bDisplayTableEngine AndAlso dicSqlTE.ContainsKey(table.Name) Then
@@ -363,7 +390,7 @@ Public Module modDBReport
                     If sDisplay.Length = 0 Then sDisplay = "''" ' ' 23/10/2016
                     sTitle &= " (" & sDisplay & ")"
                 End If
-                If prm.bDisplayTableAndFieldDescription AndAlso col.Description.Length > 0 Then _
+                If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(col.Description) AndAlso col.Description.Length > 0 Then _
                     sTitle &= " : " & col.Description
                 If col.IsAutoNumber Then
                     sTitle &= " (autonumber)"
@@ -451,7 +478,7 @@ Public Module modDBReport
         For Each table In schema.Tables
             sb.AppendLine()
             Dim sTableTitle$ = table.Name
-            If prm.bDisplayTableAndFieldDescription AndAlso table.Description.Length > 0 Then _
+            If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(table.Description) AndAlso table.Description.Length > 0 Then _
                 sTableTitle &= " : " & table.Description
             sb.AppendLine(sTableTitle)
 
@@ -503,7 +530,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
                 If fk.DeleteRule <> sRestrictDef Then sDelRule = " (Delete rule : " &
                     CStr(IIf(String.IsNullOrEmpty(fk.DeleteRule), "undefined", fk.DeleteRule)) & ")"
                 sRestrictDef = prm.sForeignKeyUpdateRuleDef
-                If fk.UpdateRule <> sRestrictDef Then sUpdRule = " (Update rule : " &
+                If Not IsNothing(fk.UpdateRule) AndAlso fk.UpdateRule <> sRestrictDef Then sUpdRule = " (Update rule : " &
                     CStr(IIf(String.IsNullOrEmpty(fk.UpdateRule), "undefined", fk.UpdateRule)) & ")"
                 sb.AppendLine("  " & sLinkTable & " : " &
                     sId & sCount & sLinkName & sDelRule & sUpdRule)

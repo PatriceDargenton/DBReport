@@ -7,11 +7,9 @@ By Patrice Dargenton (patrice.dargenton@free.fr)
 [My website](http://patrice.dargenton.free.fr/index.html)  
 [My source codes](http://patrice.dargenton.free.fr/CodesSources/index.html)  
 
-Version 1.09 - 15/04/2023
+Version 1.10 - 10/04/2024
 
 Database Administrators needs to compare database structures. Using [WinMerge](http://winmerge.org) on sql database structure files, it is difficult to compare because a lot of differences appear, whereas only a few of them are meaningful. DBReport shows only (and all) significant information that makes sense for daily administrator work.
-
-<!-- TOC -->
 
 - [Features](#features)
 - [Example with the classical Northwind database](#example-with-the-classical-northwind-database)
@@ -29,6 +27,7 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
         - [How to change the server collation?](#how-to-change-the-server-collation)
 - [Projects](#projects)
 - [Versions](#versions)
+    - [Version 1.10 - 10/04/2024](#version-110---10042024)
     - [Version 1.09 - 15/04/2023](#version-109---15042023)
     - [Version 1.08 - 01/10/2022](#version-108---01102022)
     - [Version 1.07 - 04/03/2022](#version-107---04032022)
@@ -40,8 +39,6 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
     - [Version 1.01 - 03/01/2016: First version](#version-101---03012016-first-version)
 - [Links](#links)
     - [See also](#see-also)
-
-<!-- /TOC -->
 
 # Features
 - Tables, fields and table relations (links) are displayed;
@@ -332,6 +329,10 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
  
  
 # Versions
+
+## Version 1.10 - 10/04/2024
+- Port and InstanceName added in parameter settings, for Oracle;
+- Oracle DBProvider : System.Data.OracleClient.
 
 ## Version 1.09 - 15/04/2023
 - mysql-connector-net-6.9.x.msi -> NuGet MySqlConnector 2.2.5;

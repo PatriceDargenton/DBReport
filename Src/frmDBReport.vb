@@ -280,6 +280,12 @@ Public Class frmDBReport
         prm.sDBName = sDBName
         prm.sServer = sServer
         prm.sUserLogin = sUserLogin
+
+        ' 10/04/2024 Oracle
+        prm.sUserPassword = sPW
+        prm.sInstanceName = My.Settings.InstanceName
+        prm.sPort = My.Settings.Port
+
         prm.sDBReportVersion = sAppVersion ' 23/10/2016
 
         prm.bDisplayTableAndFieldDescription = Me.chkDisplayDescription.Checked
