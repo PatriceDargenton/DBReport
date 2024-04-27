@@ -2,18 +2,16 @@
 ' File modDBReport.vb
 ' -------------------
 
-Imports System.Net
+'Imports System.Data.Common ' NuGet MySqlConnector 2.2.5: DbProviderFactories
 Imports System.Text ' StringBuilder
-Imports Microsoft.SqlServer
-Imports System.Threading.Tasks
 
-Imports MySqlConnector ' NuGet MySqlConnector 2.2.5
-'Imports MySql.Data.MySqlClient ' mysql-connector-net-6.9.x.msi
+Imports MySqlConnector
 
 Public Module modDBReport
 
     Public Const sMySqlClient$ = "MySql.Data.MySqlClient"
     Public Const sOracleClient$ = "System.Data.OracleClient" ' 10/04/2024
+    Public Const sSQLiteClient$ = "System.Data.SQLite" ' 27/04/2024
 
     Public Const sMsgError$ = "Error !"
     Public Const sMsgDone$ = "Done."
@@ -170,6 +168,16 @@ Public Module modDBReport
                     " )))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = " + sSID + " )))"
             End If
 
+            If prm.sDBProvider = sSQLiteClient Then
+                Dim sServer$ = prm.sServer
+                prm.sConnection = "Data Source=" & prm.sServer & ";"
+                'Dim fact = DbProviderFactories.GetFactory(sSQLiteClient)
+                'Using cnn As DbConnection = fact.CreateConnection()
+                '    cnn.ConnectionString = prm.sConnection
+                '    cnn.Open()
+                'End Using
+            End If
+
             m_dbReader = New DatabaseSchemaReader.DatabaseReader(prm.sConnection, prm.sDBProvider)
             m_dbReader.Owner = prm.sDBName ' 22/08/2016
 
@@ -228,9 +236,15 @@ Public Module modDBReport
         sb.AppendLine("Database report " & prm.sDBReportVersion) ' 23/10/2016
         sb.AppendLine("--------------------")
         sb.AppendLine()
-        sb.AppendLine("Login    : " & prm.sUserLogin)
-        sb.AppendLine("Server   : " & prm.sServer)
-        sb.AppendLine("Database : " & prm.sDBName)
+
+        If prm.sDBProvider = sSQLiteClient Then ' 27/04/2024
+            If Not String.IsNullOrEmpty(prm.sUserLogin) Then sb.AppendLine("Login    : " & prm.sUserLogin)
+            sb.AppendLine("Database : " & prm.sDBName)
+        Else
+            sb.AppendLine("Login    : " & prm.sUserLogin)
+            sb.AppendLine("Server   : " & prm.sServer)
+            sb.AppendLine("Database : " & prm.sDBName)
+        End If
 
         If prm.sDBProvider = sOracleClient Then ' 10/04/2024
             sb.AppendLine("Instance : " & prm.sInstanceName)

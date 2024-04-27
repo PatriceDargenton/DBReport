@@ -4,7 +4,7 @@
 ' Documentation : DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.vbproj.html
-' Version 1.09 - 15/04/2023
+' Version 1.11 - 27/04/2024
 ' By Patrice Dargenton : mailto:patrice.dargenton@free.fr
 ' http://patrice.dargenton.free.fr/index.html
 ' http://patrice.dargenton.free.fr/CodesSources/index.html
@@ -118,12 +118,29 @@ Public Class frmDBReport
         Me.ToolTip1.SetToolTip(Me.chkDisplayTableEngine, sMsgDisplayTableEngine)
         Me.ToolTip1.SetToolTip(Me.chkDisplayCollation, sMsgDisplayCollation)
 
+        'If bDebug Then
+        '    Me.tbDBProvider.Text = sMySqlClient
+        '    Me.tbDBServer.Text = "localhost"
+        '    Me.tbDBName.Text = "northwind"
+        '    Me.chkAlertNotNullable.Checked = False ' northwind
+        '    Me.tbUserName.Text = "root"
+        '    Me.tbUserPassword.Text = ""
+        'End If
         If bDebug Then
-            Me.tbDBProvider.Text = sMySqlClient
-            Me.tbDBServer.Text = "localhost"
-            Me.tbDBName.Text = "northwind"
+            Me.tbDBProvider.Text = sSQLiteClient
+            ' northwindEF for SQLite database:
+            ' https://system.data.sqlite.org/index.html/doc/trunk/www/index.wiki
+            ' https://system.data.sqlite.org/index.html/doc/trunk/www/downloads.wiki
+            ' https://system.data.sqlite.org/downloads/1.0.118.0/sqlite-netFx46-binary-x64-2015-1.0.118.0.zip
+            Me.tbDBName.Text = "northwindEF.db"
+            Me.tbDBServer.Text = Application.StartupPath & "\" & Me.tbDBName.Text
+            If Not IO.File.Exists(Me.tbDBServer.Text) Then
+                Me.tbDBServer.Text = "Not found: " & Me.tbDBServer.Text
+            End If
             Me.chkAlertNotNullable.Checked = False ' northwind
-            Me.tbUserName.Text = "root"
+            Me.chkDisplayFieldType.Checked = True
+            'Me.chkSortColumns.Checked = True
+            Me.tbUserName.Text = ""
             Me.tbUserPassword.Text = ""
         End If
 
@@ -339,6 +356,7 @@ Public Class frmDBReport
         End If
 
         If bCreateDBReport(prm, m_delegMsg, sMsgDBOff, sMsgCompoMySQLNotInst, sb) Then
+            sDBName = sDBName.Replace(".", "_") ' 27/04/2024
             Dim sPath$ = Application.StartupPath & "\DBReport_" & sDBName & ".txt"
             If Not bWriteFile(sPath, sb) Then GoTo Fin
             LetOpenFile(sPath)
