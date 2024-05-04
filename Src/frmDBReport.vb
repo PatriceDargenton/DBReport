@@ -4,7 +4,7 @@
 ' Documentation : DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.html
 ' http://patrice.dargenton.free.fr/CodesSources/DBReport.vbproj.html
-' Version 1.11 - 27/04/2024
+' Version 1.11 - 04/05/2024
 ' By Patrice Dargenton : mailto:patrice.dargenton@free.fr
 ' http://patrice.dargenton.free.fr/index.html
 ' http://patrice.dargenton.free.fr/CodesSources/index.html
@@ -125,7 +125,12 @@ Public Class frmDBReport
         '    Me.chkAlertNotNullable.Checked = False ' northwind
         '    Me.tbUserName.Text = "root"
         '    Me.tbUserPassword.Text = ""
+        '    My.Settings.SortTables = True
+        '    Me.chkSortColumns.Checked = True
+        '    Me.chkSortIndexes.Checked = True
+        '    My.Settings.DisplayMySqlParameters = False
         'End If
+
         If bDebug Then
             Me.tbDBProvider.Text = sSQLiteClient
             ' northwindEF for SQLite database:
@@ -137,11 +142,19 @@ Public Class frmDBReport
             If Not IO.File.Exists(Me.tbDBServer.Text) Then
                 Me.tbDBServer.Text = "Not found: " & Me.tbDBServer.Text
             End If
-            Me.chkAlertNotNullable.Checked = False ' northwind
+            Me.chkAlertNotNullable.Checked = False
             Me.chkDisplayFieldType.Checked = True
-            'Me.chkSortColumns.Checked = True
+            My.Settings.SortTables = True
+            Me.chkSortColumns.Checked = True
+            Me.chkSortIndexes.Checked = True
+            My.Settings.ForeignKeyDeleteRule = "NO ACTION"
+            My.Settings.ForeignKeyUpdateRule = "NO ACTION"
             Me.tbUserName.Text = ""
             Me.tbUserPassword.Text = ""
+            My.Settings.DisplayAutonumberAsPrimaryKey = False
+            My.Settings.DisplayMultipleIndexName = True
+            My.Settings.RenameSQLiteMultipleIndex = True
+            My.Settings.DisplaySQLiteSimpleIndexName = False
         End If
 
     End Sub
@@ -309,6 +322,7 @@ Public Class frmDBReport
         prm.bDisplayFieldDefaultValue = Me.chkDisplayFieldDefaultValue.Checked
         prm.bDisplayFieldType = Me.chkDisplayFieldType.Checked
         prm.bDisplayLinkName = Me.chkDisplayLinkName.Checked
+        prm.bSortTables = My.Settings.SortTables ' 04/05/2024
         prm.bSortColumns = Me.chkSortColumns.Checked
         prm.bSortIndexes = Me.chkSortIndexes.Checked
         prm.bSortLinks = Me.chkSortLinks.Checked
@@ -317,18 +331,12 @@ Public Class frmDBReport
         prm.sForeignKeyDeleteRuleDef = My.Settings.ForeignKeyDeleteRule ' 05/03/2017 RESTRICT
         prm.sForeignKeyUpdateRuleDef = My.Settings.ForeignKeyUpdateRule ' 05/03/2017 RESTRICT
 
-        ' 05/03/2017
-
-        'prm.mySqlprm.sSQLModeDef = "STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION"
-        'prm.mySqlprm.sInnodbStrictModeDef = "ON"
-        'prm.mySqlprm.iTimeOutMaxDef = 99999
-        'prm.mySqlprm.iNetReadTimeoutSecDef = iNoDefaultTimeOut
-        'prm.mySqlprm.iNetWriteTimeoutSecDef = iNoDefaultTimeOut
-        'prm.mySqlprm.sTableEngineDef = "InnoDB"
-        'prm.mySqlprm.sServerCollationDef = "utf8_general_ci"
-        'prm.mySqlprm.sDatabaseCollationDef = "utf8_general_ci"
-        'prm.mySqlprm.sTableCollationDef = "utf8_general_ci"
-        'prm.mySqlprm.sColumnCollationDef = "utf8_general_ci"
+        ' 04/05/2024
+        prm.bDisplayAutonumberAsPrimaryKey = My.Settings.DisplayAutonumberAsPrimaryKey
+        prm.bDisplayMultipleIndexName = My.Settings.DisplayMultipleIndexName
+        prm.bRenameSQLiteMultipleIndex = My.Settings.RenameSQLiteMultipleIndex
+        prm.bDisplaySQLiteSimpleIndexName = My.Settings.DisplaySQLiteSimpleIndexName
+        prm.bDisplayMySqlParameters = My.Settings.DisplayMySqlParameters
 
         prm.mySqlprm.sSQLModeDef = My.Settings.MySqlSQLMode
         prm.mySqlprm.sInnodbStrictModeDef = My.Settings.MySqlInnodbStrictMode
@@ -345,15 +353,6 @@ Public Class frmDBReport
         prm.mySqlprm.bDisplayCollation = Me.chkDisplayCollation.Checked
 
         prm.mySqlprm.sforeign_key_checksDef = "ON" ' 04/03/2022
-
-        If bDebug Then
-            ' For Norhwind :
-            prm.mySqlprm.sColumnCollationDef = "utf8_unicode_ci"
-            'prm.mySqlprm.sTableCollationDef = "utf8_general_ci"
-            'prm.mySqlprm.sDatabaseCollationDef = "utf8_general_ci"
-            'prm.mySqlprm.sServerCollationDef = "utf8_general_ci"
-            'prm.mySqlprm.sTableEngineDef = "InnoDB"
-        End If
 
         If bCreateDBReport(prm, m_delegMsg, sMsgDBOff, sMsgCompoMySQLNotInst, sb) Then
             sDBName = sDBName.Replace(".", "_") ' 27/04/2024

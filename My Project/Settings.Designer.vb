@@ -401,6 +401,78 @@ Namespace My
                 Me("Port") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property SortTables() As Boolean
+            Get
+                Return CType(Me("SortTables"),Boolean)
+            End Get
+            Set
+                Me("SortTables") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property DisplayAutonumberAsPrimaryKey() As Boolean
+            Get
+                Return CType(Me("DisplayAutonumberAsPrimaryKey"),Boolean)
+            End Get
+            Set
+                Me("DisplayAutonumberAsPrimaryKey") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property DisplayMultipleIndexName() As Boolean
+            Get
+                Return CType(Me("DisplayMultipleIndexName"),Boolean)
+            End Get
+            Set
+                Me("DisplayMultipleIndexName") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property RenameSQLiteMultipleIndex() As Boolean
+            Get
+                Return CType(Me("RenameSQLiteMultipleIndex"),Boolean)
+            End Get
+            Set
+                Me("RenameSQLiteMultipleIndex") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property DisplaySQLiteSimpleIndexName() As Boolean
+            Get
+                Return CType(Me("DisplaySQLiteSimpleIndexName"),Boolean)
+            End Get
+            Set
+                Me("DisplaySQLiteSimpleIndexName") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property DisplayMySqlParameters() As Boolean
+            Get
+                Return CType(Me("DisplayMySqlParameters"),Boolean)
+            End Get
+            Set
+                Me("DisplayMySqlParameters") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

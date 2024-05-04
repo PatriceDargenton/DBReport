@@ -53,5 +53,6 @@ Temporary Items
 /bin
 # Exclude all files after /bin, except this file:
 !/bin/*/DBReport_northwind_ok.txt
+!/bin/*/DBReport_northwindEF_db_ok.txt
 /DBReport.vbproj.html
 /DBReport.vbproj.ini

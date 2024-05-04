@@ -1,43 +1,34 @@
 
-Database report 1.09
+Database report 1.12
 --------------------
 
 Login    : root
 Server   : localhost
 Database : northwind
+Tables   : Sorted
+Columns  : Sorted
 Indexes  : Sorted
-
-MySql parameters :
-version_comment : MySQL Community Server (GPL)
-version : 5.6.15-log
-protocol_version : 10
-sql_mode : NO_ENGINE_SUBSTITUTION (Default : STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION)
-foreign_key_checks : ON
-innodb_strict_mode : ON
-net_read_timeout : 30 (30 sec.)
-net_write_timeout : 60 (1 mn)
-Database default collation (DEFAULT_COLLATION_NAME) : utf8_unicode_ci (Default : utf8_general_ci)
 
 categories
   CategoryID (tinyint(5) unsigned) (autonumber)
-  CategoryName (varchar(15)) ('') (collation : utf8_unicode_ci)
-  Description (mediumtext) (collation : utf8_unicode_ci)
-  Picture (varchar(50)) ('') (collation : utf8_unicode_ci)
+  CategoryName (varchar(15)) ('')
+  Description (mediumtext)
+  Picture (varchar(50)) ('')
     Index   : CategoryID, Primary, Unique
     Index   : CategoryName, Unique
 
 customers
-  CustomerID (varchar(5)) ('') (collation : utf8_unicode_ci)
-  CompanyName (varchar(40)) ('') (collation : utf8_unicode_ci)
-  ContactName (varchar(30)) (Unknown) (collation : utf8_unicode_ci)
-  ContactTitle (varchar(30)) ('') (collation : utf8_unicode_ci)
-  Address (varchar(60)) ('') (collation : utf8_unicode_ci)
-  City (varchar(15)) ('') (collation : utf8_unicode_ci)
-  Region (varchar(15)) ('') (collation : utf8_unicode_ci)
-  PostalCode (varchar(10)) ('') (collation : utf8_unicode_ci)
-  Country (varchar(15)) ('') (collation : utf8_unicode_ci)
-  Phone (varchar(24)) ('') (collation : utf8_unicode_ci)
-  Fax (varchar(24)) ('') (collation : utf8_unicode_ci)
+  Address (varchar(60)) ('')
+  City (varchar(15)) ('')
+  CompanyName (varchar(40)) ('')
+  ContactName (varchar(30)) (Unknown)
+  ContactTitle (varchar(30)) ('')
+  Country (varchar(15)) ('')
+  CustomerID (varchar(5)) ('')
+  Fax (varchar(24)) ('')
+  Phone (varchar(24)) ('')
+  PostalCode (varchar(10)) ('')
+  Region (varchar(15)) ('')
     Index   : City
     Index   : CompanyName
     Index   : PostalCode
@@ -45,43 +36,56 @@ customers
     Index   : CustomerID, Primary, Unique
 
 employees
-  EmployeeID (int(10) unsigned) (autonumber)
-  LastName (varchar(20)) ('') (collation : utf8_unicode_ci)
-  FirstName (varchar(10)) ('') (collation : utf8_unicode_ci)
-  Title (varchar(30)) ('') (collation : utf8_unicode_ci)
-  TitleOfCourtesy (varchar(25)) ('') (collation : utf8_unicode_ci)
+  Address (varchar(60)) ('')
   BirthDate (datetime)
+  City (varchar(15)) ('')
+  Country (varchar(15)) ('')
+  EmployeeID (int(10) unsigned) (autonumber)
+  Extension (varchar(4)) ('')
+  FirstName (varchar(10)) ('')
   HireDate (datetime)
-  Address (varchar(60)) ('') (collation : utf8_unicode_ci)
-  City (varchar(15)) ('') (collation : utf8_unicode_ci)
-  Region (varchar(15)) ('') (collation : utf8_unicode_ci)
-  PostalCode (varchar(10)) ('') (collation : utf8_unicode_ci)
-  Country (varchar(15)) ('') (collation : utf8_unicode_ci)
-  HomePhone (varchar(24)) ('') (collation : utf8_unicode_ci)
-  Extension (varchar(4)) ('') (collation : utf8_unicode_ci)
-  Photo (varchar(50)) ('') (collation : utf8_unicode_ci)
-  Notes (mediumtext) (collation : utf8_unicode_ci)
+  HomePhone (varchar(24)) ('')
+  LastName (varchar(20)) ('')
+  Notes (mediumtext)
+  Photo (varchar(50)) ('')
+  PostalCode (varchar(10)) ('')
+  Region (varchar(15)) ('')
   ReportsTo (int(10) unsigned)
+  Title (varchar(30)) ('')
+  TitleOfCourtesy (varchar(25)) ('')
     Index   : LastName
     Index   : PostalCode
     Index   : ReportsTo
     Index   : EmployeeID, Primary, Unique
 
+order_details
+  Discount (float unsigned) (0)
+  ID (int(10) unsigned) (autonumber)
+  OrderID (int(10) unsigned)
+  ProductID (int(10) unsigned)
+  Quantity (smallint(5) unsigned) (1)
+  UnitPrice (double unsigned) (0)
+    Index   : ProductID
+    Index   : ID, Primary, Unique
+    Index   : Uidx_OrderID_ProductID, Unique, 2 fields :
+      field : OrderID
+      field : ProductID
+
 orders
-  OrderID (int(10) unsigned) (autonumber)
-  CustomerID (varchar(5)) ('') (collation : utf8_unicode_ci)
+  CustomerID (varchar(5)) ('')
   EmployeeID (int(10) unsigned)
-  OrderDate (datetime)
-  RequiredDate (datetime)
-  ShippedDate (datetime)
-  ShipVia (int(10) unsigned)
   Freight (double) (0)
-  ShipName (varchar(40)) ('') (collation : utf8_unicode_ci)
-  ShipAddress (varchar(60)) ('') (collation : utf8_unicode_ci)
-  ShipCity (varchar(15)) ('') (collation : utf8_unicode_ci)
-  ShipRegion (varchar(15)) ('') (collation : utf8_unicode_ci)
-  ShipPostalCode (varchar(10)) ('') (collation : utf8_unicode_ci)
-  ShipCountry (varchar(15)) ('') (collation : utf8_unicode_ci)
+  OrderDate (datetime)
+  OrderID (int(10) unsigned) (autonumber)
+  RequiredDate (datetime)
+  ShipAddress (varchar(60)) ('')
+  ShipCity (varchar(15)) ('')
+  ShipCountry (varchar(15)) ('')
+  ShipName (varchar(40)) ('')
+  ShippedDate (datetime)
+  ShipPostalCode (varchar(10)) ('')
+  ShipRegion (varchar(15)) ('')
+  ShipVia (int(10) unsigned)
     Index   : CustomerID
     Index   : EmployeeID
     Index   : ShipVia
@@ -89,54 +93,41 @@ orders
     Index   : ShippedDate
     Index   : OrderID, Primary, Unique
 
-order_details
-  ID (int(10) unsigned) (autonumber)
-  OrderID (int(10) unsigned)
-  ProductID (int(10) unsigned)
-  UnitPrice (double unsigned) (0)
-  Quantity (smallint(5) unsigned) (1)
-  Discount (float unsigned) (0)
-    Index   : ProductID
-    Index   : ID, Primary, Unique
-    Index   : Uidx_OrderID_ProductID, Unique, 2 fields :
-      field : OrderID
-      field : ProductID
-
 products
-  ProductID (int(10) unsigned) (autonumber)
-  ProductName (varchar(40)) ('') (collation : utf8_unicode_ci)
-  SupplierID (int(10) unsigned)
   CategoryID (tinyint(5) unsigned)
-  QuantityPerUnit (varchar(20)) ('') (collation : utf8_unicode_ci)
+  Discontinued (enum('y','n')) (n)
+  ProductID (int(10) unsigned) (autonumber)
+  ProductName (varchar(40)) ('')
+  QuantityPerUnit (varchar(20)) ('')
+  ReorderLevel (smallint(5) unsigned) (0)
+  SupplierID (int(10) unsigned)
   UnitPrice (double) (0)
   UnitsInStock (smallint(5) unsigned) (0)
   UnitsOnOrder (smallint(5) unsigned) (0)
-  ReorderLevel (smallint(5) unsigned) (0)
-  Discontinued (enum('y','n')) (n) (collation : utf8_unicode_ci)
     Index   : CategoryID
     Index   : SupplierID
     Index   : ProductName
     Index   : ProductID, Primary, Unique
 
 shippers
+  CompanyName (varchar(40)) ('')
+  Phone (varchar(24)) ('')
   ShipperID (int(10) unsigned) (autonumber)
-  CompanyName (varchar(40)) ('') (collation : utf8_unicode_ci)
-  Phone (varchar(24)) ('') (collation : utf8_unicode_ci)
     Index   : ShipperID, Primary, Unique
 
 suppliers
-  SupplierID (int(10) unsigned) (autonumber)
-  CompanyName (varchar(40)) ('') (collation : utf8_unicode_ci)
-  ContactName (varchar(30)) ('') (collation : utf8_unicode_ci)
-  ContactTitle (varchar(30)) ('') (collation : utf8_unicode_ci)
-  Address (varchar(60)) ('') (collation : utf8_unicode_ci)
-  City (varchar(15)) ('') (collation : utf8_unicode_ci)
-  Region (varchar(15)) ('') (collation : utf8_unicode_ci)
-  PostalCode (varchar(10)) ('') (collation : utf8_unicode_ci)
-  Country (varchar(15)) ('') (collation : utf8_unicode_ci)
-  Phone (varchar(24)) ('') (collation : utf8_unicode_ci)
-  Fax (varchar(24)) ('') (collation : utf8_unicode_ci)
+  Address (varchar(60)) ('')
+  City (varchar(15)) ('')
+  CompanyName (varchar(40)) ('')
+  ContactName (varchar(30)) ('')
+  ContactTitle (varchar(30)) ('')
+  Country (varchar(15)) ('')
+  Fax (varchar(24)) ('')
   HomePage (varchar(255)) ('')
+  Phone (varchar(24)) ('')
+  PostalCode (varchar(10)) ('')
+  Region (varchar(15)) ('')
+  SupplierID (int(10) unsigned) (autonumber)
     Index   : PostalCode
     Index   : CompanyName
     Index   : SupplierID, Primary, Unique
@@ -168,4 +159,4 @@ shippers
 
 suppliers
 
-Report created : 15/04/2023 12:57:59 -> 15/04/2023 12:58:09 : 9.3 sec.
+Report created : 04/05/2024 09:38:05 -> 04/05/2024 09:38:12 : 7.5 sec.

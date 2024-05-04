@@ -65,6 +65,7 @@ Public Module modDBReport
         Public bDisplayFieldType As Boolean
         Public bDisplayFieldDefaultValue As Boolean
         Public bDisplayLinkName As Boolean
+        Public bSortTables As Boolean ' 04/05/2024
         Public bSortColumns As Boolean
         Public bSortIndexes As Boolean
         Public bSortLinks As Boolean
@@ -72,7 +73,14 @@ Public Module modDBReport
         Public sForeignKeyDeleteRuleDef$ ' 05/03/2017
         Public sForeignKeyUpdateRuleDef$ ' 05/03/2017
 
+        ' 04/05/2024
+        Public bDisplayAutonumberAsPrimaryKey As Boolean
+        Public bDisplayMultipleIndexName As Boolean
+        Public bRenameSQLiteMultipleIndex As Boolean
+        Public bDisplaySQLiteSimpleIndexName As Boolean
+
         Public mySqlprm As New clsPrmMySql ' 05/03/2017
+        Public bDisplayMySqlParameters As Boolean ' 04/05/2024
 
     End Class
 
@@ -143,13 +151,30 @@ Public Module modDBReport
             Dim dicSqlTE As New Dictionary(Of String, String)
             Dim dicSqlTC As New Dictionary(Of String, String)
             Dim dicSqlCC As New Dictionary(Of String, String)
+            Dim sMySqlConnectorVersion$ = "" ' 04/05/2024
             Dim bMySql As Boolean = False
             If prm.sDBProvider = sMySqlClient Then bMySql = True
-            If bMySql Then
+            If bMySql AndAlso prm.bDisplayMySqlParameters Then
                 If Not bGetMySqlParameters(prm.sConnection, prm.sDBName, dicSqlPrm, lstMySqlPrm,
                     sMsgErr, sMsgErrPossibleCause) Then Return False
                 GetMySqlTablesCollationAndEngine(prm.sConnection, prm.sDBName, dicSqlTE, dicSqlTC)
                 GetMySqlColumnsCollation(prm.sConnection, prm.sDBName, dicSqlCC)
+
+                ' 04/05/2024
+                Const sDllMySql$ = "MySqlConnector.dll" '"MySQL.Data.dll"
+                Dim sDllFullPath = Application.StartupPath & "\" & sDllMySql
+                Dim sDllPath = ""
+                If bFileExists(sDllFullPath) Then sDllPath = sDllMySql
+                Dim sVersion$
+                If sDllPath.Length > 0 Then
+                    ' For MySQL.Data.dll:
+                    'sVersion = System.Reflection.AssemblyName.GetAssemblyName(sDllPath).Version.ToString
+                    ' For MySqlConnector.dll:
+                    Dim fvi = FileVersionInfo.GetVersionInfo(sDllPath)
+                    sVersion = fvi.FileVersion.ToString
+                    sMySqlConnectorVersion = sVersion
+                End If
+
             End If
 
             ' 10/04/2024 Oracle
@@ -201,7 +226,7 @@ Public Module modDBReport
 
             CreateHeader(sb, prm)
 
-            If bMySql Then ShowMySqlInfos(sb, prm, lstMySqlPrm, dicSqlPrm)
+            If bMySql AndAlso prm.bDisplayMySqlParameters Then ShowMySqlInfos(sb, prm, lstMySqlPrm, dicSqlPrm, sMySqlConnectorVersion)
 
             CreateTableReport(sb, prm, schema, bMySql, dicSqlTE, dicSqlTC, dicSqlCC)
 
@@ -251,6 +276,10 @@ Public Module modDBReport
             sb.AppendLine("Port     : " & prm.sPort)
         End If
 
+        If prm.bSortTables Then ' 04/05/2024
+            sb.AppendLine("Tables   : Sorted")
+        End If
+
         If prm.bSortColumns Then
             sb.AppendLine("Columns  : Sorted")
         Else
@@ -266,7 +295,8 @@ Public Module modDBReport
     End Sub
 
     Private Sub ShowMySqlInfos(sb As StringBuilder, prm As clsPrmDBR,
-        lstMySqlPrm As List(Of String), dicSqlPrm As Dictionary(Of String, String))
+        lstMySqlPrm As List(Of String), dicSqlPrm As Dictionary(Of String, String),
+        sMySqlConnectorVersion$)
 
         sb.AppendLine("MySql parameters :")
         For Each sPrm In lstMySqlPrm
@@ -345,6 +375,7 @@ Public Module modDBReport
 
             If dicSqlPrm.ContainsKey(sPrm) Then sb.AppendLine(sDisplayedPrm & " : " & sVal)
         Next
+        If sMySqlConnectorVersion.Length > 0 Then sb.AppendLine("MySQL Connector/NET driver version : " & sMySqlConnectorVersion)
         sb.AppendLine()
 
     End Sub
@@ -369,7 +400,15 @@ Public Module modDBReport
             Next
         End If
 
+        Dim dicTables As New SortDic(Of String, DatabaseSchemaReader.DataSchema.DatabaseTable)
         For Each table In schema.Tables
+            dicTables.Add(table.Name, table)
+        Next
+
+        Dim sTableSorting$ = ""
+        If prm.bSortTables Then sTableSorting = "Name"
+
+        For Each table In dicTables.Sort(sTableSorting)
             Dim sTableTitle$ = table.Name
             If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(table.Description) AndAlso table.Description.Length > 0 Then _
                 sTableTitle &= " : " & table.Description
@@ -389,6 +428,7 @@ Public Module modDBReport
             ' Hashset of nullable fields of the table, to warn uniqueness
             Dim hsNullablesCol As New HashSet(Of String) ' key : column name
             Dim lstCol As New List(Of String)
+            Dim sAutonumberColName$ = ""
             For Each col In table.Columns
                 Dim sTitle$ = col.Name
                 If col.Nullable Then hsNullablesCol.Add(sTitle)
@@ -398,7 +438,8 @@ Public Module modDBReport
                 'If Not String.IsNullOrEmpty(col.DefaultValue) Then bDefVal = True
                 If Not IsNothing(col.DefaultValue) Then bDefVal = True
 
-                If prm.bDisplayFieldType Then sTitle &= " (" & col.DbDataType & ")"
+                If prm.bDisplayFieldType Then sTitle &= " (" & col.DbDataType.TrimEnd & ")" ' 04/05/2024
+
                 If prm.bDisplayFieldDefaultValue AndAlso bDefVal Then
                     Dim sDisplay$ = col.DefaultValue
                     If sDisplay.Length = 0 Then sDisplay = "''" ' ' 23/10/2016
@@ -406,7 +447,8 @@ Public Module modDBReport
                 End If
                 If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(col.Description) AndAlso col.Description.Length > 0 Then _
                     sTitle &= " : " & col.Description
-                If col.IsAutoNumber Then
+                If col.IsAutoNumber Then sAutonumberColName = sTitle ' 04/05/2024
+                If col.IsAutoNumber AndAlso Not prm.bDisplayAutonumberAsPrimaryKey Then
                     sTitle &= " (autonumber)"
                 ElseIf Not col.Nullable Then
                     If prm.bAlertNotNullable Then
@@ -445,15 +487,37 @@ Public Module modDBReport
 
             Dim sSorting$ = ""
             If prm.bSortIndexes Then sSorting = "Name"
+            Dim bIndexAutonumberDisplayed As Boolean = False
+            Dim bSQLite = False
+            If prm.sDBProvider = sSQLiteClient Then bSQLite = True
+            Dim sPreviousIndex$ = ""
 
             For Each ind In dicIndexes.Sort(sSorting)
                 Dim sUnique$ = ""
                 Dim sPrimary$ = ""
-                If ind.IsUnique Then sUnique = ", Unique"
+                Dim bMultipleIndex As Boolean = False
+                If ind.Columns.Count > 1 Then bMultipleIndex = True
+                Dim bPK = False
+                Const sMultipleIndexSQLiteName$ = "sqlite_autoindex_"
+                Dim bMultipleIndexSQLite = False
+                If ind.Name.StartsWith(sMultipleIndexSQLiteName) Then bMultipleIndexSQLite = True
 
-                If Not IsNothing(table.PrimaryKey) AndAlso
-                    table.PrimaryKey.Name = ind.Name Then
+                If (Not IsNothing(table.PrimaryKey) AndAlso table.PrimaryKey.Name = ind.Name) OrElse
+                    (bSQLite AndAlso
+                     bMultipleIndexSQLite AndAlso
+                     Not IsNothing(table.PrimaryKeyColumn) AndAlso
+                     table.PrimaryKeyColumn.Name = ind.Columns(0).Name) Then ' 04/05/2024
                     sPrimary = ", Primary"
+                    bPK = True
+                    If bMultipleIndex AndAlso Not prm.bDisplayMultipleIndexName Then sPrimary = "Primary" ' 04/05/2024
+                    ind.IsUnique = True ' 25/04/2024 Necessarily
+                End If
+
+                If bMultipleIndexSQLite Then ind.IsUnique = True ' 04/05/2024
+
+                If ind.IsUnique Then
+                    sUnique = ", Unique"
+                    If bMultipleIndex AndAlso Not prm.bDisplayMultipleIndexName AndAlso Not bPK Then sUnique = "Unique" ' 04/05/2024
                 End If
 
                 ' MySQL (5.6) ne peut garantir l'unicité si un des champs d'une clé unique peut être nul
@@ -462,13 +526,28 @@ Public Module modDBReport
                 '  is nullable, you can have duplicates records in the table
                 Dim sWarnNF$ = ""
                 Const sWarnNFTxt = " (nullable field for a unique index)"
-                If ind.Columns.Count = 1 Then
-                    If ind.IsUnique AndAlso hsNullablesCol.Contains(ind.Columns(0).Name) Then _
-                        sWarnNF = sWarnNFTxt
-                    sb.AppendLine("    Index   : " & ind.Columns(0).Name & sPrimary & sUnique & sWarnNF)
+                Dim sIndexName$ = "" ' 04/05/2024
+                If Not bMultipleIndex Then
+                    sIndexName = ind.Columns(0).Name
+                    If sIndexName = sAutonumberColName Then bIndexAutonumberDisplayed = True ' 04/05/2024
+                    If bSQLite AndAlso prm.bDisplaySQLiteSimpleIndexName Then sIndexName &= " (" & ind.Name & ")" ' 04/05/2024
+                    If ind.IsUnique AndAlso hsNullablesCol.Contains(sIndexName) Then sWarnNF = sWarnNFTxt
+                    If sIndexName <> sPreviousIndex OrElse Not bSQLite Then ' 04/05/2024
+                        sb.AppendLine("    Index   : " & sIndexName & sPrimary & sUnique & sWarnNF)
+                    End If
                 Else
-                    sb.AppendLine("    Index   : " & ind.Name & sPrimary & sUnique & ", " &
-                        ind.Columns.Count & " fields" & " :")
+                    If prm.bDisplayMultipleIndexName Then sIndexName = ind.Name ' 04/05/2024
+                    Dim sComma$ = ", "
+                    If Not prm.bDisplayMultipleIndexName AndAlso Not bPK AndAlso Not ind.IsUnique Then sComma = "" ' 04/05/2024
+
+                    ' 04/05/2024 sqlite_autoindex_X_1 -> PK_X
+                    If prm.bRenameSQLiteMultipleIndex Then ' 04/05/2024
+                        sIndexName = sIndexName.Replace("sqlite_autoindex_", "PK_")
+                        sIndexName = sIndexName.Replace("_1", "")
+                    End If
+
+                    sb.AppendLine("    Index   : " & sIndexName & sPrimary & sUnique & sComma &
+                    ind.Columns.Count & " fields" & " :")
                     For Each chp In ind.Columns
                         sWarnNF = ""
                         If ind.IsUnique AndAlso hsNullablesCol.Contains(chp.Name) Then _
@@ -476,7 +555,18 @@ Public Module modDBReport
                         sb.AppendLine("      field : " & chp.Name & sWarnNF)
                     Next
                 End If
+
+                sPreviousIndex = sIndexName
+
             Next
+
+            ' This one is not sorted:
+            ' prm.bDisplayIndexName: Except sAutonumberColName
+            If prm.bDisplayAutonumberAsPrimaryKey AndAlso
+                Not bIndexAutonumberDisplayed AndAlso
+                Not String.IsNullOrEmpty(sAutonumberColName) Then ' 04/05/2024
+                sb.AppendLine("    Index   : " & sAutonumberColName & ", Primary, Unique")
+            End If
 
             sb.AppendLine()
         Next
