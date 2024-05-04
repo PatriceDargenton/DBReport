@@ -1,17 +1,12 @@
 DBReport: A DataBase structure Reporting tool for database administrators
 ---
 
-[DBReport.html](http://patrice.dargenton.free.fr/CodesSources/DBReport.html)  
-[DBReport.vbproj.html](http://patrice.dargenton.free.fr/CodesSources/DBReport.vbproj.html)  
-By Patrice Dargenton (patrice.dargenton@free.fr)  
-[My website](http://patrice.dargenton.free.fr/index.html)  
-[My source codes](http://patrice.dargenton.free.fr/CodesSources/index.html)  
-
 Version 1.12 - 04/05/2024
 
 Database Administrators needs to compare database structures. Using [WinMerge](http://winmerge.org) on sql database structure files, it is difficult to compare because a lot of differences appear, whereas only a few of them are meaningful. DBReport shows only (and all) significant information that makes sense for daily administrator work.
 
 - [Features](#features)
+- [Database engines](#database-engines)
 - [Example with the classical Northwind database](#example-with-the-classical-northwind-database)
 - [Explanation](#explanation)
     - [Not nullable foreign key](#not-nullable-foreign-key)
@@ -49,6 +44,28 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
 - Index and links (relationships between tables) are sorted and displayed (nobody needs to care about index order);
 - Update and delete rules for relationships are displayed, if they are different to the default RESTRICT mode;
 - Duplicate constraints are displayed: the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin (e.g. the version 4.1.4).
+
+# Database engines
+- MySql : MySql.Data.MySqlClient
+- Oracle : System.Data.OracleClient
+- SQLite : System.Data.SQLite
+
+For SQLite:
+- Free GUI tool: https://sqlitestudio.pl
+- System.Data.SQLite.Core must be installed via Nuget (if you only copy/paste the packages, the project will not include checking the required DLLs at runtime), in order to get:
+```
+<package id="Stub.System.Data.SQLite.Core.NetFramework" version="1.0.118.0" targetFramework="net48" />
+<package id="System.Data.SQLite.Core" version="1.0.118.0" targetFramework="net48" />
+```
+- This Data Provider must be added in the app.Config:
+```
+  <system.data>
+    <DbProviderFactories>
+      <remove invariant="System.Data.SQLite" />
+      <add name="SQLite Data Provider" invariant="System.Data.SQLite" description=".Net Framework Data Provider for SQLite" type="System.Data.SQLite.SQLiteFactory, System.Data.SQLite" />
+    </DbProviderFactories>
+  </system.data>
+```
 
 # Example with the classical Northwind database
 
@@ -396,7 +413,6 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
  
 - Library used: [https://github.com/martinjw/dbschemareader](https://github.com/martinjw/dbschemareader)
 
-def see-also
 ## See also
  
 - (french) [DBComp2](http://patrice.dargenton.free.fr/CodesSources/DBComp.html): le comparateur de structure de base de données Access  

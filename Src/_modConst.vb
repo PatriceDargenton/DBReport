@@ -4,7 +4,7 @@
 
 Module _modConst
 
-    Public Const sAppDate$ = "04/05/2024" '1.11:"27/04/2024" 1.10:"10/04/2024" 1.09:"15/04/2023" '1.08:"01/10/2022" '1.07:"04/03/2022" '1.06:"28/02/2022" 1.05:"05/03/2017" '1.04:"23/10/2016" '"18/09/2016"
+    Public Const sAppDate$ = "04/05/2024"
 
 #If DEBUG Then
     Public Const bDebug As Boolean = True
