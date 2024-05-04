@@ -394,7 +394,7 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
   [www.geeksengine.com/article/export-access-to-mysql.html](http://www.geeksengine.com/article/export-access-to-mysql.html)  
   [www.geeksengine.com/lg.php?i=northwind-sql](http://www.geeksengine.com/lg.php?i=northwind-sql)
  
-- Library used: [https://dbschemareader.codeplex.com](https://dbschemareader.codeplex.com)
+- Library used: [https://github.com/martinjw/dbschemareader](https://github.com/martinjw/dbschemareader)
 
 def see-also
 ## See also
