@@ -57,7 +57,7 @@ For SQLite:
 <package id="Stub.System.Data.SQLite.Core.NetFramework" version="1.0.118.0" targetFramework="net48" />
 <package id="System.Data.SQLite.Core" version="1.0.118.0" targetFramework="net48" />
 ```
-- This Data Provider must be added in the app.Config:
+- This Data Provider must be added in the App.Config:
 ```
   <system.data>
     <DbProviderFactories>
@@ -70,7 +70,7 @@ For SQLite:
 # Example with the classical Northwind database
 
 [www.geeksengine.com/article/export-access-to-mysql.html](http://www.geeksengine.com/article/export-access-to-mysql.html)  
-[www.geeksengine.com/lg.php?i=northwind-sql](http://www.geeksengine.com/lg.php?i=northwind-sql)  
+[https://en.wikiversity.org/wiki/Database_Examples/Northwind](https://en.wikiversity.org/wiki/Database_Examples/Northwind)  
 ![Northwind database relationship in MS-Access](http://patrice.dargenton.free.fr/CodesSources/DBReport_fichiers/NorthwindDatabaseStructure)
 
  
@@ -409,7 +409,7 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
  
 - The classical Northwind database  
   [www.geeksengine.com/article/export-access-to-mysql.html](http://www.geeksengine.com/article/export-access-to-mysql.html)  
-  [www.geeksengine.com/lg.php?i=northwind-sql](http://www.geeksengine.com/lg.php?i=northwind-sql)
+  [https://en.wikiversity.org/wiki/Database_Examples/Northwind](https://en.wikiversity.org/wiki/Database_Examples/Northwind)
  
 - Library used: [https://github.com/martinjw/dbschemareader](https://github.com/martinjw/dbschemareader)
 
