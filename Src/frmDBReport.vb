@@ -48,6 +48,7 @@ Public Class frmDBReport
     Private Const sMsgDBProvider$ =
         "Name of the database provider installed in the DotNet Framework" &
         " (e.g. 'MySql.Data.MySqlClient' if mysql-connector-net-6.9.x.msi is used)"
+    Private Const sMsgDBProviderList$ = "List of installed system database providers"
     Private Const sMsgDBServer$ = "Name of the server (e.g. 'localhost' or '127.0.0.1')"
     Private Const sMsgDBName$ = "Name of the database for which you want to export the structure"
     Private Const sMsgUserName$ =
@@ -81,11 +82,22 @@ Public Class frmDBReport
         If Not is64BitProcess() Then sTxt &= " - 32 bits"
         Me.Text = sTxt
 
+        ' 11/05/2024
+        Dim dt = Data.Common.DbProviderFactories.GetFactoryClasses()
+        Dim lst As New List(Of String)
+        For Each row As Data.DataRow In dt.Rows
+            Dim str As String = CStr(row("InvariantName"))
+            lst.Add(str)
+        Next
+        lst.Sort()
+        Me.cbDataProviders.DataSource = lst
+
         ResetDisplaySettings()
         SaveAndRestoreSettings(bSave:=False)
 
         Me.cmdDBReport.Select()
 
+        Me.ToolTip1.SetToolTip(Me.cbDataProviders, sMsgDBProviderList)
         Me.ToolTip1.SetToolTip(Me.tbDBProvider, sMsgDBProvider)
         Me.ToolTip1.SetToolTip(Me.lblDBProvider, sMsgDBProvider)
         Me.ToolTip1.SetToolTip(Me.tbDBServer, sMsgDBServer)
@@ -111,6 +123,7 @@ Public Class frmDBReport
 
         'If bDebug Then
         '    Me.tbDBProvider.Text = sMySqlClient
+        '    Me.cbDataProviders.Text = sMySqlClient
         '    Me.tbDBServer.Text = "localhost"
         '    Me.tbDBName.Text = "northwind"
         '    Me.chkAlertNotNullable.Checked = False ' northwind
@@ -124,6 +137,7 @@ Public Class frmDBReport
 
         If bDebug Then
             Me.tbDBProvider.Text = sSQLiteClient
+            Me.cbDataProviders.Text = sSQLiteClient
             ' northwindEF for SQLite database:
             ' https://system.data.sqlite.org/index.html/doc/trunk/www/index.wiki
             ' https://system.data.sqlite.org/index.html/doc/trunk/www/downloads.wiki
@@ -179,6 +193,7 @@ Public Class frmDBReport
         Else
 
             Me.tbDBProvider.Text = My.Settings.DBProvider
+            Me.cbDataProviders.Text = Me.tbDBProvider.Text ' 11/05/2024
             Me.tbDBServer.Text = My.Settings.DBServer
             Me.tbDBName.Text = My.Settings.DBName
             Me.tbUserName.Text = My.Settings.UserName
@@ -222,6 +237,7 @@ Public Class frmDBReport
 
         Me.cmdDBReport.Enabled = bActivate
         Me.cmdResetSettings.Enabled = bActivate
+        Me.cbDataProviders.Enabled = bActivate
         Me.tbDBProvider.Enabled = bActivate
         Me.tbDBServer.Enabled = bActivate
         Me.tbDBName.Enabled = bActivate
@@ -366,6 +382,12 @@ Fin:
         Me.m_delegMsg.m_bCancel = True
     End Sub
 
+    Private Sub cbDataProviders_TextChanged(sender As Object, e As EventArgs) Handles cbDataProviders.TextChanged
+        Me.tbDBProvider.Text = Me.cbDataProviders.Text ' 11/05/2024
+    End Sub
+    Private Sub cbDataProviders_Enter(sender As Object, e As EventArgs) Handles cbDataProviders.Enter
+        ShowLongMessage(sMsgDBProviderList)
+    End Sub
     Private Sub tbDBProvider_Enter(sender As Object, e As EventArgs) Handles tbDBProvider.Enter
         ShowLongMessage(sMsgDBProvider)
     End Sub

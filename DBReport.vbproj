@@ -181,6 +181,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Src\frmDBReport.resx">
       <DependentUpon>frmDBReport.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
