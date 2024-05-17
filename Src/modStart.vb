@@ -14,24 +14,26 @@ Namespace My
 
         Private Sub MyApplication_Startup(sender As Object, e As StartupEventArgs) Handles Me.Startup
 
-            Dim sArg0$ = Microsoft.VisualBasic.Interaction.Command
+            Dim sArg$ = Microsoft.VisualBasic.Interaction.Command
             Dim bArg = False
             Dim configPath = ""
-            If Not String.IsNullOrEmpty(sArg0) Then
+            If Not String.IsNullOrEmpty(sArg) Then
                 Dim GetDirectory = Path.GetDirectoryName(
                     Reflection.Assembly.GetExecutingAssembly().Location)
                 Dim appName = Reflection.Assembly.GetEntryAssembly().GetName().Name
-                Dim configFileName = appName & "_" & sArg0 & ".exe.config"
+                Dim configFileName = appName & "_" & sArg & ".exe.config"
                 configPath = GetDirectory & "\" & configFileName
                 If File.Exists(configPath) Then bArg = True
             End If
 
-            ' If user configuration exists, delete it, if an argument is chosen
-            ' (otherwise the user configuration will be used instead)
-            Dim userPath = Configuration.ConfigurationManager.OpenExeConfiguration(
+            If bArg Then
+                ' If user configuration exists, delete it, if an argument is chosen
+                ' (otherwise the user configuration will be used instead)
+                Dim userPath = Configuration.ConfigurationManager.OpenExeConfiguration(
                 Configuration.ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath
-            If File.Exists(userPath) AndAlso bArg Then File.Delete(userPath)
-            If bArg Then AppConfig.Change(configPath)
+                If File.Exists(userPath) Then File.Delete(userPath)
+                AppConfig.Change(configPath)
+            End If
 
         End Sub
 
