@@ -1,7 +1,7 @@
 DBReport: A DataBase structure Reporting tool for database administrators
 ---
 
-Version 1.13 - 11/05/2024
+Version 1.14 - 17/05/2024
 
 Database Administrators needs to compare database structures. Using [WinMerge](http://winmerge.org) on sql database structure files, it is difficult to compare because a lot of differences appear, whereas only a few of them are meaningful. DBReport shows only (and all) significant information that makes sense for daily administrator work.
 
