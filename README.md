@@ -1,7 +1,7 @@
 DBReport: A DataBase structure Reporting tool for database administrators
 ---
 
-Version 1.14 - 17/05/2024
+Version 1.15 - 24/05/2024
 
 Database Administrators needs to compare database structures. Using [WinMerge](http://winmerge.org) on sql database structure files, it is difficult to compare because a lot of differences appear, whereas only a few of them are meaningful. DBReport shows only (and all) significant information that makes sense for daily administrator work.
 
@@ -22,6 +22,7 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
         - [How to change the server collation?](#how-to-change-the-server-collation)
 - [Projects](#projects)
 - [Versions](#versions)
+    - [Version 1.15 - 24/05/2024](#version-115---24052024)
     - [Version 1.14 - 17/05/2024](#version-114---17052024)
     - [Version 1.13 - 11/05/2024](#version-113---11052024)
     - [Version 1.12 - 04/05/2024](#version-112---04052024)
@@ -350,6 +351,10 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
  
  
 # Versions
+
+## Version 1.15 - 24/05/2024
+- Table sorting also for links;
+- Fix SQLite index.
 
 ## Version 1.14 - 17/05/2024
 - Dynamic configuration: a specific configuration can be loaded at runtime from a command line argument, for example: if for example Config1 is given, then the DBReport_Config1.exe.config configuration is read instead of DBReport.exe.config and also C:\Users\[MyAccount]\AppData\Local\DBReport\DBReport.exe_Url_[xxx]\1.1.4.[xxxxx]\user.config for user-specific configuration.

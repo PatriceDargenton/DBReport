@@ -1,5 +1,5 @@
 
-Database report 1.12
+Database report 1.15
 --------------------
 
 Login    : root
@@ -8,6 +8,18 @@ Database : northwind
 Tables   : Sorted
 Columns  : Sorted
 Indexes  : Sorted
+
+MySql parameters :
+version_comment : MySQL Community Server (GPL)
+version : 5.6.15-log
+protocol_version : 10
+sql_mode : NO_ENGINE_SUBSTITUTION (Default : STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION)
+foreign_key_checks : ON
+innodb_strict_mode : ON
+net_read_timeout : 30 (30 sec.)
+net_write_timeout : 60 (1 mn)
+Database default collation (DEFAULT_COLLATION_NAME) : utf8_unicode_ci (Default : utf8_general_ci)
+MySQL Connector/NET driver version : 2.3.7.0
 
 categories
   CategoryID (tinyint(5) unsigned) (autonumber)
@@ -123,7 +135,7 @@ suppliers
   ContactTitle (varchar(30)) ('')
   Country (varchar(15)) ('')
   Fax (varchar(24)) ('')
-  HomePage (varchar(255)) ('')
+  HomePage (varchar(255)) ('') (collation : utf8_general_ci)
   Phone (varchar(24)) ('')
   PostalCode (varchar(10)) ('')
   Region (varchar(15)) ('')
@@ -142,14 +154,14 @@ customers
 employees
   employees : ReportsTo
 
+order_details
+  orders : OrderID
+  products : ProductID
+
 orders
   customers : CustomerID
   employees : EmployeeID
   shippers : ShipVia
-
-order_details
-  orders : OrderID
-  products : ProductID
 
 products
   categories : CategoryID
@@ -159,4 +171,4 @@ shippers
 
 suppliers
 
-Report created : 04/05/2024 09:38:05 -> 04/05/2024 09:38:12 : 7.5 sec.
+Report created : 24/05/2024 11:05:03 -> 24/05/2024 11:05:13 : 9.3 sec.

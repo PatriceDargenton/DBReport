@@ -132,7 +132,9 @@ Public Class frmDBReport
         '    My.Settings.SortTables = True
         '    Me.chkSortColumns.Checked = True
         '    Me.chkSortIndexes.Checked = True
-        '    My.Settings.DisplayMySqlParameters = False
+        '    My.Settings.DisplayMySqlParameters = True
+        '    My.Settings.MySqlTableCollation = "utf8_general_ci"
+        '    My.Settings.MySqlColumnCollation = "utf8_unicode_ci"
         'End If
 
         If bDebug Then

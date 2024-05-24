@@ -11,5 +11,5 @@ Imports System.Reflection
 <Assembly: AssemblyCopyright("Copyright © 2024")>
 <Assembly: AssemblyTrademark("DBReport")>
 
-<Assembly: AssemblyVersion("1.1.4.*")>
+<Assembly: AssemblyVersion("1.1.5.*")>
 

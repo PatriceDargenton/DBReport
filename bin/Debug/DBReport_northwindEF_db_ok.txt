@@ -1,5 +1,5 @@
 
-Database report 1.12
+Database report 1.15
 --------------------
 
 Database : northwindEF.db
@@ -192,11 +192,11 @@ Products
 
 Regions
 
+sqlite_sequence
+
 Suppliers
 
 Territories
   Regions : RegionID
 
-sqlite_sequence
-
-Report created : 04/05/2024 09:34:28 -> 04/05/2024 09:34:29 : 0.3 sec.
+Report created : 24/05/2024 10:38:54 -> 24/05/2024 10:39:06 : 11.5 sec.

@@ -424,6 +424,9 @@ Public Module modDBReport
             End If
             sb.AppendLine(sTableTitle)
 
+            Dim bSQLite = False
+            If prm.sDBProvider = sSQLiteClient Then bSQLite = True
+
             ' Noter tous les champs nullables pour alerter sur les clés uniques
             ' Hashset of nullable fields of the table, to warn uniqueness
             Dim hsNullablesCol As New HashSet(Of String) ' key : column name
@@ -447,7 +450,11 @@ Public Module modDBReport
                 End If
                 If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(col.Description) AndAlso col.Description.Length > 0 Then _
                     sTitle &= " : " & col.Description
-                If col.IsAutoNumber Then sAutonumberColName = sTitle ' 04/05/2024
+
+                'If col.IsAutoNumber Then sAutonumberColName = sTitle ' 04/05/2024
+                If col.IsAutoNumber AndAlso bSQLite AndAlso
+                    String.IsNullOrEmpty(col.ForeignKeyTableName) Then sAutonumberColName = sTitle ' 24/05/2024
+
                 If col.IsAutoNumber AndAlso Not prm.bDisplayAutonumberAsPrimaryKey Then
                     sTitle &= " (autonumber)"
                 ElseIf Not col.Nullable Then
@@ -488,8 +495,6 @@ Public Module modDBReport
             Dim sSorting$ = ""
             If prm.bSortIndexes Then sSorting = "Name"
             Dim bIndexAutonumberDisplayed As Boolean = False
-            Dim bSQLite = False
-            If prm.sDBProvider = sSQLiteClient Then bSQLite = True
             Dim sPreviousIndex$ = ""
 
             For Each ind In dicIndexes.Sort(sSorting)
@@ -498,22 +503,29 @@ Public Module modDBReport
                 Dim bMultipleIndex As Boolean = False
                 If ind.Columns.Count > 1 Then bMultipleIndex = True
                 Dim bPK = False
-                Const sMultipleIndexSQLiteName$ = "sqlite_autoindex_"
-                Dim bMultipleIndexSQLite = False
-                If ind.Name.StartsWith(sMultipleIndexSQLiteName) Then bMultipleIndexSQLite = True
+                Const sSQLiteAutoIndex$ = "sqlite_autoindex_"
+                Dim bSQLiteAutoIndex = False
+                If ind.Name.StartsWith(sSQLiteAutoIndex) Then bSQLiteAutoIndex = True
 
-                If (Not IsNothing(table.PrimaryKey) AndAlso table.PrimaryKey.Name = ind.Name) OrElse
-                    (bSQLite AndAlso
-                     bMultipleIndexSQLite AndAlso
+                ' 24/05/2024
+                Dim bIndexNameContainsPK = False
+                If bSQLite AndAlso bSQLiteAutoIndex AndAlso
+                    ind.Name = sSQLiteAutoIndex & table.PrimaryKey.TableName & "_1" Then bIndexNameContainsPK = True
+
+                If (Not IsNothing(table.PrimaryKey) AndAlso
+                        (table.PrimaryKey.Name = ind.Name OrElse bIndexNameContainsPK)) OrElse
+                    (bSQLite AndAlso bSQLiteAutoIndex AndAlso
                      Not IsNothing(table.PrimaryKeyColumn) AndAlso
                      table.PrimaryKeyColumn.Name = ind.Columns(0).Name) Then ' 04/05/2024
-                    sPrimary = ", Primary"
-                    bPK = True
-                    If bMultipleIndex AndAlso Not prm.bDisplayMultipleIndexName Then sPrimary = "Primary" ' 04/05/2024
-                    ind.IsUnique = True ' 25/04/2024 Necessarily
+                    If sAutonumberColName.Length = 0 Then ' 24/05/2024 PrimaryKey yet found
+                        sPrimary = ", Primary"
+                        bPK = True
+                        If bMultipleIndex AndAlso Not prm.bDisplayMultipleIndexName Then sPrimary = "Primary" ' 04/05/2024
+                        ind.IsUnique = True ' 25/04/2024 Necessarily
+                    End If
                 End If
 
-                If bMultipleIndexSQLite Then ind.IsUnique = True ' 04/05/2024
+                If bSQLiteAutoIndex Then ind.IsUnique = True ' 04/05/2024
 
                 If ind.IsUnique Then
                     sUnique = ", Unique"
@@ -579,7 +591,17 @@ Public Module modDBReport
         schema As DatabaseSchemaReader.DataSchema.DatabaseSchema)
 
         sb.AppendLine("Links") ' Relationships between tables
+
+        ' 24/05/2024
+        Dim dicTables As New SortDic(Of String, DatabaseSchemaReader.DataSchema.DatabaseTable)
         For Each table In schema.Tables
+            dicTables.Add(table.Name, table)
+        Next
+
+        Dim sTableSorting$ = ""
+        If prm.bSortTables Then sTableSorting = "Name"
+
+        For Each table In dicTables.Sort(sTableSorting)
             sb.AppendLine()
             Dim sTableTitle$ = table.Name
             If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(table.Description) AndAlso table.Description.Length > 0 Then _
