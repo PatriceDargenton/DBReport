@@ -50,6 +50,7 @@ Partial Class frmDBReport
         Me.tbDBProvider = New System.Windows.Forms.TextBox()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.cmdResetSettings = New System.Windows.Forms.Button()
+        Me.cbDataProviders = New System.Windows.Forms.ComboBox()
         Me.lblInfo = New System.Windows.Forms.Label()
         Me.cmdCancel = New System.Windows.Forms.Button()
         Me.chkDisplayFieldType = New System.Windows.Forms.CheckBox()
@@ -62,7 +63,7 @@ Partial Class frmDBReport
         Me.chkDisplayDescription = New System.Windows.Forms.CheckBox()
         Me.chkDisplayTableEngine = New System.Windows.Forms.CheckBox()
         Me.chkDisplayCollation = New System.Windows.Forms.CheckBox()
-        Me.cbDataProviders = New System.Windows.Forms.ComboBox()
+        Me.chkDisplayLinksBelowEachTable = New System.Windows.Forms.CheckBox()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -179,6 +180,15 @@ Partial Class frmDBReport
         Me.cmdResetSettings.Text = "Default"
         Me.ToolTip1.SetToolTip(Me.cmdResetSettings, "Click to reset settings to their default value")
         Me.cmdResetSettings.UseVisualStyleBackColor = True
+        '
+        'cbDataProviders
+        '
+        Me.cbDataProviders.FormattingEnabled = True
+        Me.cbDataProviders.Location = New System.Drawing.Point(86, 5)
+        Me.cbDataProviders.Name = "cbDataProviders"
+        Me.cbDataProviders.Size = New System.Drawing.Size(175, 21)
+        Me.cbDataProviders.TabIndex = 0
+        Me.ToolTip1.SetToolTip(Me.cbDataProviders, "List of installed system database providers")
         '
         'lblInfo
         '
@@ -301,20 +311,22 @@ Partial Class frmDBReport
         Me.chkDisplayCollation.Text = "Display collation"
         Me.chkDisplayCollation.UseVisualStyleBackColor = True
         '
-        'cbDataProviders
+        'chkDisplayLinksBelowEachTable
         '
-        Me.cbDataProviders.FormattingEnabled = True
-        Me.cbDataProviders.Location = New System.Drawing.Point(86, 5)
-        Me.cbDataProviders.Name = "cbDataProviders"
-        Me.cbDataProviders.Size = New System.Drawing.Size(175, 21)
-        Me.cbDataProviders.TabIndex = 0
-        Me.ToolTip1.SetToolTip(Me.cbDataProviders, "List of installed system database providers")
+        Me.chkDisplayLinksBelowEachTable.AutoSize = True
+        Me.chkDisplayLinksBelowEachTable.Location = New System.Drawing.Point(86, 193)
+        Me.chkDisplayLinksBelowEachTable.Name = "chkDisplayLinksBelowEachTable"
+        Me.chkDisplayLinksBelowEachTable.Size = New System.Drawing.Size(168, 17)
+        Me.chkDisplayLinksBelowEachTable.TabIndex = 26
+        Me.chkDisplayLinksBelowEachTable.Text = "Display links below each table"
+        Me.chkDisplayLinksBelowEachTable.UseVisualStyleBackColor = True
         '
         'frmDBReport
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(554, 371)
+        Me.Controls.Add(Me.chkDisplayLinksBelowEachTable)
         Me.Controls.Add(Me.cbDataProviders)
         Me.Controls.Add(Me.chkDisplayCollation)
         Me.Controls.Add(Me.chkDisplayTableEngine)
@@ -378,4 +390,5 @@ Partial Class frmDBReport
     Friend WithEvents chkDisplayTableEngine As System.Windows.Forms.CheckBox
     Friend WithEvents chkDisplayCollation As System.Windows.Forms.CheckBox
     Friend WithEvents cbDataProviders As ComboBox
+    Friend WithEvents chkDisplayLinksBelowEachTable As CheckBox
 End Class

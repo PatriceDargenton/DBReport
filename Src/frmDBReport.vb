@@ -42,6 +42,7 @@ Public Class frmDBReport
     Private Const bAlertNotNullableDef As Boolean = True
     Private Const bDisplayTableEngineDef As Boolean = True
     Private Const bDisplayCollationDef As Boolean = True
+    Private Const bDisplayLinksBelowEachTable As Boolean = False ' 31/05/2024
 
 #End Region
 
@@ -191,6 +192,7 @@ Public Class frmDBReport
             My.Settings.AlertNotNullable = Me.chkAlertNotNullable.Checked
             My.Settings.MySqlDisplayTableEngine = Me.chkDisplayTableEngine.Checked
             My.Settings.MySqlDisplayCollation = Me.chkDisplayCollation.Checked
+            My.Settings.DisplayLinksBelowEachTable = Me.chkDisplayLinksBelowEachTable.Checked ' 31/05/2024
 
         Else
 
@@ -211,6 +213,7 @@ Public Class frmDBReport
             Me.chkAlertNotNullable.Checked = My.Settings.AlertNotNullable
             Me.chkDisplayTableEngine.Checked = My.Settings.MySqlDisplayTableEngine
             Me.chkDisplayCollation.Checked = My.Settings.MySqlDisplayCollation
+            Me.chkDisplayLinksBelowEachTable.Checked = My.Settings.DisplayLinksBelowEachTable ' 31/05/2024
 
         End If
 
@@ -231,6 +234,7 @@ Public Class frmDBReport
         Me.chkAlertNotNullable.Checked = bAlertNotNullableDef
         Me.chkDisplayTableEngine.Checked = bDisplayTableEngineDef
         Me.chkDisplayCollation.Checked = bDisplayCollationDef
+        Me.chkDisplayLinksBelowEachTable.Checked = My.Settings.DisplayLinksBelowEachTable ' 31/05/2024
     End Sub
 
     Private Sub Activation(bActivate As Boolean)
@@ -256,6 +260,7 @@ Public Class frmDBReport
         Me.chkAlertNotNullable.Enabled = bActivate
         Me.chkDisplayTableEngine.Enabled = bActivate
         Me.chkDisplayCollation.Enabled = bActivate
+        Me.chkDisplayLinksBelowEachTable.Enabled = bActivate ' 31/05/2024
 
     End Sub
 
@@ -346,6 +351,7 @@ Public Class frmDBReport
         prm.bRenameSQLiteMultipleIndex = My.Settings.RenameSQLiteMultipleIndex
         prm.bDisplaySQLiteSimpleIndexName = My.Settings.DisplaySQLiteSimpleIndexName
         prm.bDisplayMySqlParameters = My.Settings.DisplayMySqlParameters
+        prm.bDisplayLinksBelowEachTable = My.Settings.DisplayLinksBelowEachTable ' 31/05/2024
 
         prm.mySqlprm.sSQLModeDef = My.Settings.MySqlSQLMode
         prm.mySqlprm.sInnodbStrictModeDef = My.Settings.MySqlInnodbStrictMode

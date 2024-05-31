@@ -83,6 +83,7 @@ Public Module modDBReport
 
         Public mySqlprm As New clsPrmMySql ' 05/03/2017
         Public bDisplayMySqlParameters As Boolean ' 04/05/2024
+        Public bDisplayLinksBelowEachTable As Boolean ' 31/05/2024
 
     End Class
 
@@ -238,9 +239,22 @@ Public Module modDBReport
 
             If bMySql AndAlso prm.bDisplayMySqlParameters Then ShowMySqlInfos(sb, prm, lstMySqlPrm, dicSqlPrm, sMySqlConnectorVersion)
 
-            CreateTableReport(sb, prm, schema, bMySql, dicSqlTE, dicSqlTC, dicSqlCC)
+            Dim dicTableLinks As New SortDic(Of String, List(Of String))
+            CreateLinkReport(sb, prm, schema, dicTableLinks)
 
-            CreateLinkReport(sb, prm, schema)
+            CreateTableReport(sb, prm, schema, bMySql, dicSqlTE, dicSqlTC, dicSqlCC, dicTableLinks)
+
+            If Not prm.bDisplayLinksBelowEachTable Then
+                sb.AppendLine("Links")
+                For Each kvp In dicTableLinks
+                    sb.AppendLine()
+                    Dim sTableTitle$ = kvp.Key
+                    sb.AppendLine(sTableTitle)
+                    For Each sLine In kvp.Value
+                        sb.AppendLine(sLine)
+                    Next
+                Next
+            End If
 
             ShowMsg(sMsgDone)
             ShowLongMsg("")
@@ -249,7 +263,7 @@ Public Module modDBReport
             Dim ts2 = dTimeEnd2 - m_dTimeStart
             Dim sTime2$ = m_dTimeStart.ToString(sDateTimeFormat) & " -> " &
                 dTimeEnd2.ToString(sDateTimeFormat) & " : " & sDisplayTime(ts2.TotalSeconds)
-            sb.AppendLine()
+            If Not prm.bDisplayLinksBelowEachTable Then sb.AppendLine()
             sb.AppendLine("Report created : " & sTime2)
 
             Return True
@@ -398,7 +412,8 @@ Public Module modDBReport
         schema As DatabaseSchemaReader.DataSchema.DatabaseSchema, bMySql As Boolean,
         dicSqlTE As Dictionary(Of String, String),
         dicSqlTC As Dictionary(Of String, String),
-        dicSqlCC As Dictionary(Of String, String))
+        dicSqlCC As Dictionary(Of String, String),
+        dicTableLinks As SortDic(Of String, List(Of String)))
 
         ' Lister les clés étrangères pour préciser :
         ' Build foreign key list to specify :
@@ -594,17 +609,27 @@ Public Module modDBReport
                 sb.AppendLine("    Index   : " & sAutonumberColName & ", Primary, Unique")
             End If
 
+            If prm.bDisplayLinksBelowEachTable Then ' 31/05/2024
+                If dicTableLinks.ContainsKey(sTableTitle) Then
+                    Dim lst = dicTableLinks(sTableTitle)
+                    For Each sLine In lst
+                        sb.AppendLine(sLine)
+                    Next
+                End If
+            End If
+
             sb.AppendLine()
         Next
 
-        sb.AppendLine()
+        If Not prm.bDisplayLinksBelowEachTable Then sb.AppendLine()
 
     End Sub
 
     Private Sub CreateLinkReport(sb As StringBuilder, prm As clsPrmDBR,
-        schema As DatabaseSchemaReader.DataSchema.DatabaseSchema)
+        schema As DatabaseSchemaReader.DataSchema.DatabaseSchema,
+        dicTableLinks As SortDic(Of String, List(Of String)))
 
-        sb.AppendLine("Links") ' Relationships between tables
+        ' Relationships between tables
 
         ' 24/05/2024
         Dim dicTables As New SortDic(Of String, DatabaseSchemaReader.DataSchema.DatabaseTable)
@@ -616,11 +641,12 @@ Public Module modDBReport
         If prm.bSortTables Then sTableSorting = "Name"
 
         For Each table In dicTables.Sort(sTableSorting)
-            sb.AppendLine()
+
             Dim sTableTitle$ = table.Name
             If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(table.Description) AndAlso table.Description.Length > 0 Then _
                 sTableTitle &= " : " & table.Description
-            sb.AppendLine(sTableTitle)
+
+            Dim lst As New List(Of String)
 
             Dim dicLinks As New SortDic(Of String, clsLink)
             For Each fk In table.ForeignKeys
@@ -672,9 +698,20 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
                 sRestrictDef = prm.sForeignKeyUpdateRuleDef
                 If Not IsNothing(fk.UpdateRule) AndAlso fk.UpdateRule <> sRestrictDef Then sUpdRule = " (Update rule : " &
                     CStr(IIf(String.IsNullOrEmpty(fk.UpdateRule), "undefined", fk.UpdateRule)) & ")"
-                sb.AppendLine("  " & sLinkTable & " : " &
-                    sId & sCount & sLinkName & sDelRule & sUpdRule)
+
+                Dim sLine$ = sLinkTable & " : " &
+                    sId & sCount & sLinkName & sDelRule & sUpdRule
+                If prm.bDisplayLinksBelowEachTable Then ' 31/05/2024
+                    sLine = "    Link    : " & sLine
+                Else
+                    sLine = "  " & sLine
+                End If
+                lst.Add(sLine)
+
             Next
+
+            dicTableLinks.Add(sTableTitle, lst)
+
         Next
 
     End Sub
