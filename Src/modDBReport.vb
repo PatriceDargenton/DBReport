@@ -3,7 +3,9 @@
 ' -------------------
 
 'Imports System.Data.Common ' NuGet MySqlConnector 2.2.5: DbProviderFactories
+Imports System.Net
 Imports System.Text ' StringBuilder
+Imports System.Xml
 
 Imports MySqlConnector
 
@@ -186,11 +188,19 @@ Public Module modDBReport
                 Dim sSID = prm.sInstanceName
                 Dim sPort$ = prm.sPort
 
-                prm.sConnection =
-                    "USER ID=" + sLogin + ";PASSWORD=" + sPW +
-                    ";DATA SOURCE=(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = " + sServer +
-                    " )(PORT = " + sPort +
-                    " )))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = " + sSID + " )))"
+                If String.IsNullOrEmpty(sSID) Then
+                    ' 31/05/2024 TNS connection mode (Transparent Network Substrate)
+                    prm.sConnection =
+                        "USER ID=" + sLogin + ";PASSWORD=" + sPW +
+                        ";DATA SOURCE=" + sServer
+                Else
+                    prm.sConnection =
+                        "USER ID=" + sLogin + ";PASSWORD=" + sPW +
+                        ";DATA SOURCE=(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = " + sServer +
+                        " )(PORT = " + sPort +
+                        " )))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = " + sSID + " )))"
+                End If
+
             End If
 
             If prm.sDBProvider = sSQLiteClient Then
@@ -262,16 +272,20 @@ Public Module modDBReport
         sb.AppendLine("--------------------")
         sb.AppendLine()
 
+        Dim bOracleClient = prm.sDBProvider = sOracleClient
         If prm.sDBProvider = sSQLiteClient Then ' 27/04/2024
             If Not String.IsNullOrEmpty(prm.sUserLogin) Then sb.AppendLine("Login    : " & prm.sUserLogin)
             sb.AppendLine("Database : " & prm.sDBName)
         Else
-            sb.AppendLine("Login    : " & prm.sUserLogin)
+            If Not bOracleClient OrElse
+                  (bOracleClient AndAlso prm.sUserLogin <> prm.sDBName) Then ' 31/05/2024
+                sb.AppendLine("Login    : " & prm.sUserLogin)
+            End If
             sb.AppendLine("Server   : " & prm.sServer)
             sb.AppendLine("Database : " & prm.sDBName)
         End If
 
-        If prm.sDBProvider = sOracleClient Then ' 10/04/2024
+        If bOracleClient AndAlso Not String.IsNullOrEmpty(prm.sInstanceName) Then ' 28/05/2024
             sb.AppendLine("Instance : " & prm.sInstanceName)
             sb.AppendLine("Port     : " & prm.sPort)
         End If
