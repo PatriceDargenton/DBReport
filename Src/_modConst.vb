@@ -4,7 +4,7 @@
 
 Module _modConst
 
-    Public Const sAppDate$ = "31/05/2024"
+    Public Const sAppDate$ = "14/06/2024"
 
 #If DEBUG Then
     Public Const bDebug As Boolean = True

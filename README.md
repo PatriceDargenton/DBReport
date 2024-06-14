@@ -1,7 +1,7 @@
 DBReport: A DataBase structure Reporting tool for database administrators
 ---
 
-Version 1.16 - 31/05/2024
+Version 1.18 - 14/06/2024
 
 Database Administrators needs to compare database structures. Using [WinMerge](http://winmerge.org) on sql database structure files, it is difficult to compare because a lot of differences appear, whereas only a few of them are meaningful. DBReport shows only (and all) significant information that makes sense for daily administrator work.
 
@@ -22,6 +22,7 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
         - [How to change the server collation?](#how-to-change-the-server-collation)
 - [Projects](#projects)
 - [Versions](#versions)
+    - [Version 1.18 - 14/06/2024](#version-118---14062024)
     - [Version 1.17 - 31/05/2024](#version-117---31052024)
     - [Version 1.16 - 31/05/2024](#version-116---31052024)
     - [Version 1.15 - 24/05/2024](#version-115---24052024)
@@ -52,6 +53,7 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
 
 # Database engines
 - MySql : MySql.Data.MySqlClient
+- MariaDb : MySqlConnector
 - Oracle : System.Data.OracleClient
 - SQLite : System.Data.SQLite
 
@@ -69,6 +71,14 @@ For SQLite:
       <remove invariant="System.Data.SQLite" />
       <add name="SQLite Data Provider" invariant="System.Data.SQLite" description=".Net Framework Data Provider for SQLite" type="System.Data.SQLite.SQLiteFactory, System.Data.SQLite" />
     </DbProviderFactories>
+  </system.data>
+```
+For MariaDb, this Data Provider must be added in the App.Config (MySql.Data comes from Oracle, and is not compatible with MariaDb):
+```
+  <system.data>
+    <DbProviderFactories>
+      <remove invariant="MySqlConnector" />
+<add name="MySqlConnector" invariant="MySqlConnector" description="Async MySQL ADO.NET Connector" type="MySqlConnector.MySqlConnectorFactory, MySqlConnector, Culture=neutral, PublicKeyToken=d33d3e53aa5f8c92" />
   </system.data>
 ```
 
@@ -354,6 +364,9 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
  
 # Versions
 
+## Version 1.18 - 14/06/2024
+- MariaDb DBProvider: MySqlConnector.
+
 ## Version 1.17 - 31/05/2024
 - Option added: Display links below each table.
 
@@ -379,7 +392,7 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
 - SQLite fixes.
 
 ## Version 1.11 - 27/04/2024
-- SQLite DBProvider : System.Data.SQLite.
+- SQLite DBProvider: System.Data.SQLite.
 
 ## Version 1.10 - 10/04/2024
 - Port and InstanceName added in parameter settings, for Oracle;
