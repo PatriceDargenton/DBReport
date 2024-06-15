@@ -304,20 +304,38 @@ Public Module modDBReport
             sb.AppendLine("Port     : " & prm.sPort)
         End If
 
-        If prm.bSortTables Then ' 04/05/2024
-            sb.AppendLine("Tables   : Sorted")
+        If prm.bDisplayLinksBelowEachTable <> frmDBReport.bDisplayLinksBelowEachTableDef Then
+            If prm.bDisplayLinksBelowEachTable Then
+                sb.AppendLine("Links    : Below each table")
+            Else
+                sb.AppendLine("Links    : Second part of the report")
+            End If
         End If
 
-        If prm.bSortColumns Then
-            sb.AppendLine("Columns  : Sorted")
-        Else
-            'sb.AppendLine("Columns  : Not sorted")
+        If prm.bSortTables <> frmDBReport.bSortTablesDef Then
+            If prm.bSortTables Then
+                sb.AppendLine("Tables   : Sorted")
+            Else
+                sb.AppendLine("Tables   : Not sorted")
+            End If
         End If
-        If prm.bSortIndexes Then
-            sb.AppendLine("Indexes  : Sorted")
-        Else
-            'sb.AppendLine("Indexes  : Not sorted")
+
+        If prm.bSortColumns <> frmDBReport.bSortColumnsDef Then
+            If prm.bSortColumns Then
+                sb.AppendLine("Columns  : Sorted")
+            Else
+                sb.AppendLine("Columns  : Not sorted")
+            End If
         End If
+
+        If prm.bSortIndexes <> frmDBReport.bSortIndexesDef Then
+            If prm.bSortIndexes Then
+                sb.AppendLine("Indexes  : Sorted")
+            Else
+                sb.AppendLine("Indexes  : Not sorted")
+            End If
+        End If
+
         sb.AppendLine()
 
     End Sub

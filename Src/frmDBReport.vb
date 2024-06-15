@@ -32,8 +32,11 @@ Public Class frmDBReport
     ' In release mode, do not save password in config file, it may not be secure in all situations
     Private Const bSavePassWord As Boolean = Not bRelease
 
-    Private Const bSortColumnsDef As Boolean = False
-    Private Const bSortIndexesDef As Boolean = True ' To make the comparison easier
+    Public Const bDisplayLinksBelowEachTableDef As Boolean = False ' 31/05/2024
+    Public Const bSortTablesDef As Boolean = False ' 15/06/2024
+    Public Const bSortColumnsDef As Boolean = False
+    Public Const bSortIndexesDef As Boolean = True ' To make the comparison easier
+
     Private Const bDisplayFieldDescriptionDef As Boolean = True
     Private Const bDisplayFieldTypeDef As Boolean = True
     Private Const bDisplayDefaultValueDef As Boolean = True
@@ -42,7 +45,6 @@ Public Class frmDBReport
     Private Const bAlertNotNullableDef As Boolean = True
     Private Const bDisplayTableEngineDef As Boolean = True
     Private Const bDisplayCollationDef As Boolean = True
-    Private Const bDisplayLinksBelowEachTable As Boolean = False ' 31/05/2024
 
 #End Region
 
@@ -58,6 +60,8 @@ Public Class frmDBReport
         "Login password for the selected user (leave blank if no password is set for this user)"
     Private Const sMsgDBReport$ = "Click 'DB report' to create the database report"
     Private Const sMsgResetSettings$ = "Click to restore default display settings of the database report"
+    Private Const sMsgDisplayLinksBelowEachTable$ = "Display links below each table (otherwise display links in the second part of the report)"
+    Private Const sMsgSortTables$ = "Sort tables"
     Private Const sMsgSortColumns$ = "Sort columns of each table"
     Private Const sMsgSortIndexes$ =
         "Sort indexes of each table (to make the database structure comparison easier)"
@@ -116,6 +120,8 @@ Public Class frmDBReport
         Me.ToolTip1.SetToolTip(Me.chkDisplayFieldDefaultValue, sMsgDisplayFieldDefaultValue)
         Me.ToolTip1.SetToolTip(Me.chkDisplayFieldType, sMsgDisplayFieldType)
         Me.ToolTip1.SetToolTip(Me.chkDisplayLinkName, sMsgDisplayLinkName)
+        Me.ToolTip1.SetToolTip(Me.chkDisplayLinksBelowEachTable, sMsgDisplayLinksBelowEachTable)
+        Me.ToolTip1.SetToolTip(Me.chkSortTables, sMsgSortTables)
         Me.ToolTip1.SetToolTip(Me.chkSortColumns, sMsgSortColumns)
         Me.ToolTip1.SetToolTip(Me.chkSortIndexes, sMsgSortIndexes)
         Me.ToolTip1.SetToolTip(Me.chkSortLinks, sMsgSortLinks)
@@ -130,7 +136,7 @@ Public Class frmDBReport
         '    Me.chkAlertNotNullable.Checked = False ' northwind
         '    Me.tbUserName.Text = "root"
         '    Me.tbUserPassword.Text = ""
-        '    My.Settings.SortTables = True
+        '    Me.chkSortTables.Checked = True
         '    Me.chkSortColumns.Checked = True
         '    Me.chkSortIndexes.Checked = True
         '    My.Settings.DisplayMySqlParameters = True
@@ -152,7 +158,7 @@ Public Class frmDBReport
             End If
             Me.chkAlertNotNullable.Checked = False
             Me.chkDisplayFieldType.Checked = True
-            My.Settings.SortTables = True
+            Me.chkSortTables.Checked = True
             Me.chkSortColumns.Checked = True
             Me.chkSortIndexes.Checked = True
             My.Settings.ForeignKeyDeleteRule = "NO ACTION"
@@ -186,13 +192,14 @@ Public Class frmDBReport
             My.Settings.DisplayFieldType = Me.chkDisplayFieldType.Checked
             My.Settings.DisplayFieldDefaultValue = Me.chkDisplayFieldDefaultValue.Checked
             My.Settings.DisplayLinkName = Me.chkDisplayLinkName.Checked
+            My.Settings.DisplayLinksBelowEachTable = Me.chkDisplayLinksBelowEachTable.Checked ' 31/05/2024
+            My.Settings.SortTables = Me.chkSortTables.Checked
             My.Settings.SortColumns = Me.chkSortColumns.Checked
             My.Settings.SortIndexes = Me.chkSortIndexes.Checked
             My.Settings.SortLinks = Me.chkSortLinks.Checked
             My.Settings.AlertNotNullable = Me.chkAlertNotNullable.Checked
             My.Settings.MySqlDisplayTableEngine = Me.chkDisplayTableEngine.Checked
             My.Settings.MySqlDisplayCollation = Me.chkDisplayCollation.Checked
-            My.Settings.DisplayLinksBelowEachTable = Me.chkDisplayLinksBelowEachTable.Checked ' 31/05/2024
 
         Else
 
@@ -207,13 +214,14 @@ Public Class frmDBReport
             Me.chkDisplayFieldType.Checked = My.Settings.DisplayFieldType
             Me.chkDisplayFieldDefaultValue.Checked = My.Settings.DisplayFieldDefaultValue
             Me.chkDisplayLinkName.Checked = My.Settings.DisplayLinkName
+            Me.chkDisplayLinksBelowEachTable.Checked = My.Settings.DisplayLinksBelowEachTable ' 31/05/2024
+            Me.chkSortTables.Checked = My.Settings.SortTables
             Me.chkSortColumns.Checked = My.Settings.SortColumns
             Me.chkSortIndexes.Checked = My.Settings.SortIndexes
             Me.chkSortLinks.Checked = My.Settings.SortLinks
             Me.chkAlertNotNullable.Checked = My.Settings.AlertNotNullable
             Me.chkDisplayTableEngine.Checked = My.Settings.MySqlDisplayTableEngine
             Me.chkDisplayCollation.Checked = My.Settings.MySqlDisplayCollation
-            Me.chkDisplayLinksBelowEachTable.Checked = My.Settings.DisplayLinksBelowEachTable ' 31/05/2024
 
         End If
 
@@ -228,13 +236,14 @@ Public Class frmDBReport
         Me.chkDisplayFieldType.Checked = bDisplayFieldTypeDef
         Me.chkDisplayFieldDefaultValue.Checked = bDisplayDefaultValueDef
         Me.chkDisplayLinkName.Checked = bDisplayLinkNameDef ' False
+        Me.chkSortTables.Checked = bSortTablesDef ' False
         Me.chkSortColumns.Checked = bSortColumnsDef ' False
         Me.chkSortIndexes.Checked = bSortIndexesDef
         Me.chkSortLinks.Checked = bSortLinksDef
         Me.chkAlertNotNullable.Checked = bAlertNotNullableDef
         Me.chkDisplayTableEngine.Checked = bDisplayTableEngineDef
         Me.chkDisplayCollation.Checked = bDisplayCollationDef
-        Me.chkDisplayLinksBelowEachTable.Checked = My.Settings.DisplayLinksBelowEachTable ' 31/05/2024
+        Me.chkDisplayLinksBelowEachTable.Checked = bDisplayLinksBelowEachTableDef ' 14/06/2024
     End Sub
 
     Private Sub Activation(bActivate As Boolean)
@@ -254,6 +263,7 @@ Public Class frmDBReport
         Me.chkDisplayFieldType.Enabled = bActivate
         Me.chkDisplayFieldDefaultValue.Enabled = bActivate
         Me.chkDisplayLinkName.Enabled = bActivate
+        Me.chkSortTables.Enabled = bActivate ' 14/06/2024
         Me.chkSortColumns.Enabled = bActivate
         Me.chkSortIndexes.Enabled = bActivate
         Me.chkSortLinks.Enabled = bActivate
@@ -336,7 +346,8 @@ Public Class frmDBReport
         prm.bDisplayFieldDefaultValue = Me.chkDisplayFieldDefaultValue.Checked
         prm.bDisplayFieldType = Me.chkDisplayFieldType.Checked
         prm.bDisplayLinkName = Me.chkDisplayLinkName.Checked
-        prm.bSortTables = My.Settings.SortTables ' 04/05/2024
+        prm.bDisplayLinksBelowEachTable = Me.chkDisplayLinksBelowEachTable.Checked ' 14/06/2024
+        prm.bSortTables = Me.chkSortTables.Checked  ' 14/06/2024
         prm.bSortColumns = Me.chkSortColumns.Checked
         prm.bSortIndexes = Me.chkSortIndexes.Checked
         prm.bSortLinks = Me.chkSortLinks.Checked
@@ -351,7 +362,6 @@ Public Class frmDBReport
         prm.bRenameSQLiteMultipleIndex = My.Settings.RenameSQLiteMultipleIndex
         prm.bDisplaySQLiteSimpleIndexName = My.Settings.DisplaySQLiteSimpleIndexName
         prm.bDisplayMySqlParameters = My.Settings.DisplayMySqlParameters
-        prm.bDisplayLinksBelowEachTable = My.Settings.DisplayLinksBelowEachTable ' 31/05/2024
 
         prm.mySqlprm.sSQLModeDef = My.Settings.MySqlSQLMode
         prm.mySqlprm.sInnodbStrictModeDef = My.Settings.MySqlInnodbStrictMode
@@ -416,6 +426,12 @@ Fin:
     End Sub
     Private Sub cmdResetSettings_Enter(sender As Object, e As EventArgs) Handles cmdResetSettings.Enter
         ShowLongMessage(sMsgResetSettings)
+    End Sub
+    Private Sub chkDisplayLinksBelowEachTable_Enter(sender As Object, e As EventArgs) Handles chkDisplayLinksBelowEachTable.Enter
+        ShowLongMessage(sMsgDisplayLinksBelowEachTable)
+    End Sub
+    Private Sub chkSortTables_Enter(sender As Object, e As EventArgs) Handles chkSortTables.Enter
+        ShowLongMessage(sMsgSortTables)
     End Sub
     Private Sub chkSortColumns_Enter(sender As Object, e As EventArgs) Handles chkSortColumns.Enter
         ShowLongMessage(sMsgSortColumns)

@@ -64,6 +64,7 @@ Partial Class frmDBReport
         Me.chkDisplayTableEngine = New System.Windows.Forms.CheckBox()
         Me.chkDisplayCollation = New System.Windows.Forms.CheckBox()
         Me.chkDisplayLinksBelowEachTable = New System.Windows.Forms.CheckBox()
+        Me.chkSortTables = New System.Windows.Forms.CheckBox()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -72,7 +73,7 @@ Partial Class frmDBReport
         Me.cmdDBReport.Location = New System.Drawing.Point(278, 32)
         Me.cmdDBReport.Name = "cmdDBReport"
         Me.cmdDBReport.Size = New System.Drawing.Size(70, 38)
-        Me.cmdDBReport.TabIndex = 21
+        Me.cmdDBReport.TabIndex = 23
         Me.cmdDBReport.Text = "DB report"
         Me.cmdDBReport.UseVisualStyleBackColor = True
         '
@@ -81,8 +82,8 @@ Partial Class frmDBReport
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 349)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(554, 22)
-        Me.StatusStrip1.TabIndex = 25
+        Me.StatusStrip1.Size = New System.Drawing.Size(578, 22)
+        Me.StatusStrip1.TabIndex = 27
         Me.StatusStrip1.Text = "StatusStrip1"
         '
         'ToolStripStatusLabel1
@@ -176,7 +177,7 @@ Partial Class frmDBReport
         Me.cmdResetSettings.Location = New System.Drawing.Point(447, 32)
         Me.cmdResetSettings.Name = "cmdResetSettings"
         Me.cmdResetSettings.Size = New System.Drawing.Size(70, 38)
-        Me.cmdResetSettings.TabIndex = 23
+        Me.cmdResetSettings.TabIndex = 25
         Me.cmdResetSettings.Text = "Default"
         Me.ToolTip1.SetToolTip(Me.cmdResetSettings, "Click to reset settings to their default value")
         Me.cmdResetSettings.UseVisualStyleBackColor = True
@@ -195,10 +196,10 @@ Partial Class frmDBReport
         Me.lblInfo.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblInfo.Location = New System.Drawing.Point(12, 225)
+        Me.lblInfo.Location = New System.Drawing.Point(13, 248)
         Me.lblInfo.Name = "lblInfo"
-        Me.lblInfo.Size = New System.Drawing.Size(529, 114)
-        Me.lblInfo.TabIndex = 24
+        Me.lblInfo.Size = New System.Drawing.Size(553, 101)
+        Me.lblInfo.TabIndex = 26
         Me.lblInfo.Text = "Messages"
         '
         'cmdCancel
@@ -207,125 +208,136 @@ Partial Class frmDBReport
         Me.cmdCancel.Location = New System.Drawing.Point(363, 32)
         Me.cmdCancel.Name = "cmdCancel"
         Me.cmdCancel.Size = New System.Drawing.Size(70, 38)
-        Me.cmdCancel.TabIndex = 22
+        Me.cmdCancel.TabIndex = 24
         Me.cmdCancel.Text = "Cancel"
         Me.cmdCancel.UseVisualStyleBackColor = True
         '
         'chkDisplayFieldType
         '
         Me.chkDisplayFieldType.AutoSize = True
-        Me.chkDisplayFieldType.Location = New System.Drawing.Point(278, 86)
+        Me.chkDisplayFieldType.Location = New System.Drawing.Point(278, 110)
         Me.chkDisplayFieldType.Name = "chkDisplayFieldType"
         Me.chkDisplayFieldType.Size = New System.Drawing.Size(105, 17)
-        Me.chkDisplayFieldType.TabIndex = 11
+        Me.chkDisplayFieldType.TabIndex = 12
         Me.chkDisplayFieldType.Text = "Display field type"
         Me.chkDisplayFieldType.UseVisualStyleBackColor = True
         '
         'chkDisplayFieldDefaultValue
         '
         Me.chkDisplayFieldDefaultValue.AutoSize = True
-        Me.chkDisplayFieldDefaultValue.Location = New System.Drawing.Point(278, 113)
+        Me.chkDisplayFieldDefaultValue.Location = New System.Drawing.Point(278, 137)
         Me.chkDisplayFieldDefaultValue.Name = "chkDisplayFieldDefaultValue"
         Me.chkDisplayFieldDefaultValue.Size = New System.Drawing.Size(146, 17)
-        Me.chkDisplayFieldDefaultValue.TabIndex = 12
+        Me.chkDisplayFieldDefaultValue.TabIndex = 13
         Me.chkDisplayFieldDefaultValue.Text = "Display field default value"
         Me.chkDisplayFieldDefaultValue.UseVisualStyleBackColor = True
         '
         'chkDisplayLinkName
         '
         Me.chkDisplayLinkName.AutoSize = True
-        Me.chkDisplayLinkName.Location = New System.Drawing.Point(278, 139)
+        Me.chkDisplayLinkName.Location = New System.Drawing.Point(278, 163)
         Me.chkDisplayLinkName.Name = "chkDisplayLinkName"
         Me.chkDisplayLinkName.Size = New System.Drawing.Size(108, 17)
-        Me.chkDisplayLinkName.TabIndex = 13
+        Me.chkDisplayLinkName.TabIndex = 14
         Me.chkDisplayLinkName.Text = "Display link name"
         Me.chkDisplayLinkName.UseVisualStyleBackColor = True
         '
         'chkSortColumns
         '
         Me.chkSortColumns.AutoSize = True
-        Me.chkSortColumns.Location = New System.Drawing.Point(430, 86)
+        Me.chkSortColumns.Location = New System.Drawing.Point(452, 110)
         Me.chkSortColumns.Name = "chkSortColumns"
         Me.chkSortColumns.Size = New System.Drawing.Size(87, 17)
-        Me.chkSortColumns.TabIndex = 16
+        Me.chkSortColumns.TabIndex = 18
         Me.chkSortColumns.Text = "Sort columns"
         Me.chkSortColumns.UseVisualStyleBackColor = True
         '
         'chkSortIndexes
         '
         Me.chkSortIndexes.AutoSize = True
-        Me.chkSortIndexes.Location = New System.Drawing.Point(430, 113)
+        Me.chkSortIndexes.Location = New System.Drawing.Point(452, 137)
         Me.chkSortIndexes.Name = "chkSortIndexes"
         Me.chkSortIndexes.Size = New System.Drawing.Size(84, 17)
-        Me.chkSortIndexes.TabIndex = 17
+        Me.chkSortIndexes.TabIndex = 19
         Me.chkSortIndexes.Text = "Sort indexes"
         Me.chkSortIndexes.UseVisualStyleBackColor = True
         '
         'chkSortLinks
         '
         Me.chkSortLinks.AutoSize = True
-        Me.chkSortLinks.Location = New System.Drawing.Point(430, 139)
+        Me.chkSortLinks.Location = New System.Drawing.Point(452, 163)
         Me.chkSortLinks.Name = "chkSortLinks"
         Me.chkSortLinks.Size = New System.Drawing.Size(69, 17)
-        Me.chkSortLinks.TabIndex = 18
+        Me.chkSortLinks.TabIndex = 20
         Me.chkSortLinks.Text = "Sort links"
         Me.chkSortLinks.UseVisualStyleBackColor = True
         '
         'chkAlertNotNullable
         '
         Me.chkAlertNotNullable.AutoSize = True
-        Me.chkAlertNotNullable.Location = New System.Drawing.Point(430, 166)
+        Me.chkAlertNotNullable.Location = New System.Drawing.Point(452, 190)
         Me.chkAlertNotNullable.Name = "chkAlertNotNullable"
         Me.chkAlertNotNullable.Size = New System.Drawing.Size(104, 17)
-        Me.chkAlertNotNullable.TabIndex = 19
+        Me.chkAlertNotNullable.TabIndex = 21
         Me.chkAlertNotNullable.Text = "Alert not nullable"
         Me.chkAlertNotNullable.UseVisualStyleBackColor = True
         '
         'chkDisplayDescription
         '
         Me.chkDisplayDescription.AutoSize = True
-        Me.chkDisplayDescription.Location = New System.Drawing.Point(278, 166)
+        Me.chkDisplayDescription.Location = New System.Drawing.Point(278, 190)
         Me.chkDisplayDescription.Name = "chkDisplayDescription"
         Me.chkDisplayDescription.Size = New System.Drawing.Size(114, 17)
-        Me.chkDisplayDescription.TabIndex = 14
+        Me.chkDisplayDescription.TabIndex = 15
         Me.chkDisplayDescription.Text = "Display description"
         Me.chkDisplayDescription.UseVisualStyleBackColor = True
         '
         'chkDisplayTableEngine
         '
         Me.chkDisplayTableEngine.AutoSize = True
-        Me.chkDisplayTableEngine.Location = New System.Drawing.Point(278, 193)
+        Me.chkDisplayTableEngine.Location = New System.Drawing.Point(278, 217)
         Me.chkDisplayTableEngine.Name = "chkDisplayTableEngine"
         Me.chkDisplayTableEngine.Size = New System.Drawing.Size(121, 17)
-        Me.chkDisplayTableEngine.TabIndex = 15
+        Me.chkDisplayTableEngine.TabIndex = 16
         Me.chkDisplayTableEngine.Text = "Display table engine"
         Me.chkDisplayTableEngine.UseVisualStyleBackColor = True
         '
         'chkDisplayCollation
         '
         Me.chkDisplayCollation.AutoSize = True
-        Me.chkDisplayCollation.Location = New System.Drawing.Point(430, 193)
+        Me.chkDisplayCollation.Location = New System.Drawing.Point(452, 217)
         Me.chkDisplayCollation.Name = "chkDisplayCollation"
         Me.chkDisplayCollation.Size = New System.Drawing.Size(102, 17)
-        Me.chkDisplayCollation.TabIndex = 20
+        Me.chkDisplayCollation.TabIndex = 22
         Me.chkDisplayCollation.Text = "Display collation"
         Me.chkDisplayCollation.UseVisualStyleBackColor = True
         '
         'chkDisplayLinksBelowEachTable
         '
         Me.chkDisplayLinksBelowEachTable.AutoSize = True
-        Me.chkDisplayLinksBelowEachTable.Location = New System.Drawing.Point(86, 193)
+        Me.chkDisplayLinksBelowEachTable.Location = New System.Drawing.Point(278, 87)
         Me.chkDisplayLinksBelowEachTable.Name = "chkDisplayLinksBelowEachTable"
         Me.chkDisplayLinksBelowEachTable.Size = New System.Drawing.Size(168, 17)
-        Me.chkDisplayLinksBelowEachTable.TabIndex = 26
+        Me.chkDisplayLinksBelowEachTable.TabIndex = 11
         Me.chkDisplayLinksBelowEachTable.Text = "Display links below each table"
         Me.chkDisplayLinksBelowEachTable.UseVisualStyleBackColor = True
+        '
+        'chkSortTables
+        '
+        Me.chkSortTables.AutoSize = True
+        Me.chkSortTables.Location = New System.Drawing.Point(452, 87)
+        Me.chkSortTables.Name = "chkSortTables"
+        Me.chkSortTables.Size = New System.Drawing.Size(76, 17)
+        Me.chkSortTables.TabIndex = 17
+        Me.chkSortTables.Text = "Sort tables"
+        Me.chkSortTables.UseVisualStyleBackColor = True
         '
         'frmDBReport
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(554, 371)
+        Me.ClientSize = New System.Drawing.Size(578, 371)
+        Me.Controls.Add(Me.chkSortTables)
         Me.Controls.Add(Me.chkDisplayLinksBelowEachTable)
         Me.Controls.Add(Me.cbDataProviders)
         Me.Controls.Add(Me.chkDisplayCollation)
@@ -391,4 +403,5 @@ Partial Class frmDBReport
     Friend WithEvents chkDisplayCollation As System.Windows.Forms.CheckBox
     Friend WithEvents cbDataProviders As ComboBox
     Friend WithEvents chkDisplayLinksBelowEachTable As CheckBox
+    Friend WithEvents chkSortTables As CheckBox
 End Class
