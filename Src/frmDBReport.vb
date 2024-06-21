@@ -129,8 +129,8 @@ Public Class frmDBReport
         Me.ToolTip1.SetToolTip(Me.chkDisplayCollation, sMsgDisplayCollation)
 
         'If bDebug Then
-        '    Me.tbDBProvider.Text = sMySqlClient
-        '    Me.cbDataProviders.Text = sMySqlClient
+        '    Me.tbDBProvider.Text = enumDBProvider.MySqlClient.ToDescription()
+        '    Me.cbDataProviders.Text = enumDBProvider.MySqlClient.ToDescription()
         '    Me.tbDBServer.Text = "localhost"
         '    Me.tbDBName.Text = "northwind"
         '    Me.chkAlertNotNullable.Checked = False ' northwind
@@ -145,8 +145,8 @@ Public Class frmDBReport
         'End If
 
         If bDebug Then
-            Me.tbDBProvider.Text = sSQLiteClient
-            Me.cbDataProviders.Text = sSQLiteClient
+            Me.tbDBProvider.Text = enumDBProvider.SQLiteClient.ToDescription()
+            Me.cbDataProviders.Text = enumDBProvider.SQLiteClient.ToDescription()
             ' northwindEF for SQLite database:
             ' https://system.data.sqlite.org/index.html/doc/trunk/www/index.wiki
             ' https://system.data.sqlite.org/index.html/doc/trunk/www/downloads.wiki
@@ -330,7 +330,14 @@ Public Class frmDBReport
 
         Dim prm As New clsPrmDBR
         prm.sConnection = sConnection
+
         prm.sDBProvider = sDBProvider
+        Try
+            prm.DBProvider = GetType(enumDBProvider).GetValueFromDescription(Of enumDBProvider)(sDBProvider)
+        Catch ex As Exception
+            prm.DBProvider = enumDBProvider.Unknown
+        End Try
+
         prm.sDBName = sDBName
         prm.sServer = sServer
         prm.sUserLogin = sUserLogin

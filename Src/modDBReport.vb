@@ -3,17 +3,11 @@
 ' -------------------
 
 'Imports System.Data.Common ' NuGet MySqlConnector 2.2.5: DbProviderFactories
-Imports System.Net
+Imports System.ComponentModel
 Imports System.Text ' StringBuilder
-Imports System.Xml
-
 Imports MySqlConnector
 
 Public Module modDBReport
-
-    Public Const sMySqlClient$ = "MySql.Data.MySqlClient"
-    Public Const sOracleClient$ = "System.Data.OracleClient" ' 10/04/2024
-    Public Const sSQLiteClient$ = "System.Data.SQLite" ' 27/04/2024
 
     Public Const sMsgError$ = "Error !"
     Public Const sMsgDone$ = "Done."
@@ -58,8 +52,50 @@ Public Module modDBReport
 
 #Region "Classes"
 
+    ' See https://github.com/TylerBrinkley/Enums.NET
+    Public Enum enumDBProvider
+
+        ''' <summary>
+        ''' Unknown
+        ''' </summary>
+        <Description("Unknown")>
+        Unknown
+
+        ''' <summary>
+        ''' MySql.Data.MySqlClient (This client for MySql comes from Oracle Corporation)
+        ''' </summary>
+        <Description("MySql.Data.MySqlClient")>
+        MySqlClient
+
+        ''' <summary>
+        ''' MySqlConnector (MariaDb client)
+        ''' </summary>
+        <Description("MySqlConnector")>
+        MariaDbClient
+
+        ''' <summary>
+        ''' System.Data.OracleClient
+        ''' </summary>
+        <Description("System.Data.OracleClient")>
+        OracleClient
+
+        ''' <summary>
+        ''' System.Data.SQLite
+        ''' </summary>
+        <Description("System.Data.SQLite")>
+        SQLiteClient
+
+        ''' <summary>
+        ''' Default: MySql.Data.MySqlClient
+        ''' </summary>
+        <Description("MySql.Data.MySqlClient")>
+        [Default] = MySqlClient
+
+    End Enum
+
     Public Class clsPrmDBR
 
+        Public DBProvider As enumDBProvider ' 21/06/2024
         Public sConnection$, sDBProvider$, sUserLogin$, sServer$, sDBName$, sDBReportVersion$
         Public sUserPassword$, sInstanceName$, sPort$ ' 10/04/2024 Oracle
 
@@ -140,7 +176,7 @@ Public Module modDBReport
     Public Function bCreateDBReport(prm As clsPrmDBR, delegMsg As clsDelegMsg,
         sMsgErr$, sMsgErrPossibleCause$, ByRef sb As StringBuilder) As Boolean
 
-        ' Library used : https://dbschemareader.codeplex.com
+        ' Library used : https://github.com/TylerBrinkley/Enums.NET
 
         Try
             m_delegMsg = delegMsg
@@ -156,7 +192,7 @@ Public Module modDBReport
             Dim dicSqlCC As New Dictionary(Of String, String)
             Dim sMySqlConnectorVersion$ = "" ' 04/05/2024
             Dim bMySql As Boolean = False
-            If prm.sDBProvider = sMySqlClient Then bMySql = True
+            If prm.DBProvider = enumDBProvider.MySqlClient Then bMySql = True
             If bMySql AndAlso prm.bDisplayMySqlParameters Then
                 If Not bGetMySqlParameters(prm.sConnection, prm.sDBName, dicSqlPrm, lstMySqlPrm,
                     sMsgErr, sMsgErrPossibleCause) Then Return False
@@ -181,7 +217,7 @@ Public Module modDBReport
             End If
 
             ' 10/04/2024 Oracle
-            If prm.sDBProvider = sOracleClient Then
+            If prm.DBProvider = enumDBProvider.OracleClient Then
 
                 Dim sLogin$ = prm.sUserLogin
                 Dim sPW$ = prm.sUserPassword
@@ -204,11 +240,14 @@ Public Module modDBReport
 
             End If
 
-            If prm.sDBProvider = sSQLiteClient Then
+            ' System.Data.SQLite
+            If prm.DBProvider = enumDBProvider.SQLiteClient Then
                 Dim sServer$ = prm.sServer
                 prm.sConnection = "Data Source=" & prm.sServer & ";"
-                'Dim fact = DbProviderFactories.GetFactory(sSQLiteClient)
-                'Using cnn As DbConnection = fact.CreateConnection()
+                'Dim sDBProvider$ = prm.sDBProvider
+                'Dim sDBProvider$ = prm.DBProvider.ToDescription()
+                'Dim fact = System.Data.Common.DbProviderFactories.GetFactory(sDBProvider)
+                'Using cnn As System.Data.Common.DbConnection = fact.CreateConnection()
                 '    cnn.ConnectionString = prm.sConnection
                 '    cnn.Open()
                 'End Using
@@ -286,8 +325,8 @@ Public Module modDBReport
         sb.AppendLine("--------------------")
         sb.AppendLine()
 
-        Dim bOracleClient = prm.sDBProvider = sOracleClient
-        If prm.sDBProvider = sSQLiteClient Then ' 27/04/2024
+        Dim bOracleClient = prm.DBProvider = enumDBProvider.OracleClient
+        If prm.DBProvider = enumDBProvider.SQLiteClient Then ' 27/04/2024
             If Not String.IsNullOrEmpty(prm.sUserLogin) Then sb.AppendLine("Login    : " & prm.sUserLogin)
             sb.AppendLine("Database : " & prm.sDBName)
         Else
@@ -472,7 +511,7 @@ Public Module modDBReport
             sb.AppendLine(sTableTitle)
 
             Dim bSQLite = False
-            If prm.sDBProvider = sSQLiteClient Then bSQLite = True
+            If prm.DBProvider = enumDBProvider.SQLiteClient Then bSQLite = True
 
             ' Noter tous les champs nullables pour alerter sur les clés uniques
             ' Hashset of nullable fields of the table, to warn uniqueness

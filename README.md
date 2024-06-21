@@ -1,7 +1,7 @@
 DBReport: A DataBase structure Reporting tool for database administrators
 ---
 
-Version 1.19 - 15/06/2024
+Version 1.20 - 21/06/2024
 
 Database Administrators needs to compare database structures. Using [WinMerge](http://winmerge.org) on sql database structure files, it is difficult to compare because a lot of differences appear, whereas only a few of them are meaningful. DBReport shows only (and all) significant information that makes sense for daily administrator work.
 
@@ -22,6 +22,7 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
         - [How to change the server collation?](#how-to-change-the-server-collation)
 - [Projects](#projects)
 - [Versions](#versions)
+    - [Version 1.20 - 21/06/2024](#version-120---21062024)
     - [Version 1.19 - 15/06/2024](#version-119---15062024)
     - [Version 1.18 - 14/06/2024](#version-118---14062024)
     - [Version 1.17 - 31/05/2024](#version-117---31052024)
@@ -364,6 +365,9 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
  
  
 # Versions
+
+## Version 1.20 - 21/06/2024
+- [Enum](https://github.com/TylerBrinkley/Enums.NET) for DBProvider.
 
 ## Version 1.19 - 15/06/2024
 - Option sort table in the user interface.
