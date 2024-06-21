@@ -176,7 +176,7 @@ Public Module modDBReport
     Public Function bCreateDBReport(prm As clsPrmDBR, delegMsg As clsDelegMsg,
         sMsgErr$, sMsgErrPossibleCause$, ByRef sb As StringBuilder) As Boolean
 
-        ' Library used : https://github.com/TylerBrinkley/Enums.NET
+        ' Library used : https://github.com/martinjw/dbschemareader
 
         Try
             m_delegMsg = delegMsg
