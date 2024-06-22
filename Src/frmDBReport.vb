@@ -48,9 +48,7 @@ Public Class frmDBReport
 
 #End Region
 
-    Private Const sMsgDBProvider$ =
-        "Name of the database provider installed in the DotNet Framework" &
-        " (e.g. 'MySql.Data.MySqlClient' if mysql-connector-net-6.9.x.msi is used)"
+    Private Const sMsgDBProvider$ = "Name of the database provider installed in the DotNet Framework"
     Private Const sMsgDBProviderList$ = "List of installed system database providers"
     Private Const sMsgDBServer$ = "Name of the server (e.g. 'localhost' or '127.0.0.1')"
     Private Const sMsgDBName$ = "Name of the database for which you want to export the structure"
@@ -405,6 +403,22 @@ Fin:
 
     Private Sub cmdCancel_Click(sender As Object, e As EventArgs) Handles cmdCancel.Click
         Me.m_delegMsg.m_bCancel = True
+    End Sub
+
+    Private Sub tbDBProvider_TextChanged(sender As Object, e As EventArgs) Handles tbDBProvider.TextChanged
+
+        Dim DBProvider As enumDBProvider
+        Try
+            DBProvider = GetType(enumDBProvider).GetValueFromDescription(Of enumDBProvider)(tbDBProvider.Text)
+        Catch ex As Exception
+            DBProvider = enumDBProvider.Unknown
+        End Try
+        Dim sProvider$ = DBProvider.ToString()
+        If DBProvider = enumDBProvider.Default Then sProvider = "MySqlClient" 'enumDBProvider.MySqlClient.ToDescription()
+        If DBProvider = enumDBProvider.Unknown Then sProvider = tbDBProvider.Text
+        Dim sMsg$ = sMsgDBProvider & " : " & sProvider
+        ShowLongMessage(sMsg)
+
     End Sub
 
     Private Sub cbDataProviders_TextChanged(sender As Object, e As EventArgs) Handles cbDataProviders.TextChanged
