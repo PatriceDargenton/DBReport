@@ -1,8 +1,6 @@
 DBReport: A DataBase structure Reporting tool for database administrators
 ---
 
-Version 1.20 - 21/06/2024
-
 Database Administrators needs to compare database structures. Using [WinMerge](http://winmerge.org) on sql database structure files, it is difficult to compare because a lot of differences appear, whereas only a few of them are meaningful. DBReport shows only (and all) significant information that makes sense for daily administrator work.
 
 - [Features](#features)
@@ -22,26 +20,6 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
         - [How to change the server collation?](#how-to-change-the-server-collation)
 - [Projects](#projects)
 - [Versions](#versions)
-    - [Version 1.20 - 21/06/2024](#version-120---21062024)
-    - [Version 1.19 - 15/06/2024](#version-119---15062024)
-    - [Version 1.18 - 14/06/2024](#version-118---14062024)
-    - [Version 1.17 - 31/05/2024](#version-117---31052024)
-    - [Version 1.16 - 31/05/2024](#version-116---31052024)
-    - [Version 1.15 - 24/05/2024](#version-115---24052024)
-    - [Version 1.14 - 17/05/2024](#version-114---17052024)
-    - [Version 1.13 - 11/05/2024](#version-113---11052024)
-    - [Version 1.12 - 04/05/2024](#version-112---04052024)
-    - [Version 1.11 - 27/04/2024](#version-111---27042024)
-    - [Version 1.10 - 10/04/2024](#version-110---10042024)
-    - [Version 1.09 - 15/04/2023](#version-109---15042023)
-    - [Version 1.08 - 01/10/2022](#version-108---01102022)
-    - [Version 1.07 - 04/03/2022](#version-107---04032022)
-    - [Version 1.06 - 28/02/2022](#version-106---28022022)
-    - [Version 1.05 - 05/03/2017](#version-105---05032017)
-    - [Version 1.04 - 23/10/2016](#version-104---23102016)
-    - [Version 1.03 - 18/09/2016](#version-103---18092016)
-    - [Version 1.02 - 24/01/2016](#version-102---24012016)
-    - [Version 1.01 - 03/01/2016: First version](#version-101---03012016-first-version)
 - [Links](#links)
     - [See also](#see-also)
 
@@ -363,90 +341,10 @@ Be careful because if you miss some parameters for MySql (for exemple init_conne
  
 - ListBox or ComboBox to recall a list of databases recently used, instead of only the last one.
  
- 
 # Versions
 
-## Version 1.20 - 21/06/2024
-- [Enum](https://github.com/TylerBrinkley/Enums.NET) for DBProvider.
-
-## Version 1.19 - 15/06/2024
-- Option sort table in the user interface.
-
-## Version 1.18 - 14/06/2024
-- MariaDb DBProvider: MySqlConnector.
-
-## Version 1.17 - 31/05/2024
-- Option added: Display links below each table.
-
-## Version 1.16 - 31/05/2024
-- Oracle TNS connection mode (Transparent Network Substrate).
-
-## Version 1.15 - 24/05/2024
-- Table sorting also for links;
-- Fix SQLite index.
-
-## Version 1.14 - 17/05/2024
-- Dynamic configuration: a specific configuration can be loaded at runtime from a command line argument, for example: if for example Config1 is given, then the DBReport_Config1.exe.config configuration is read instead of DBReport.exe.config and also C:\Users\[MyAccount]\AppData\Local\DBReport\DBReport.exe_Url_[xxx]\1.1.4.[xxxxx]\user.config for user-specific configuration.
-
-## Version 1.13 - 11/05/2024
-- List of installed system database providers, from  DBSchemaReader: DatabaseSchemaViewer.
-
-## Version 1.12 - 04/05/2024
-- DatabaseSchemaReader 2.10.1 -> 2.11.0;
-- MySqlConnector 2.3.6 -> 2.3.7;
-- MySql dll version displayed;
-- Parameters added: SortTables, DisplayMySqlParameters;
-- SQLite parameters added: DisplayAutonumberAsPrimaryKey, DisplayMultipleIndexName, RenameSQLiteMultipleIndex, DisplaySQLiteSimpleIndexName;
-- SQLite fixes.
-
-## Version 1.11 - 27/04/2024
-- SQLite DBProvider: System.Data.SQLite.
-
-## Version 1.10 - 10/04/2024
-- Port and InstanceName added in parameter settings, for Oracle;
-- Oracle DBProvider : System.Data.OracleClient.
-
-## Version 1.09 - 15/04/2023
-- mysql-connector-net-6.9.x.msi -> NuGet MySqlConnector 2.2.5;
-- Packages update.
-
-## Version 1.08 - 01/10/2022
-- DatabaseSchemaReader 2.7.11 -> 2.7.14;
-- .Net45 -> .Net48.
-
-## Version 1.07 - 04/03/2022
-- MySql parameter added: foreign_key_checks;
-- DatabaseSchemaReader NuGet package added, version=2.7.11.
-
-## Version 1.06 - 28/02/2022
-- Exe, dll and html doc out from source code, and inside release.
-
-## Version 1.05 - 05/03/2017
-- Main MySql parameters added in the report: sql_mode, innodb_strict_mode, collation, table engine, timeout;
-- ForeignKeyDeleteRule, ForeignKeyUpdateRule: default value are now configurable.
-
-## Version 1.04 - 23/10/2016
-- DBReport version added in the report;
-- Default value for String: the empty string is distinguished from the null string.
-
-## Version 1.03 - 18/09/2016
-- Report generation time added to the end of the report;
-- Duplicate constraints bug fixed (the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin);
-- DbReader.ReaderProgress handled;
-- DbReader version 1.3.7.0 -> 2.1.1.2 (faster!);
-- DotNet 4.0 -> DotNet 4.5.
-
-## Version 1.02 - 24/01/2016
-- DB report change: 'an unique index' -> 'a unique index';
-- MouseOver control messages: disabled;
-- Reset settings button;
-- Cancel button;
-- Check boxes for options;
-- Option to display or hide the description of tables and fields.
- 
-## Version 1.01 - 03/01/2016: First version
- 
- 
+See [Changelog.md](Changelog.md)
+  
 # Links
  
 - The classical Northwind database  
