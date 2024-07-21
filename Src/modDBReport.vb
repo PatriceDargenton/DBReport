@@ -6,6 +6,7 @@
 Imports System.ComponentModel
 Imports System.Text ' StringBuilder
 Imports MySqlConnector
+Imports Oracle.ManagedDataAccess.Client ' OracleConnection
 
 Public Module modDBReport
 
@@ -193,6 +194,7 @@ Public Module modDBReport
             Dim sMySqlConnectorVersion$ = "" ' 04/05/2024
             Dim bMySql As Boolean = False
             If prm.DBProvider = enumDBProvider.MySqlClient Then bMySql = True
+            If prm.DBProvider = enumDBProvider.MariaDbClient Then bMySql = True
             If bMySql AndAlso prm.bDisplayMySqlParameters Then
                 If Not bGetMySqlParameters(prm.sConnection, prm.sDBName, dicSqlPrm, lstMySqlPrm,
                     sMsgErr, sMsgErrPossibleCause) Then Return False
@@ -213,6 +215,9 @@ Public Module modDBReport
                     sVersion = fvi.FileVersion.ToString
                     sMySqlConnectorVersion = sVersion
                 End If
+
+                Dim dbConnection As New MySql.Data.MySqlClient.MySqlConnection(prm.sConnection)
+                m_dbReader = New DatabaseSchemaReader.DatabaseReader(dbConnection)
 
             End If
 
@@ -238,6 +243,9 @@ Public Module modDBReport
                         " )))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = " + sSID + " )))"
                 End If
 
+                ' This package Oracle.ManagedDataAccess is not available in .Net Core, but in .Net 4
+                Dim dbConnection As New OracleConnection(prm.sConnection)
+                m_dbReader = New DatabaseSchemaReader.DatabaseReader(dbConnection)
             End If
 
             ' System.Data.SQLite
@@ -251,9 +259,22 @@ Public Module modDBReport
                 '    cnn.ConnectionString = prm.sConnection
                 '    cnn.Open()
                 'End Using
+                Dim dbConnection As New Microsoft.Data.Sqlite.SqliteConnection(prm.sConnection)
+                m_dbReader = New DatabaseSchemaReader.DatabaseReader(dbConnection)
             End If
 
-            m_dbReader = New DatabaseSchemaReader.DatabaseReader(prm.sConnection, prm.sDBProvider)
+            Select Case prm.DBProvider
+                Case enumDBProvider.OracleClient
+                Case enumDBProvider.SQLiteClient
+                Case enumDBProvider.MySqlClient
+                Case enumDBProvider.MariaDbClient
+                Case Else
+                    MsgBox(".Net core: The database connection must be explicit now",
+                        MsgBoxStyle.Exclamation Or MsgBoxStyle.OkCancel, m_sMsgTitle)
+                    Return False
+            End Select
+
+            'm_dbReader = New DatabaseSchemaReader.DatabaseReader(prm.sConnection, prm.sDBProvider)
             m_dbReader.Owner = prm.sDBName ' 22/08/2016
 
             ShowMsg("Reading database schema...")

@@ -253,6 +253,7 @@ Retry:
         Dim p As New Process
         p.StartInfo = New ProcessStartInfo(sFilePath)
         p.StartInfo.Arguments = sArguments
+        p.StartInfo.UseShellExecute = True
         If bMaximized Then p.StartInfo.WindowStyle = ProcessWindowStyle.Maximized
         p.Start()
 

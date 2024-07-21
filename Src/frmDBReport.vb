@@ -128,7 +128,7 @@ Public Class frmDBReport
 
         'If bDebug Then
         '    Me.tbDBProvider.Text = enumDBProvider.MySqlClient.ToDescription()
-        '    Me.cbDataProviders.Text = enumDBProvider.MySqlClient.ToDescription()
+        '    Me.cbDataProviders.Text = Me.tbDBProvider.Text
         '    Me.tbDBServer.Text = "localhost"
         '    Me.tbDBName.Text = "northwind"
         '    Me.chkAlertNotNullable.Checked = False ' northwind
@@ -140,11 +140,18 @@ Public Class frmDBReport
         '    My.Settings.DisplayMySqlParameters = True
         '    My.Settings.MySqlTableCollation = "utf8_general_ci"
         '    My.Settings.MySqlColumnCollation = "utf8_unicode_ci"
+        '    My.Settings.ForeignKeyDeleteRule = "RESTRICT"
+        '    My.Settings.ForeignKeyUpdateRule = "RESTRICT"
+
+        '    ' To compare with other database engine
+        '    'Me.chkDisplayFieldType.Checked = False
+        '    'Me.chkDisplayFieldDefaultValue.Checked = False
+
         'End If
 
         If bDebug Then
             Me.tbDBProvider.Text = enumDBProvider.SQLiteClient.ToDescription()
-            Me.cbDataProviders.Text = enumDBProvider.SQLiteClient.ToDescription()
+            Me.cbDataProviders.Text = Me.tbDBProvider.Text
             ' northwindEF for SQLite database:
             ' https://system.data.sqlite.org/index.html/doc/trunk/www/index.wiki
             ' https://system.data.sqlite.org/index.html/doc/trunk/www/downloads.wiki
@@ -250,7 +257,7 @@ Public Class frmDBReport
 
         Me.cmdDBReport.Enabled = bActivate
         Me.cmdResetSettings.Enabled = bActivate
-        Me.cbDataProviders.Enabled = bActivate
+        Me.cbDataProviders.Enabled = False ' <DbProviderFactories> is no longer compatible with .Net Core
         Me.tbDBProvider.Enabled = bActivate
         Me.tbDBServer.Enabled = bActivate
         Me.tbDBName.Enabled = bActivate
