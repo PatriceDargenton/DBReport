@@ -6,6 +6,7 @@ All notable changes to the Surveillance project will be documented in this file.
 
 ## [1.21] - 2024-07-21 Pre-release .Net Core in the DotNetCore branch
 ### Updated
+- Dynamic configuration using shortcut (e.g. DBReport_Config1.exe.config read instead of DBReport.exe.config) does not work for the moment;
 - The database connection must be explicit at compile time (trying to connect at run time is no longer possible, and DbProviderFactories is no longer supported in App.Config);
 - The package for Oracle.ManagedDataAccess is not available in .Net Core, but in .Net 4 (so the connection constructor is ensured via .Net 4 backward compatibility and not directly in .Net Core);
 - Net 4.8 update to .Net Core (.Net 8)
