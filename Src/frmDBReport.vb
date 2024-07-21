@@ -86,12 +86,16 @@ Public Class frmDBReport
         Me.Text = sTxt
 
         ' 11/05/2024
-        Dim dt = Data.Common.DbProviderFactories.GetFactoryClasses()
+        'Dim dt = Data.Common.DbProviderFactories.GetFactoryClasses()
         Dim lst As New List(Of String)
-        For Each row As Data.DataRow In dt.Rows
-            Dim str As String = CStr(row("InvariantName"))
-            lst.Add(str)
-        Next
+        'For Each row As Data.DataRow In dt.Rows
+        '    Dim str As String = CStr(row("InvariantName"))
+        '    lst.Add(str)
+        'Next
+        lst.Add(enumDBProvider.MySqlClient.ToDescription())
+        lst.Add(enumDBProvider.MariaDbClient.ToDescription())
+        lst.Add(enumDBProvider.OracleClient.ToDescription())
+        lst.Add(enumDBProvider.SQLiteClient.ToDescription())
         lst.Sort()
         Me.cbDataProviders.DataSource = lst
 
@@ -257,7 +261,7 @@ Public Class frmDBReport
 
         Me.cmdDBReport.Enabled = bActivate
         Me.cmdResetSettings.Enabled = bActivate
-        Me.cbDataProviders.Enabled = False ' <DbProviderFactories> is no longer compatible with .Net Core
+        Me.cbDataProviders.Enabled = bActivate
         Me.tbDBProvider.Enabled = bActivate
         Me.tbDBServer.Enabled = bActivate
         Me.tbDBName.Enabled = bActivate

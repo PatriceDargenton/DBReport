@@ -197,7 +197,6 @@ Partial Class frmDBReport
         ' 
         ' cbDataProviders
         ' 
-        cbDataProviders.Enabled = False
         cbDataProviders.FormattingEnabled = True
         cbDataProviders.Location = New Point(100, 6)
         cbDataProviders.Margin = New Padding(4, 3, 4, 3)
