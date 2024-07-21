@@ -6,7 +6,7 @@
     <StartupObject>DBReport.My.MyApplication</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
-    <OptionStrict>Off</OptionStrict>
+    <OptionStrict>On</OptionStrict>
     <AssemblyVersion>1.2.1</AssemblyVersion>
   </PropertyGroup>
 
