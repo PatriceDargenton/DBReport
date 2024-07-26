@@ -6,6 +6,8 @@ All notable changes to the Surveillance project will be documented in this file.
 
 ## [1.21] - 2024-07-21 Pre-release .Net Core in the DotNetCore branch
 ### Updated
+- These providers work fine with .Net Core : MySQL (MySqlConnector), Microsoft.Data.Sqlite (but not Microsoft.Data.Sqlite.Core);
+- These providers are broken with .Net Core : MariaDb (MySqlConnector: problem with charset), Oracle (connexion refused: provider not allowed, both Oracle.ManagedDataAccess and Oracle.ManagedDataAccess.Core tested);
 - Dynamic configuration using shortcut (e.g. DBReport_Config1.exe.config read instead of DBReport.exe.config) does not work for the moment;
 - The database connection must be explicit at compile time (trying to connect at run time is no longer possible, and DbProviderFactories is no longer supported in App.Config);
 - The package for Oracle.ManagedDataAccess is not available in .Net Core, but in .Net 4 (so the connection constructor is ensured via .Net 4 backward compatibility and not directly in .Net Core);
