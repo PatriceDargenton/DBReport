@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the Surveillance project will be documented in this file.
+All notable changes to the DBReport project will be documented in this file.
 
 ## [Unreleased]
 
