@@ -86,13 +86,17 @@ Public Class frmDBReport
         Me.Text = sTxt
 
         ' 11/05/2024
-        Dim dt = Data.Common.DbProviderFactories.GetFactoryClasses()
         Dim lst As New List(Of String)
-        For Each row As Data.DataRow In dt.Rows
-            Dim str As String = CStr(row("InvariantName"))
-            lst.Add(str)
-        Next
-        lst.Sort()
+        Try
+            Dim dt = Data.Common.DbProviderFactories.GetFactoryClasses()
+            For Each row As Data.DataRow In dt.Rows
+                Dim str As String = CStr(row("InvariantName"))
+                If str = "Devart.Data.Oracle" Then Continue For
+                lst.Add(str)
+            Next
+            lst.Sort()
+        Catch ex As Exception
+        End Try
         Me.cbDataProviders.DataSource = lst
 
         ResetDisplaySettings()

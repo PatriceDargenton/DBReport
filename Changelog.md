@@ -4,6 +4,13 @@ All notable changes to the DBReport project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.21] - 2024-06-05
+### Added
+- Ngplsql: the open source .NET data provider for PostgreSQL
+
+### Updated
+- Packages updated
+
 ## [1.20] - 2024-06-21
 ### Added
 - [Enum](https://github.com/TylerBrinkley/Enums.NET) for DBProvider.
