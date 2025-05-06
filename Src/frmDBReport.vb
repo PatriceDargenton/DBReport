@@ -96,6 +96,7 @@ Public Class frmDBReport
         lst.Add(enumDBProvider.MariaDbClient.ToDescription())
         lst.Add(enumDBProvider.OracleClient.ToDescription())
         lst.Add(enumDBProvider.SQLiteClient.ToDescription())
+        lst.Add(enumDBProvider.PostgreSQL.ToDescription())
         lst.Sort()
         Me.cbDataProviders.DataSource = lst
 
