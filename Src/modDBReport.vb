@@ -127,6 +127,7 @@ Public Module modDBReport
         Public mySqlprm As New clsPrmMySql ' 05/03/2017
         Public bDisplayMySqlParameters As Boolean ' 04/05/2024
         Public bDisplayLinksBelowEachTable As Boolean ' 31/05/2024
+        Public bUseUpperCaseIdentifiers As Boolean ' 10/05/2025
 
     End Class
 
@@ -535,8 +536,10 @@ Public Module modDBReport
         Dim sTableSorting$ = ""
         If prm.bSortTables Then sTableSorting = "Name"
 
+        Dim toUpper = prm.bUseUpperCaseIdentifiers
         For Each table In dicTables.Sort(sTableSorting)
             Dim sTableTitle$ = table.Name
+            If toUpper Then sTableTitle = sTableTitle.ToUpper
             If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(table.Description) AndAlso table.Description.Length > 0 Then _
                 sTableTitle &= " : " & table.Description
             If bMySql Then
@@ -561,6 +564,7 @@ Public Module modDBReport
             Dim sAutonumberColName$ = ""
             For Each col In table.Columns
                 Dim sTitle$ = col.Name
+                If toUpper Then sTitle = sTitle.ToUpper ' 10/05/2025
                 If col.Nullable Then hsNullablesCol.Add(sTitle)
                 Dim bDefVal As Boolean = False
 
@@ -600,9 +604,9 @@ Public Module modDBReport
                 End If
 
                 If bMySql AndAlso prm.mySqlprm.bDisplayCollation Then
-                    Dim sCle$ = table.Name & ":" & col.Name
-                    If dicSqlCC.ContainsKey(sCle) Then
-                        Dim sCC$ = dicSqlCC(sCle)
+                    Dim sKey$ = table.Name & ":" & col.Name
+                    If dicSqlCC.ContainsKey(sKey) Then
+                        Dim sCC$ = dicSqlCC(sKey)
                         If sCC <> prm.mySqlprm.sColumnCollationDef Then sTitle &= " (collation : " & sCC & ")"
                     End If
                 End If
@@ -668,6 +672,7 @@ Public Module modDBReport
                 Dim sIndexName$ = "" ' 04/05/2024
                 If Not bMultipleIndex Then
                     sIndexName = ind.Columns(0).Name
+                    If toUpper Then sIndexName = sIndexName.ToUpper ' 10/05/2025
                     If sIndexName = sAutonumberColName Then bIndexAutonumberDisplayed = True ' 04/05/2024
                     If bSQLite AndAlso prm.bDisplaySQLiteSimpleIndexName Then sIndexName &= " (" & ind.Name & ")" ' 04/05/2024
                     If ind.IsUnique AndAlso hsNullablesCol.Contains(sIndexName) Then sWarnNF = sWarnNFTxt
@@ -684,14 +689,17 @@ Public Module modDBReport
                         sIndexName = sIndexName.Replace("sqlite_autoindex_", "PK_")
                         sIndexName = sIndexName.Replace("_1", "")
                     End If
+                    If toUpper Then sIndexName = sIndexName.ToUpper ' 10/05/2025
 
                     sb.AppendLine("    Index   : " & sIndexName & sPrimary & sUnique & sComma &
                     ind.Columns.Count & " fields" & " :")
-                    For Each chp In ind.Columns
+                    For Each fld In ind.Columns
                         sWarnNF = ""
-                        If ind.IsUnique AndAlso hsNullablesCol.Contains(chp.Name) Then _
+                        If ind.IsUnique AndAlso hsNullablesCol.Contains(fld.Name) Then _
                             sWarnNF = sWarnNFTxt
-                        sb.AppendLine("      field : " & chp.Name & sWarnNF)
+                        Dim sFieldName$ = fld.Name
+                        If toUpper Then sFieldName = sFieldName.ToUpper ' 10/05/2025
+                        sb.AppendLine("      field : " & sFieldName & sWarnNF)
                     Next
                 End If
 
@@ -708,8 +716,8 @@ Public Module modDBReport
             End If
 
             If prm.bDisplayLinksBelowEachTable Then ' 31/05/2024
-                If dicTableLinks.ContainsKey(sTableTitle) Then
-                    Dim lst = dicTableLinks(sTableTitle)
+                If dicTableLinks.ContainsKey(table.Name) Then
+                    Dim lst = dicTableLinks(table.Name)
                     For Each sLine In lst
                         sb.AppendLine(sLine)
                     Next
@@ -738,9 +746,11 @@ Public Module modDBReport
         Dim sTableSorting$ = ""
         If prm.bSortTables Then sTableSorting = "Name"
 
+        Dim toUpper = prm.bUseUpperCaseIdentifiers
         For Each table In dicTables.Sort(sTableSorting)
 
             Dim sTableTitle$ = table.Name
+            If toUpper Then sTableTitle = sTableTitle.ToUpper ' 10/05/2025
             If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(table.Description) AndAlso table.Description.Length > 0 Then _
                 sTableTitle &= " : " & table.Description
 
@@ -780,6 +790,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
                 Dim fk = fk0.dc
                 Dim sId$ = fk.Columns(0)
                 Dim sLinkTable$ = fk.RefersToTable
+                If toUpper Then sLinkTable = sLinkTable.ToUpper : sId = sId.ToUpper ' 10/05/2025
                 Dim sLinkName$ = ""
                 Dim sCount$ = ""
                 If prm.bDisplayLinkName Then

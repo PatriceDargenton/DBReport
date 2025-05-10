@@ -12,9 +12,12 @@ All notable changes to the DBReport project will be documented in this file.
 - The package for Oracle.ManagedDataAccess is not available in .Net Core, but in .Net 4 (so the connection constructor is ensured via .Net 4 backward compatibility and not directly in .Net Core);
 - Net 4.8 update to .Net Core (.Net 8)
 
-## [1.21] - 2024-06-05
 ### Added
-- Ngplsql: the open source .NET data provider for PostgreSQL
+- Option UseUpperCaseIdentifiers for tables, fields and indexes.
+
+## [1.21] - 2025-05-06
+### Added
+- Ngplsql: the open source .NET data provider for PostgreSQL.
 
 ### Updated
 - Packages updated
