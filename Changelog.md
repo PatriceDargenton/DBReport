@@ -4,13 +4,6 @@ All notable changes to the DBReport project will be documented in this file.
 
 ## [Unreleased]
 
-## [1.21] - 2024-06-05
-### Added
-- Ngplsql: the open source .NET data provider for PostgreSQL
-
-### Updated
-- Packages updated
-
 ## [1.22] - 2025-06-05 Pre-release .Net Core in the DotNetCore branch
 ### Updated
 - Ngplsql: the open source .NET data provider for PostgreSQL
