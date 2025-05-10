@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
     <OptionStrict>On</OptionStrict>
-    <AssemblyVersion>1.2.2</AssemblyVersion>
+    <AssemblyVersion>1.2.3</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
