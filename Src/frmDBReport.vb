@@ -171,6 +171,7 @@ Public Class frmDBReport
             My.Settings.DisplayMultipleIndexName = True
             My.Settings.RenameSQLiteMultipleIndex = True
             My.Settings.DisplaySQLiteSimpleIndexName = False
+            My.Settings.UseUpperCaseIdentifiers = False ' 10/05/2025
         End If
 
     End Sub
@@ -371,6 +372,7 @@ Public Class frmDBReport
         prm.bRenameSQLiteMultipleIndex = My.Settings.RenameSQLiteMultipleIndex
         prm.bDisplaySQLiteSimpleIndexName = My.Settings.DisplaySQLiteSimpleIndexName
         prm.bDisplayMySqlParameters = My.Settings.DisplayMySqlParameters
+        prm.bUseUpperCaseIdentifiers = My.Settings.UseUpperCaseIdentifiers ' 10/05/2025
 
         prm.mySqlprm.sSQLModeDef = My.Settings.MySqlSQLMode
         prm.mySqlprm.sInnodbStrictModeDef = My.Settings.MySqlInnodbStrictMode
