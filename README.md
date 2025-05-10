@@ -29,7 +29,8 @@ Database Administrators needs to compare database structures. Using [WinMerge](h
 - Table and field description are displayed, if available;
 - Index and links (relationships between tables) are sorted and displayed (nobody needs to care about index order);
 - Update and delete rules for relationships are displayed, if they are different to the default RESTRICT mode;
-- Duplicate constraints are displayed: the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin (e.g. the version 4.1.4).
+- Duplicate constraints are displayed: the same constraint can be added several times, and it can be hard to detect using an old version of phpMyAdmin (e.g. the version 4.1.4);
+- Dynamic configuration: a specific configuration can be loaded at runtime from a command line argument, for example: if for example Config1 is given, then the DBReport_Config1.exe.config configuration is read instead of DBReport.exe.config and also C:\Users\[MyAccount]\AppData\Local\DBReport\DBReport.exe_Url_[xxx]\1.2.0.[xxxxx]\user.config for user-specific configuration.
 
 # Database engines
 - MySql : MySql.Data.MySqlClient
