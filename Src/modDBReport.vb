@@ -530,6 +530,9 @@ Public Module modDBReport
 
         Dim dicTables As New SortDic(Of String, DatabaseSchemaReader.DataSchema.DatabaseTable)
         For Each table In schema.Tables
+            ' 18/06/2025 Ignore PostgreSQL system tables
+            If table.Name.ToUpper.StartsWith("PG_") Then Continue For
+            If table.Name.ToUpper.StartsWith("SQL_") Then Continue For
             dicTables.Add(table.Name, table)
         Next
 
@@ -629,6 +632,12 @@ Public Module modDBReport
             Dim sPreviousIndex$ = ""
 
             For Each ind In dicIndexes.Sort(sSorting)
+
+                ' 18/06/2025 For PostgreSQL system tables
+                Dim sIndexNameWithout_pkey = ind.Name.Replace("_pkey", "")
+                Dim bPrimaryKeyEndsWithIndexName = table.PrimaryKey?.Name?.EndsWith(sIndexNameWithout_pkey)
+                Dim bTableNameIsIndexName = (table.Name = sIndexNameWithout_pkey)
+
                 Dim sUnique$ = ""
                 Dim sPrimary$ = ""
                 Dim bMultipleIndex As Boolean = False
@@ -644,7 +653,8 @@ Public Module modDBReport
                     ind.Name = sSQLiteAutoIndex & table.PrimaryKey.TableName & "_1" Then bIndexNameContainsPK = True
 
                 If (Not IsNothing(table.PrimaryKey) AndAlso
-                        (table.PrimaryKey.Name = ind.Name OrElse bIndexNameContainsPK)) OrElse
+                        (table.PrimaryKey.Name = ind.Name OrElse bIndexNameContainsPK OrElse
+                        bPrimaryKeyEndsWithIndexName OrElse bTableNameIsIndexName)) OrElse
                     (bSQLite AndAlso bSQLiteAutoIndex AndAlso
                      Not IsNothing(table.PrimaryKeyColumn) AndAlso
                      table.PrimaryKeyColumn.Name = ind.Columns(0).Name) Then ' 04/05/2024
@@ -740,6 +750,9 @@ Public Module modDBReport
         ' 24/05/2024
         Dim dicTables As New SortDic(Of String, DatabaseSchemaReader.DataSchema.DatabaseTable)
         For Each table In schema.Tables
+            ' 18/06/2025 Ignore PostgreSQL system tables
+            If table.Name.ToUpper.StartsWith("PG_") Then Continue For
+            If table.Name.ToUpper.StartsWith("SQL_") Then Continue For
             dicTables.Add(table.Name, table)
         Next
 
@@ -790,6 +803,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
                 Dim fk = fk0.dc
                 Dim sId$ = fk.Columns(0)
                 Dim sLinkTable$ = fk.RefersToTable
+                If String.IsNullOrEmpty(sLinkTable) Then Continue For ' 18/06/2025
                 If toUpper Then sLinkTable = sLinkTable.ToUpper : sId = sId.ToUpper ' 10/05/2025
                 Dim sLinkName$ = ""
                 Dim sCount$ = ""
@@ -817,9 +831,9 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
                 End If
                 lst.Add(sLine)
 
-            Next
+                Next
 
-            dicTableLinks.Add(sTableTitle, lst)
+                dicTableLinks.Add(sTableTitle, lst)
 
         Next
 
