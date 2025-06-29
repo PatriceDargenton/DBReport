@@ -54,5 +54,14 @@ Temporary Items
 # Exclude all files after /bin, except this file:
 !/bin/*/DBReport_northwind_ok.txt
 !/bin/*/DBReport_northwindEF_db_ok.txt
+
+# New project folder, in order to add a test project
 /DBReport.vbproj.html
 /DBReport.vbproj.ini
+/DBReport/DBReport.vbproj.html
+/DBReport/DBReport.vbproj.ini
+/DBReport/DBReport.vbproj.user
+/DBReport/bin/northwindEF.db
+/DBReport/bin/Debug/net8.0-windows
+/DBReport/obj
+/DBReport/bin/Release/net8.0-windows
