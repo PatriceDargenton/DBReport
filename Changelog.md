@@ -4,7 +4,7 @@ All notable changes to the DBReport project will be documented in this file.
 
 ## [Unreleased]
 
-## [1.23] - 2025-05-10 Pre-release .Net Core in the DotNetCore branch
+## [1.23] - 2025-06-29
 ### Updated
 - Ngplsql: the open source .NET data provider for PostgreSQL
 - Dynamic configuration using shortcut (e.g. DBReport_Config1.exe.config read instead of DBReport.exe.config) does not work for the moment;
