@@ -86,17 +86,18 @@ Public Class frmDBReport
         Me.Text = sTxt
 
         ' 11/05/2024
+        'Dim dt = Data.Common.DbProviderFactories.GetFactoryClasses()
         Dim lst As New List(Of String)
-        Try
-            Dim dt = Data.Common.DbProviderFactories.GetFactoryClasses()
-            For Each row As Data.DataRow In dt.Rows
-                Dim str As String = CStr(row("InvariantName"))
-                If str = "Devart.Data.Oracle" Then Continue For
-                lst.Add(str)
-            Next
-            lst.Sort()
-        Catch ex As Exception
-        End Try
+        'For Each row As Data.DataRow In dt.Rows
+        '    Dim str As String = CStr(row("InvariantName"))
+        '    lst.Add(str)
+        'Next
+        lst.Add(enumDBProvider.MySqlClient.ToDescription())
+        lst.Add(enumDBProvider.MariaDbClient.ToDescription())
+        lst.Add(enumDBProvider.OracleClient.ToDescription())
+        lst.Add(enumDBProvider.SQLiteClient.ToDescription())
+        lst.Add(enumDBProvider.PostgreSQL.ToDescription())
+        lst.Sort()
         Me.cbDataProviders.DataSource = lst
 
         ResetDisplaySettings()
@@ -132,7 +133,7 @@ Public Class frmDBReport
 
         'If bDebug Then
         '    Me.tbDBProvider.Text = enumDBProvider.MySqlClient.ToDescription()
-        '    Me.cbDataProviders.Text = enumDBProvider.MySqlClient.ToDescription()
+        '    Me.cbDataProviders.Text = Me.tbDBProvider.Text
         '    Me.tbDBServer.Text = "localhost"
         '    Me.tbDBName.Text = "northwind"
         '    Me.chkAlertNotNullable.Checked = False ' northwind
@@ -144,11 +145,18 @@ Public Class frmDBReport
         '    My.Settings.DisplayMySqlParameters = True
         '    My.Settings.MySqlTableCollation = "utf8_general_ci"
         '    My.Settings.MySqlColumnCollation = "utf8_unicode_ci"
+        '    My.Settings.ForeignKeyDeleteRule = "RESTRICT"
+        '    My.Settings.ForeignKeyUpdateRule = "RESTRICT"
+
+        '    ' To compare with other database engine
+        '    'Me.chkDisplayFieldType.Checked = False
+        '    'Me.chkDisplayFieldDefaultValue.Checked = False
+
         'End If
 
         If bDebug Then
             Me.tbDBProvider.Text = enumDBProvider.SQLiteClient.ToDescription()
-            Me.cbDataProviders.Text = enumDBProvider.SQLiteClient.ToDescription()
+            Me.cbDataProviders.Text = Me.tbDBProvider.Text
             ' northwindEF for SQLite database:
             ' https://system.data.sqlite.org/index.html/doc/trunk/www/index.wiki
             ' https://system.data.sqlite.org/index.html/doc/trunk/www/downloads.wiki

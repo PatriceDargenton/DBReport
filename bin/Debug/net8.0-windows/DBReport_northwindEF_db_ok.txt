@@ -1,11 +1,10 @@
 
-Database report 1.15
+Database report 1.20
 --------------------
 
 Database : northwindEF.db
 Tables   : Sorted
 Columns  : Sorted
-Indexes  : Sorted
 
 Categories
   CategoryID (INTEGER) (autonumber)
@@ -199,4 +198,4 @@ Suppliers
 Territories
   Regions : RegionID
 
-Report created : 24/05/2024 10:38:54 -> 24/05/2024 10:39:06 : 11.5 sec.
+Report created : 11/07/2024 07:18:01 -> 11/07/2024 07:18:02 : 0.7 sec.

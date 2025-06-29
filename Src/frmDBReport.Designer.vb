@@ -33,345 +33,372 @@ Partial Class frmDBReport
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
+        components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDBReport))
-        Me.cmdDBReport = New System.Windows.Forms.Button()
-        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.tbDBName = New System.Windows.Forms.TextBox()
-        Me.lblDBName = New System.Windows.Forms.Label()
-        Me.lblUserName = New System.Windows.Forms.Label()
-        Me.tbUserName = New System.Windows.Forms.TextBox()
-        Me.lblUserPassword = New System.Windows.Forms.Label()
-        Me.tbUserPassword = New System.Windows.Forms.TextBox()
-        Me.lblDBServer = New System.Windows.Forms.Label()
-        Me.tbDBServer = New System.Windows.Forms.TextBox()
-        Me.lblDBProvider = New System.Windows.Forms.Label()
-        Me.tbDBProvider = New System.Windows.Forms.TextBox()
-        Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.cmdResetSettings = New System.Windows.Forms.Button()
-        Me.cbDataProviders = New System.Windows.Forms.ComboBox()
-        Me.lblInfo = New System.Windows.Forms.Label()
-        Me.cmdCancel = New System.Windows.Forms.Button()
-        Me.chkDisplayFieldType = New System.Windows.Forms.CheckBox()
-        Me.chkDisplayFieldDefaultValue = New System.Windows.Forms.CheckBox()
-        Me.chkDisplayLinkName = New System.Windows.Forms.CheckBox()
-        Me.chkSortColumns = New System.Windows.Forms.CheckBox()
-        Me.chkSortIndexes = New System.Windows.Forms.CheckBox()
-        Me.chkSortLinks = New System.Windows.Forms.CheckBox()
-        Me.chkAlertNotNullable = New System.Windows.Forms.CheckBox()
-        Me.chkDisplayDescription = New System.Windows.Forms.CheckBox()
-        Me.chkDisplayTableEngine = New System.Windows.Forms.CheckBox()
-        Me.chkDisplayCollation = New System.Windows.Forms.CheckBox()
-        Me.chkDisplayLinksBelowEachTable = New System.Windows.Forms.CheckBox()
-        Me.chkSortTables = New System.Windows.Forms.CheckBox()
-        Me.StatusStrip1.SuspendLayout()
-        Me.SuspendLayout()
-        '
-        'cmdDBReport
-        '
-        Me.cmdDBReport.Location = New System.Drawing.Point(278, 32)
-        Me.cmdDBReport.Name = "cmdDBReport"
-        Me.cmdDBReport.Size = New System.Drawing.Size(70, 38)
-        Me.cmdDBReport.TabIndex = 23
-        Me.cmdDBReport.Text = "DB report"
-        Me.cmdDBReport.UseVisualStyleBackColor = True
-        '
-        'StatusStrip1
-        '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 349)
-        Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(578, 22)
-        Me.StatusStrip1.TabIndex = 27
-        Me.StatusStrip1.Text = "StatusStrip1"
-        '
-        'ToolStripStatusLabel1
-        '
-        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
-        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(0, 17)
-        '
-        'tbDBName
-        '
-        Me.tbDBName.Location = New System.Drawing.Point(86, 84)
-        Me.tbDBName.Name = "tbDBName"
-        Me.tbDBName.Size = New System.Drawing.Size(175, 20)
-        Me.tbDBName.TabIndex = 6
-        '
-        'lblDBName
-        '
-        Me.lblDBName.AutoSize = True
-        Me.lblDBName.Location = New System.Drawing.Point(12, 87)
-        Me.lblDBName.Name = "lblDBName"
-        Me.lblDBName.Size = New System.Drawing.Size(51, 13)
-        Me.lblDBName.TabIndex = 5
-        Me.lblDBName.Text = "DB name"
-        '
-        'lblUserName
-        '
-        Me.lblUserName.AutoSize = True
-        Me.lblUserName.Location = New System.Drawing.Point(12, 113)
-        Me.lblUserName.Name = "lblUserName"
-        Me.lblUserName.Size = New System.Drawing.Size(58, 13)
-        Me.lblUserName.TabIndex = 7
-        Me.lblUserName.Text = "User name"
-        '
-        'tbUserName
-        '
-        Me.tbUserName.Location = New System.Drawing.Point(86, 110)
-        Me.tbUserName.Name = "tbUserName"
-        Me.tbUserName.Size = New System.Drawing.Size(175, 20)
-        Me.tbUserName.TabIndex = 8
-        '
-        'lblUserPassword
-        '
-        Me.lblUserPassword.AutoSize = True
-        Me.lblUserPassword.Location = New System.Drawing.Point(13, 139)
-        Me.lblUserPassword.Name = "lblUserPassword"
-        Me.lblUserPassword.Size = New System.Drawing.Size(53, 13)
-        Me.lblUserPassword.TabIndex = 9
-        Me.lblUserPassword.Text = "Password"
-        '
-        'tbUserPassword
-        '
-        Me.tbUserPassword.Location = New System.Drawing.Point(86, 136)
-        Me.tbUserPassword.Name = "tbUserPassword"
-        Me.tbUserPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.tbUserPassword.Size = New System.Drawing.Size(175, 20)
-        Me.tbUserPassword.TabIndex = 10
-        '
-        'lblDBServer
-        '
-        Me.lblDBServer.AutoSize = True
-        Me.lblDBServer.Location = New System.Drawing.Point(12, 61)
-        Me.lblDBServer.Name = "lblDBServer"
-        Me.lblDBServer.Size = New System.Drawing.Size(54, 13)
-        Me.lblDBServer.TabIndex = 3
-        Me.lblDBServer.Text = "DB server"
-        '
-        'tbDBServer
-        '
-        Me.tbDBServer.Location = New System.Drawing.Point(86, 58)
-        Me.tbDBServer.Name = "tbDBServer"
-        Me.tbDBServer.Size = New System.Drawing.Size(175, 20)
-        Me.tbDBServer.TabIndex = 4
-        '
-        'lblDBProvider
-        '
-        Me.lblDBProvider.AutoSize = True
-        Me.lblDBProvider.Location = New System.Drawing.Point(12, 35)
-        Me.lblDBProvider.Name = "lblDBProvider"
-        Me.lblDBProvider.Size = New System.Drawing.Size(63, 13)
-        Me.lblDBProvider.TabIndex = 1
-        Me.lblDBProvider.Text = "DB provider"
-        '
-        'tbDBProvider
-        '
-        Me.tbDBProvider.Location = New System.Drawing.Point(86, 32)
-        Me.tbDBProvider.Name = "tbDBProvider"
-        Me.tbDBProvider.Size = New System.Drawing.Size(175, 20)
-        Me.tbDBProvider.TabIndex = 2
-        '
-        'cmdResetSettings
-        '
-        Me.cmdResetSettings.Location = New System.Drawing.Point(447, 32)
-        Me.cmdResetSettings.Name = "cmdResetSettings"
-        Me.cmdResetSettings.Size = New System.Drawing.Size(70, 38)
-        Me.cmdResetSettings.TabIndex = 25
-        Me.cmdResetSettings.Text = "Default"
-        Me.ToolTip1.SetToolTip(Me.cmdResetSettings, "Click to reset settings to their default value")
-        Me.cmdResetSettings.UseVisualStyleBackColor = True
-        '
-        'cbDataProviders
-        '
-        Me.cbDataProviders.FormattingEnabled = True
-        Me.cbDataProviders.Location = New System.Drawing.Point(86, 5)
-        Me.cbDataProviders.Name = "cbDataProviders"
-        Me.cbDataProviders.Size = New System.Drawing.Size(175, 21)
-        Me.cbDataProviders.TabIndex = 0
-        Me.ToolTip1.SetToolTip(Me.cbDataProviders, "List of installed system database providers")
-        '
-        'lblInfo
-        '
-        Me.lblInfo.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblInfo.Location = New System.Drawing.Point(13, 248)
-        Me.lblInfo.Name = "lblInfo"
-        Me.lblInfo.Size = New System.Drawing.Size(553, 101)
-        Me.lblInfo.TabIndex = 26
-        Me.lblInfo.Text = "Messages"
-        '
-        'cmdCancel
-        '
-        Me.cmdCancel.Enabled = False
-        Me.cmdCancel.Location = New System.Drawing.Point(363, 32)
-        Me.cmdCancel.Name = "cmdCancel"
-        Me.cmdCancel.Size = New System.Drawing.Size(70, 38)
-        Me.cmdCancel.TabIndex = 24
-        Me.cmdCancel.Text = "Cancel"
-        Me.cmdCancel.UseVisualStyleBackColor = True
-        '
-        'chkDisplayFieldType
-        '
-        Me.chkDisplayFieldType.AutoSize = True
-        Me.chkDisplayFieldType.Location = New System.Drawing.Point(278, 110)
-        Me.chkDisplayFieldType.Name = "chkDisplayFieldType"
-        Me.chkDisplayFieldType.Size = New System.Drawing.Size(105, 17)
-        Me.chkDisplayFieldType.TabIndex = 12
-        Me.chkDisplayFieldType.Text = "Display field type"
-        Me.chkDisplayFieldType.UseVisualStyleBackColor = True
-        '
-        'chkDisplayFieldDefaultValue
-        '
-        Me.chkDisplayFieldDefaultValue.AutoSize = True
-        Me.chkDisplayFieldDefaultValue.Location = New System.Drawing.Point(278, 137)
-        Me.chkDisplayFieldDefaultValue.Name = "chkDisplayFieldDefaultValue"
-        Me.chkDisplayFieldDefaultValue.Size = New System.Drawing.Size(146, 17)
-        Me.chkDisplayFieldDefaultValue.TabIndex = 13
-        Me.chkDisplayFieldDefaultValue.Text = "Display field default value"
-        Me.chkDisplayFieldDefaultValue.UseVisualStyleBackColor = True
-        '
-        'chkDisplayLinkName
-        '
-        Me.chkDisplayLinkName.AutoSize = True
-        Me.chkDisplayLinkName.Location = New System.Drawing.Point(278, 163)
-        Me.chkDisplayLinkName.Name = "chkDisplayLinkName"
-        Me.chkDisplayLinkName.Size = New System.Drawing.Size(108, 17)
-        Me.chkDisplayLinkName.TabIndex = 14
-        Me.chkDisplayLinkName.Text = "Display link name"
-        Me.chkDisplayLinkName.UseVisualStyleBackColor = True
-        '
-        'chkSortColumns
-        '
-        Me.chkSortColumns.AutoSize = True
-        Me.chkSortColumns.Location = New System.Drawing.Point(452, 110)
-        Me.chkSortColumns.Name = "chkSortColumns"
-        Me.chkSortColumns.Size = New System.Drawing.Size(87, 17)
-        Me.chkSortColumns.TabIndex = 18
-        Me.chkSortColumns.Text = "Sort columns"
-        Me.chkSortColumns.UseVisualStyleBackColor = True
-        '
-        'chkSortIndexes
-        '
-        Me.chkSortIndexes.AutoSize = True
-        Me.chkSortIndexes.Location = New System.Drawing.Point(452, 137)
-        Me.chkSortIndexes.Name = "chkSortIndexes"
-        Me.chkSortIndexes.Size = New System.Drawing.Size(84, 17)
-        Me.chkSortIndexes.TabIndex = 19
-        Me.chkSortIndexes.Text = "Sort indexes"
-        Me.chkSortIndexes.UseVisualStyleBackColor = True
-        '
-        'chkSortLinks
-        '
-        Me.chkSortLinks.AutoSize = True
-        Me.chkSortLinks.Location = New System.Drawing.Point(452, 163)
-        Me.chkSortLinks.Name = "chkSortLinks"
-        Me.chkSortLinks.Size = New System.Drawing.Size(69, 17)
-        Me.chkSortLinks.TabIndex = 20
-        Me.chkSortLinks.Text = "Sort links"
-        Me.chkSortLinks.UseVisualStyleBackColor = True
-        '
-        'chkAlertNotNullable
-        '
-        Me.chkAlertNotNullable.AutoSize = True
-        Me.chkAlertNotNullable.Location = New System.Drawing.Point(452, 190)
-        Me.chkAlertNotNullable.Name = "chkAlertNotNullable"
-        Me.chkAlertNotNullable.Size = New System.Drawing.Size(104, 17)
-        Me.chkAlertNotNullable.TabIndex = 21
-        Me.chkAlertNotNullable.Text = "Alert not nullable"
-        Me.chkAlertNotNullable.UseVisualStyleBackColor = True
-        '
-        'chkDisplayDescription
-        '
-        Me.chkDisplayDescription.AutoSize = True
-        Me.chkDisplayDescription.Location = New System.Drawing.Point(278, 190)
-        Me.chkDisplayDescription.Name = "chkDisplayDescription"
-        Me.chkDisplayDescription.Size = New System.Drawing.Size(114, 17)
-        Me.chkDisplayDescription.TabIndex = 15
-        Me.chkDisplayDescription.Text = "Display description"
-        Me.chkDisplayDescription.UseVisualStyleBackColor = True
-        '
-        'chkDisplayTableEngine
-        '
-        Me.chkDisplayTableEngine.AutoSize = True
-        Me.chkDisplayTableEngine.Location = New System.Drawing.Point(278, 217)
-        Me.chkDisplayTableEngine.Name = "chkDisplayTableEngine"
-        Me.chkDisplayTableEngine.Size = New System.Drawing.Size(121, 17)
-        Me.chkDisplayTableEngine.TabIndex = 16
-        Me.chkDisplayTableEngine.Text = "Display table engine"
-        Me.chkDisplayTableEngine.UseVisualStyleBackColor = True
-        '
-        'chkDisplayCollation
-        '
-        Me.chkDisplayCollation.AutoSize = True
-        Me.chkDisplayCollation.Location = New System.Drawing.Point(452, 217)
-        Me.chkDisplayCollation.Name = "chkDisplayCollation"
-        Me.chkDisplayCollation.Size = New System.Drawing.Size(102, 17)
-        Me.chkDisplayCollation.TabIndex = 22
-        Me.chkDisplayCollation.Text = "Display collation"
-        Me.chkDisplayCollation.UseVisualStyleBackColor = True
-        '
-        'chkDisplayLinksBelowEachTable
-        '
-        Me.chkDisplayLinksBelowEachTable.AutoSize = True
-        Me.chkDisplayLinksBelowEachTable.Location = New System.Drawing.Point(278, 87)
-        Me.chkDisplayLinksBelowEachTable.Name = "chkDisplayLinksBelowEachTable"
-        Me.chkDisplayLinksBelowEachTable.Size = New System.Drawing.Size(168, 17)
-        Me.chkDisplayLinksBelowEachTable.TabIndex = 11
-        Me.chkDisplayLinksBelowEachTable.Text = "Display links below each table"
-        Me.chkDisplayLinksBelowEachTable.UseVisualStyleBackColor = True
-        '
-        'chkSortTables
-        '
-        Me.chkSortTables.AutoSize = True
-        Me.chkSortTables.Location = New System.Drawing.Point(452, 87)
-        Me.chkSortTables.Name = "chkSortTables"
-        Me.chkSortTables.Size = New System.Drawing.Size(76, 17)
-        Me.chkSortTables.TabIndex = 17
-        Me.chkSortTables.Text = "Sort tables"
-        Me.chkSortTables.UseVisualStyleBackColor = True
-        '
-        'frmDBReport
-        '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(578, 371)
-        Me.Controls.Add(Me.chkSortTables)
-        Me.Controls.Add(Me.chkDisplayLinksBelowEachTable)
-        Me.Controls.Add(Me.cbDataProviders)
-        Me.Controls.Add(Me.chkDisplayCollation)
-        Me.Controls.Add(Me.chkDisplayTableEngine)
-        Me.Controls.Add(Me.chkDisplayDescription)
-        Me.Controls.Add(Me.chkAlertNotNullable)
-        Me.Controls.Add(Me.chkSortLinks)
-        Me.Controls.Add(Me.chkSortIndexes)
-        Me.Controls.Add(Me.chkSortColumns)
-        Me.Controls.Add(Me.chkDisplayLinkName)
-        Me.Controls.Add(Me.chkDisplayFieldDefaultValue)
-        Me.Controls.Add(Me.chkDisplayFieldType)
-        Me.Controls.Add(Me.cmdResetSettings)
-        Me.Controls.Add(Me.cmdCancel)
-        Me.Controls.Add(Me.lblInfo)
-        Me.Controls.Add(Me.lblDBProvider)
-        Me.Controls.Add(Me.tbDBProvider)
-        Me.Controls.Add(Me.lblDBServer)
-        Me.Controls.Add(Me.tbDBServer)
-        Me.Controls.Add(Me.lblUserPassword)
-        Me.Controls.Add(Me.tbUserPassword)
-        Me.Controls.Add(Me.lblUserName)
-        Me.Controls.Add(Me.tbUserName)
-        Me.Controls.Add(Me.lblDBName)
-        Me.Controls.Add(Me.tbDBName)
-        Me.Controls.Add(Me.StatusStrip1)
-        Me.Controls.Add(Me.cmdDBReport)
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "frmDBReport"
-        Me.Text = "DB Report"
-        Me.StatusStrip1.ResumeLayout(False)
-        Me.StatusStrip1.PerformLayout()
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+        cmdDBReport = New Button()
+        StatusStrip1 = New StatusStrip()
+        ToolStripStatusLabel1 = New ToolStripStatusLabel()
+        tbDBName = New TextBox()
+        lblDBName = New Label()
+        lblUserName = New Label()
+        tbUserName = New TextBox()
+        lblUserPassword = New Label()
+        tbUserPassword = New TextBox()
+        lblDBServer = New Label()
+        tbDBServer = New TextBox()
+        lblDBProvider = New Label()
+        tbDBProvider = New TextBox()
+        ToolTip1 = New ToolTip(components)
+        cmdResetSettings = New Button()
+        cbDataProviders = New ComboBox()
+        lblInfo = New Label()
+        cmdCancel = New Button()
+        chkDisplayFieldType = New CheckBox()
+        chkDisplayFieldDefaultValue = New CheckBox()
+        chkDisplayLinkName = New CheckBox()
+        chkSortColumns = New CheckBox()
+        chkSortIndexes = New CheckBox()
+        chkSortLinks = New CheckBox()
+        chkAlertNotNullable = New CheckBox()
+        chkDisplayDescription = New CheckBox()
+        chkDisplayTableEngine = New CheckBox()
+        chkDisplayCollation = New CheckBox()
+        chkDisplayLinksBelowEachTable = New CheckBox()
+        chkSortTables = New CheckBox()
+        StatusStrip1.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' cmdDBReport
+        ' 
+        cmdDBReport.Location = New Point(324, 37)
+        cmdDBReport.Margin = New Padding(4, 3, 4, 3)
+        cmdDBReport.Name = "cmdDBReport"
+        cmdDBReport.Size = New Size(82, 44)
+        cmdDBReport.TabIndex = 23
+        cmdDBReport.Text = "DB report"
+        cmdDBReport.UseVisualStyleBackColor = True
+        ' 
+        ' StatusStrip1
+        ' 
+        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1})
+        StatusStrip1.Location = New Point(0, 406)
+        StatusStrip1.Name = "StatusStrip1"
+        StatusStrip1.Padding = New Padding(1, 0, 16, 0)
+        StatusStrip1.Size = New Size(674, 22)
+        StatusStrip1.TabIndex = 27
+        StatusStrip1.Text = "StatusStrip1"
+        ' 
+        ' ToolStripStatusLabel1
+        ' 
+        ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        ToolStripStatusLabel1.Size = New Size(0, 17)
+        ' 
+        ' tbDBName
+        ' 
+        tbDBName.Location = New Point(100, 97)
+        tbDBName.Margin = New Padding(4, 3, 4, 3)
+        tbDBName.Name = "tbDBName"
+        tbDBName.Size = New Size(204, 23)
+        tbDBName.TabIndex = 6
+        ' 
+        ' lblDBName
+        ' 
+        lblDBName.AutoSize = True
+        lblDBName.Location = New Point(14, 100)
+        lblDBName.Margin = New Padding(4, 0, 4, 0)
+        lblDBName.Name = "lblDBName"
+        lblDBName.Size = New Size(55, 15)
+        lblDBName.TabIndex = 5
+        lblDBName.Text = "DB name"
+        ' 
+        ' lblUserName
+        ' 
+        lblUserName.AutoSize = True
+        lblUserName.Location = New Point(14, 130)
+        lblUserName.Margin = New Padding(4, 0, 4, 0)
+        lblUserName.Name = "lblUserName"
+        lblUserName.Size = New Size(63, 15)
+        lblUserName.TabIndex = 7
+        lblUserName.Text = "User name"
+        ' 
+        ' tbUserName
+        ' 
+        tbUserName.Location = New Point(100, 127)
+        tbUserName.Margin = New Padding(4, 3, 4, 3)
+        tbUserName.Name = "tbUserName"
+        tbUserName.Size = New Size(204, 23)
+        tbUserName.TabIndex = 8
+        ' 
+        ' lblUserPassword
+        ' 
+        lblUserPassword.AutoSize = True
+        lblUserPassword.Location = New Point(15, 160)
+        lblUserPassword.Margin = New Padding(4, 0, 4, 0)
+        lblUserPassword.Name = "lblUserPassword"
+        lblUserPassword.Size = New Size(57, 15)
+        lblUserPassword.TabIndex = 9
+        lblUserPassword.Text = "Password"
+        ' 
+        ' tbUserPassword
+        ' 
+        tbUserPassword.Location = New Point(100, 157)
+        tbUserPassword.Margin = New Padding(4, 3, 4, 3)
+        tbUserPassword.Name = "tbUserPassword"
+        tbUserPassword.PasswordChar = "*"c
+        tbUserPassword.Size = New Size(204, 23)
+        tbUserPassword.TabIndex = 10
+        ' 
+        ' lblDBServer
+        ' 
+        lblDBServer.AutoSize = True
+        lblDBServer.Location = New Point(14, 70)
+        lblDBServer.Margin = New Padding(4, 0, 4, 0)
+        lblDBServer.Name = "lblDBServer"
+        lblDBServer.Size = New Size(56, 15)
+        lblDBServer.TabIndex = 3
+        lblDBServer.Text = "DB server"
+        ' 
+        ' tbDBServer
+        ' 
+        tbDBServer.Location = New Point(100, 67)
+        tbDBServer.Margin = New Padding(4, 3, 4, 3)
+        tbDBServer.Name = "tbDBServer"
+        tbDBServer.Size = New Size(204, 23)
+        tbDBServer.TabIndex = 4
+        ' 
+        ' lblDBProvider
+        ' 
+        lblDBProvider.AutoSize = True
+        lblDBProvider.Location = New Point(14, 40)
+        lblDBProvider.Margin = New Padding(4, 0, 4, 0)
+        lblDBProvider.Name = "lblDBProvider"
+        lblDBProvider.Size = New Size(69, 15)
+        lblDBProvider.TabIndex = 1
+        lblDBProvider.Text = "DB provider"
+        ' 
+        ' tbDBProvider
+        ' 
+        tbDBProvider.Location = New Point(100, 37)
+        tbDBProvider.Margin = New Padding(4, 3, 4, 3)
+        tbDBProvider.Name = "tbDBProvider"
+        tbDBProvider.Size = New Size(204, 23)
+        tbDBProvider.TabIndex = 2
+        ' 
+        ' cmdResetSettings
+        ' 
+        cmdResetSettings.Location = New Point(522, 37)
+        cmdResetSettings.Margin = New Padding(4, 3, 4, 3)
+        cmdResetSettings.Name = "cmdResetSettings"
+        cmdResetSettings.Size = New Size(82, 44)
+        cmdResetSettings.TabIndex = 25
+        cmdResetSettings.Text = "Default"
+        ToolTip1.SetToolTip(cmdResetSettings, "Click to reset settings to their default value")
+        cmdResetSettings.UseVisualStyleBackColor = True
+        ' 
+        ' cbDataProviders
+        ' 
+        cbDataProviders.FormattingEnabled = True
+        cbDataProviders.Location = New Point(100, 6)
+        cbDataProviders.Margin = New Padding(4, 3, 4, 3)
+        cbDataProviders.Name = "cbDataProviders"
+        cbDataProviders.Size = New Size(204, 23)
+        cbDataProviders.TabIndex = 0
+        ToolTip1.SetToolTip(cbDataProviders, "List of installed system database providers")
+        ' 
+        ' lblInfo
+        ' 
+        lblInfo.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        lblInfo.Location = New Point(15, 286)
+        lblInfo.Margin = New Padding(4, 0, 4, 0)
+        lblInfo.Name = "lblInfo"
+        lblInfo.Size = New Size(645, 117)
+        lblInfo.TabIndex = 26
+        lblInfo.Text = "Messages"
+        ' 
+        ' cmdCancel
+        ' 
+        cmdCancel.Enabled = False
+        cmdCancel.Location = New Point(424, 37)
+        cmdCancel.Margin = New Padding(4, 3, 4, 3)
+        cmdCancel.Name = "cmdCancel"
+        cmdCancel.Size = New Size(82, 44)
+        cmdCancel.TabIndex = 24
+        cmdCancel.Text = "Cancel"
+        cmdCancel.UseVisualStyleBackColor = True
+        ' 
+        ' chkDisplayFieldType
+        ' 
+        chkDisplayFieldType.AutoSize = True
+        chkDisplayFieldType.Location = New Point(324, 127)
+        chkDisplayFieldType.Margin = New Padding(4, 3, 4, 3)
+        chkDisplayFieldType.Name = "chkDisplayFieldType"
+        chkDisplayFieldType.Size = New Size(116, 19)
+        chkDisplayFieldType.TabIndex = 12
+        chkDisplayFieldType.Text = "Display field type"
+        chkDisplayFieldType.UseVisualStyleBackColor = True
+        ' 
+        ' chkDisplayFieldDefaultValue
+        ' 
+        chkDisplayFieldDefaultValue.AutoSize = True
+        chkDisplayFieldDefaultValue.Location = New Point(324, 158)
+        chkDisplayFieldDefaultValue.Margin = New Padding(4, 3, 4, 3)
+        chkDisplayFieldDefaultValue.Name = "chkDisplayFieldDefaultValue"
+        chkDisplayFieldDefaultValue.Size = New Size(161, 19)
+        chkDisplayFieldDefaultValue.TabIndex = 13
+        chkDisplayFieldDefaultValue.Text = "Display field default value"
+        chkDisplayFieldDefaultValue.UseVisualStyleBackColor = True
+        ' 
+        ' chkDisplayLinkName
+        ' 
+        chkDisplayLinkName.AutoSize = True
+        chkDisplayLinkName.Location = New Point(324, 188)
+        chkDisplayLinkName.Margin = New Padding(4, 3, 4, 3)
+        chkDisplayLinkName.Name = "chkDisplayLinkName"
+        chkDisplayLinkName.Size = New Size(119, 19)
+        chkDisplayLinkName.TabIndex = 14
+        chkDisplayLinkName.Text = "Display link name"
+        chkDisplayLinkName.UseVisualStyleBackColor = True
+        ' 
+        ' chkSortColumns
+        ' 
+        chkSortColumns.AutoSize = True
+        chkSortColumns.Location = New Point(527, 127)
+        chkSortColumns.Margin = New Padding(4, 3, 4, 3)
+        chkSortColumns.Name = "chkSortColumns"
+        chkSortColumns.Size = New Size(96, 19)
+        chkSortColumns.TabIndex = 18
+        chkSortColumns.Text = "Sort columns"
+        chkSortColumns.UseVisualStyleBackColor = True
+        ' 
+        ' chkSortIndexes
+        ' 
+        chkSortIndexes.AutoSize = True
+        chkSortIndexes.Location = New Point(527, 158)
+        chkSortIndexes.Margin = New Padding(4, 3, 4, 3)
+        chkSortIndexes.Name = "chkSortIndexes"
+        chkSortIndexes.Size = New Size(90, 19)
+        chkSortIndexes.TabIndex = 19
+        chkSortIndexes.Text = "Sort indexes"
+        chkSortIndexes.UseVisualStyleBackColor = True
+        ' 
+        ' chkSortLinks
+        ' 
+        chkSortLinks.AutoSize = True
+        chkSortLinks.Location = New Point(527, 188)
+        chkSortLinks.Margin = New Padding(4, 3, 4, 3)
+        chkSortLinks.Name = "chkSortLinks"
+        chkSortLinks.Size = New Size(74, 19)
+        chkSortLinks.TabIndex = 20
+        chkSortLinks.Text = "Sort links"
+        chkSortLinks.UseVisualStyleBackColor = True
+        ' 
+        ' chkAlertNotNullable
+        ' 
+        chkAlertNotNullable.AutoSize = True
+        chkAlertNotNullable.Location = New Point(527, 219)
+        chkAlertNotNullable.Margin = New Padding(4, 3, 4, 3)
+        chkAlertNotNullable.Name = "chkAlertNotNullable"
+        chkAlertNotNullable.Size = New Size(117, 19)
+        chkAlertNotNullable.TabIndex = 21
+        chkAlertNotNullable.Text = "Alert not nullable"
+        chkAlertNotNullable.UseVisualStyleBackColor = True
+        ' 
+        ' chkDisplayDescription
+        ' 
+        chkDisplayDescription.AutoSize = True
+        chkDisplayDescription.Location = New Point(324, 219)
+        chkDisplayDescription.Margin = New Padding(4, 3, 4, 3)
+        chkDisplayDescription.Name = "chkDisplayDescription"
+        chkDisplayDescription.Size = New Size(126, 19)
+        chkDisplayDescription.TabIndex = 15
+        chkDisplayDescription.Text = "Display description"
+        chkDisplayDescription.UseVisualStyleBackColor = True
+        ' 
+        ' chkDisplayTableEngine
+        ' 
+        chkDisplayTableEngine.AutoSize = True
+        chkDisplayTableEngine.Location = New Point(324, 250)
+        chkDisplayTableEngine.Margin = New Padding(4, 3, 4, 3)
+        chkDisplayTableEngine.Name = "chkDisplayTableEngine"
+        chkDisplayTableEngine.Size = New Size(132, 19)
+        chkDisplayTableEngine.TabIndex = 16
+        chkDisplayTableEngine.Text = "Display table engine"
+        chkDisplayTableEngine.UseVisualStyleBackColor = True
+        ' 
+        ' chkDisplayCollation
+        ' 
+        chkDisplayCollation.AutoSize = True
+        chkDisplayCollation.Location = New Point(527, 250)
+        chkDisplayCollation.Margin = New Padding(4, 3, 4, 3)
+        chkDisplayCollation.Name = "chkDisplayCollation"
+        chkDisplayCollation.Size = New Size(113, 19)
+        chkDisplayCollation.TabIndex = 22
+        chkDisplayCollation.Text = "Display collation"
+        chkDisplayCollation.UseVisualStyleBackColor = True
+        ' 
+        ' chkDisplayLinksBelowEachTable
+        ' 
+        chkDisplayLinksBelowEachTable.AutoSize = True
+        chkDisplayLinksBelowEachTable.Location = New Point(324, 100)
+        chkDisplayLinksBelowEachTable.Margin = New Padding(4, 3, 4, 3)
+        chkDisplayLinksBelowEachTable.Name = "chkDisplayLinksBelowEachTable"
+        chkDisplayLinksBelowEachTable.Size = New Size(183, 19)
+        chkDisplayLinksBelowEachTable.TabIndex = 11
+        chkDisplayLinksBelowEachTable.Text = "Display links below each table"
+        chkDisplayLinksBelowEachTable.UseVisualStyleBackColor = True
+        ' 
+        ' chkSortTables
+        ' 
+        chkSortTables.AutoSize = True
+        chkSortTables.Location = New Point(527, 100)
+        chkSortTables.Margin = New Padding(4, 3, 4, 3)
+        chkSortTables.Name = "chkSortTables"
+        chkSortTables.Size = New Size(81, 19)
+        chkSortTables.TabIndex = 17
+        chkSortTables.Text = "Sort tables"
+        chkSortTables.UseVisualStyleBackColor = True
+        ' 
+        ' frmDBReport
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(674, 428)
+        Controls.Add(chkSortTables)
+        Controls.Add(chkDisplayLinksBelowEachTable)
+        Controls.Add(cbDataProviders)
+        Controls.Add(chkDisplayCollation)
+        Controls.Add(chkDisplayTableEngine)
+        Controls.Add(chkDisplayDescription)
+        Controls.Add(chkAlertNotNullable)
+        Controls.Add(chkSortLinks)
+        Controls.Add(chkSortIndexes)
+        Controls.Add(chkSortColumns)
+        Controls.Add(chkDisplayLinkName)
+        Controls.Add(chkDisplayFieldDefaultValue)
+        Controls.Add(chkDisplayFieldType)
+        Controls.Add(cmdResetSettings)
+        Controls.Add(cmdCancel)
+        Controls.Add(lblInfo)
+        Controls.Add(lblDBProvider)
+        Controls.Add(tbDBProvider)
+        Controls.Add(lblDBServer)
+        Controls.Add(tbDBServer)
+        Controls.Add(lblUserPassword)
+        Controls.Add(tbUserPassword)
+        Controls.Add(lblUserName)
+        Controls.Add(tbUserName)
+        Controls.Add(lblDBName)
+        Controls.Add(tbDBName)
+        Controls.Add(StatusStrip1)
+        Controls.Add(cmdDBReport)
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        Margin = New Padding(4, 3, 4, 3)
+        Name = "frmDBReport"
+        Text = "DB Report"
+        StatusStrip1.ResumeLayout(False)
+        StatusStrip1.PerformLayout()
+        ResumeLayout(False)
+        PerformLayout()
 
     End Sub
     Friend WithEvents cmdDBReport As System.Windows.Forms.Button

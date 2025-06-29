@@ -1,5 +1,5 @@
 
-Database report 1.15
+Database report 1.20
 --------------------
 
 Login    : root
@@ -7,7 +7,6 @@ Server   : localhost
 Database : northwind
 Tables   : Sorted
 Columns  : Sorted
-Indexes  : Sorted
 
 MySql parameters :
 version_comment : MySQL Community Server (GPL)
@@ -171,4 +170,4 @@ shippers
 
 suppliers
 
-Report created : 24/05/2024 11:05:03 -> 24/05/2024 11:05:13 : 9.3 sec.
+Report created : 21/07/2024 11:29:30 -> 21/07/2024 11:29:37 : 7.2 sec.

@@ -136,9 +136,9 @@ Retry:
         End Using
 
         ' Analyze the BOM
-        If bom(0) = &H2B AndAlso bom(1) = &H2F AndAlso bom(2) = &H76 Then
-            Return Encoding.UTF7
-        End If
+        'If bom(0) = &H2B AndAlso bom(1) = &H2F AndAlso bom(2) = &H76 Then
+        '    Return Encoding.UTF7
+        'End If
         If bom(0) = &HEF AndAlso bom(1) = &HBB AndAlso bom(2) = &HBF Then
             Return Encoding.UTF8
         End If
@@ -253,6 +253,7 @@ Retry:
         Dim p As New Process
         p.StartInfo = New ProcessStartInfo(sFilePath)
         p.StartInfo.Arguments = sArguments
+        p.StartInfo.UseShellExecute = True
         If bMaximized Then p.StartInfo.WindowStyle = ProcessWindowStyle.Maximized
         p.Start()
 

@@ -1,198 +1,61 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FB9313CA-4C53-406E-B432-DC6FC4154A48}</ProjectGuid>
     <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <StartupObject>DBReport.My.MyApplication</StartupObject>
-    <RootNamespace>DBReport</RootNamespace>
-    <AssemblyName>DBReport</AssemblyName>
-    <FileAlignment>512</FileAlignment>
+    <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>DBReport.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <Prefer32Bit>false</Prefer32Bit>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>DBReport.xml</DocumentationFile>
-    <NoWarn>
-    </NoWarn>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <Prefer32Bit>false</Prefer32Bit>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionExplicit>On</OptionExplicit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <OptionCompare>Binary</OptionCompare>
-  </PropertyGroup>
-  <PropertyGroup>
     <OptionStrict>On</OptionStrict>
+    <AssemblyVersion>1.2.3</AssemblyVersion>
   </PropertyGroup>
-  <PropertyGroup>
-    <OptionInfer>On</OptionInfer>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>Src\DBReport.ico</ApplicationIcon>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="DatabaseSchemaReader, Version=2.15.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\DatabaseSchemaReader.2.15.0\lib\net45\DatabaseSchemaReader.dll</HintPath>
-    </Reference>
-    <Reference Include="Enums.NET, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7ea1c1650d506225, processorArchitecture=MSIL">
-      <HintPath>packages\Enums.NET.5.0.0\lib\net461\Enums.NET.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=9.0.0.6, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Extensions.DependencyInjection.Abstractions.9.0.6\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=9.0.0.6, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.Extensions.Logging.Abstractions.9.0.6\lib\net462\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="MySqlConnector, Version=2.0.0.0, Culture=neutral, PublicKeyToken=d33d3e53aa5f8c92, processorArchitecture=MSIL">
-      <HintPath>packages\MySqlConnector.2.4.0\lib\net48\MySqlConnector.dll</HintPath>
-    </Reference>
-    <Reference Include="Npgsql, Version=8.0.7.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
-      <HintPath>packages\Npgsql.8.0.7\lib\netstandard2.0\Npgsql.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data.SQLite, Version=1.0.119.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\lib\net46\System.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  <ItemGroup>
-    <Import Include="Microsoft.VisualBasic" />
-    <Import Include="System" />
-    <Import Include="System.Collections" />
-    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
     <Import Include="System.Drawing" />
-    <Import Include="System.Diagnostics" />
     <Import Include="System.Windows.Forms" />
-    <Import Include="System.Linq" />
-    <Import Include="System.Xml.Linq" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Src\clsShowMsg.vb" />
-    <Compile Include="Src\clsSortDic.vb" />
-    <Compile Include="Src\DynamicConfig.vb" />
-    <Compile Include="Src\frmDBReport.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Src\frmDBReport.Designer.vb">
-      <DependentUpon>frmDBReport.vb</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Src\AssemblyInfo.vb" />
-    <Compile Include="My Project\Application.Designer.vb">
+    <PackageReference Include="DatabaseSchemaReader" Version="2.15.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.6" />
+    <PackageReference Include="MySql.Data" Version="9.3.0" />
+    <PackageReference Include="MySqlConnector" Version="2.4.0" />
+    <PackageReference Include="Npgsql" Version="9.0.3" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.8.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="My Project\Application.Designer.vb">
+      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Settings.Designer.vb">
+    <Compile Update="My Project\Settings.Designer.vb">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Src\modExtension.vb" />
-    <Compile Include="Src\modStart.vb" />
-    <Compile Include="Src\_modConst.vb" />
-    <Compile Include="Src\modUtil.vb" />
-    <Compile Include="Src\modDBReport.vb" />
-    <Compile Include="Src\modUtilFile.vb" />
-    <Compile Include="Src\UniversalComparer.vb" />
   </ItemGroup>
+
   <ItemGroup>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Src\frmDBReport.resx">
-      <DependentUpon>frmDBReport.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="My Project\Application.myapp">
+    <None Update="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+    <None Update="My Project\Settings.settings">
       <CustomToolNamespace>My</CustomToolNamespace>
+      <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Src\DBReport.ico" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <Import Project="packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>Ce projet fait référence à des packages NuGet qui sont manquants sur cet ordinateur. Utilisez l'option de restauration des packages NuGet pour les télécharger. Pour plus d'informations, consultez http://go.microsoft.com/fwlink/?LinkID=322105. Le fichier manquant est : {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.119.0\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
