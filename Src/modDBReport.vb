@@ -128,6 +128,7 @@ Public Module modDBReport
         Public bDisplayMySqlParameters As Boolean ' 04/05/2024
         Public bDisplayLinksBelowEachTable As Boolean ' 31/05/2024
         Public bUseUpperCaseIdentifiers As Boolean ' 10/05/2025
+        Public bDisplayDateTime As Boolean ' 29/06/2025
 
     End Class
 
@@ -340,12 +341,14 @@ Public Module modDBReport
             ShowMsg(sMsgDone)
             ShowLongMsg("")
 
-            Dim dTimeEnd2 = Now()
-            Dim ts2 = dTimeEnd2 - m_dTimeStart
-            Dim sTime2$ = m_dTimeStart.ToString(sDateTimeFormat) & " -> " &
-                dTimeEnd2.ToString(sDateTimeFormat) & " : " & sDisplayTime(ts2.TotalSeconds)
-            If Not prm.bDisplayLinksBelowEachTable Then sb.AppendLine()
-            sb.AppendLine("Report created : " & sTime2)
+            If prm.bDisplayDateTime Then
+                Dim dTimeEnd2 = Now()
+                Dim ts2 = dTimeEnd2 - m_dTimeStart
+                Dim sTime2$ = m_dTimeStart.ToString(sDateTimeFormat) & " -> " &
+                    dTimeEnd2.ToString(sDateTimeFormat) & " : " & sDisplayTime(ts2.TotalSeconds)
+                If Not prm.bDisplayLinksBelowEachTable Then sb.AppendLine()
+                sb.AppendLine("Report created : " & sTime2)
+            End If
 
             Return True
 
