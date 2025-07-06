@@ -65,5 +65,6 @@ Temporary Items
 /DBReport/bin/Debug/net8.0-windows
 /DBReport/bin/Release/net8.0-windows
 /DBReport/obj
+
 /DBReport.Tests/obj
 /DBReport.Tests/bin/Debug/net9.0-windows7.0

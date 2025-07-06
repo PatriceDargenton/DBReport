@@ -15,10 +15,10 @@ Namespace DBReport
         Public Const sMsgError$ = "Error !"
         Public Const sMsgDone$ = "Done."
         Public Const sMsgDBOff$ = "Could not connect to database !" & vbCrLf &
-        "Possible cause : the database server has not been started," & vbCrLf &
-        " or wrong database name or account used."
+            "Possible cause : the database server has not been started," & vbCrLf &
+            " or wrong database name or account used."
         Public Const sMsgCompoMySQLNotInst$ =
-        "Possible cause : mysql-connector-net-6.9.x.msi is not installed"
+            "Possible cause : mysql-connector-net-6.9.x.msi is not installed"
 
         Private Const iNoDefaultTimeOut% = -1
 
@@ -34,7 +34,7 @@ Namespace DBReport
             m_delegMsg.ShowLongMsg(sMsg)
         End Sub
         Private Sub ShowMessageDeleg(sender As Object, e As DatabaseSchemaReader.ReaderEventArgs) _
-        Handles m_dbReader.ReaderProgress
+                Handles m_dbReader.ReaderProgress
 
             If bDebug Then
                 Debug.WriteLine("")
@@ -49,7 +49,7 @@ Namespace DBReport
                 Debug.WriteLine(sTime)
             End If
             ShowMsg("Reading database schema : " & e.ProgressType.ToString & ", " &
-            e.SchemaObjectType.ToString) ' & ", " & e.Name & ", " & e.Index & ", " & e.Count)
+                e.SchemaObjectType.ToString) ' & ", " & e.Name & ", " & e.Index & ", " & e.Count)
 
         End Sub
 
@@ -185,7 +185,7 @@ Namespace DBReport
 #End Region
 
         Public Function bCreateDBReport(prm As clsPrmDBR, delegMsg As clsDelegMsg,
-        sMsgErr$, sMsgErrPossibleCause$, ByRef sb As StringBuilder) As Boolean
+                sMsgErr$, sMsgErrPossibleCause$, ByRef sb As StringBuilder) As Boolean
 
             ' Library used : https://github.com/martinjw/dbschemareader
 
@@ -207,7 +207,7 @@ Namespace DBReport
                 If prm.DBProvider = enumDBProvider.MariaDbClient Then bMySql = True
                 If bMySql AndAlso prm.bDisplayMySqlParameters Then
                     If Not bGetMySqlParameters(prm.sConnection, prm.sDBName, dicSqlPrm, lstMySqlPrm,
-                    sMsgErr, sMsgErrPossibleCause) Then Return False
+                        sMsgErr, sMsgErrPossibleCause) Then Return False
                     GetMySqlTablesCollationAndEngine(prm.sConnection, prm.sDBName, dicSqlTE, dicSqlTC)
                     GetMySqlColumnsCollation(prm.sConnection, prm.sDBName, dicSqlCC)
 
@@ -243,14 +243,14 @@ Namespace DBReport
                     If String.IsNullOrEmpty(sSID) Then
                         ' 31/05/2024 TNS connection mode (Transparent Network Substrate)
                         prm.sConnection =
-                        "USER ID=" + sLogin + ";PASSWORD=" + sPW +
-                        ";DATA SOURCE=" + sServer
+                            "USER ID=" + sLogin + ";PASSWORD=" + sPW +
+                            ";DATA SOURCE=" + sServer
                     Else
                         prm.sConnection =
-                        "USER ID=" + sLogin + ";PASSWORD=" + sPW +
-                        ";DATA SOURCE=(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = " + sServer +
-                        " )(PORT = " + sPort +
-                        " )))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = " + sSID + " )))"
+                            "USER ID=" + sLogin + ";PASSWORD=" + sPW +
+                            ";DATA SOURCE=(DESCRIPTION = (ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = " + sServer +
+                            " )(PORT = " + sPort +
+                            " )))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = " + sSID + " )))"
                     End If
 
                     ' This package Oracle.ManagedDataAccess is not available in .Net Core, but in .Net 4
@@ -276,8 +276,8 @@ Namespace DBReport
                 ' Npgsql : PostgreSQL
                 If prm.DBProvider = enumDBProvider.PostgreSQL Then
                     prm.sConnection = "Host=" & prm.sServer & ";Port=" & prm.sPort &
-                    ";Database=" & prm.sDBName &
-                    ";Username=" & prm.sUserLogin & ";Password=" & prm.sUserPassword & ";"
+                        ";Database=" & prm.sDBName &
+                        ";Username=" & prm.sUserLogin & ";Password=" & prm.sUserPassword & ";"
                     'prm.sConnection = "Server=" & prm.sServer &
                     '    ";User id=" & prm.sUserLogin & ";Pwd=" & prm.sUserPassword & ";" &
                     '    ";database=" & prm.sDBName & ";Port=" & prm.sPort
@@ -294,7 +294,7 @@ Namespace DBReport
                     Case enumDBProvider.PostgreSQL
                     Case Else
                         MsgBox(".Net core: The database connection must be explicit now",
-                        MsgBoxStyle.Exclamation Or MsgBoxStyle.OkCancel, m_sMsgTitle)
+                            MsgBoxStyle.Exclamation Or MsgBoxStyle.OkCancel, m_sMsgTitle)
                         Return False
                 End Select
 
@@ -427,8 +427,8 @@ Namespace DBReport
         End Sub
 
         Private Sub ShowMySqlInfos(sb As StringBuilder, prm As clsPrmDBR,
-        lstMySqlPrm As List(Of String), dicSqlPrm As Dictionary(Of String, String),
-        sMySqlConnectorVersion$)
+                lstMySqlPrm As List(Of String), dicSqlPrm As Dictionary(Of String, String),
+                sMySqlConnectorVersion$)
 
             sb.AppendLine("MySql parameters :")
             For Each sPrm In lstMySqlPrm
@@ -478,13 +478,13 @@ Namespace DBReport
                 End If
 
                 If sPrm = enumMySqlPrm.net_read_timeout_sec OrElse
-                sPrm = enumMySqlPrm.net_write_timeout_sec Then
+                    sPrm = enumMySqlPrm.net_write_timeout_sec Then
 
                     Dim iValDef% = 0
                     If sPrm = enumMySqlPrm.net_read_timeout_sec Then _
-                    iValDef = prm.mySqlprm.iNetReadTimeoutSecDef
+                        iValDef = prm.mySqlprm.iNetReadTimeoutSecDef
                     If sPrm = enumMySqlPrm.net_write_timeout_sec Then _
-                    iValDef = prm.mySqlprm.iNetWriteTimeoutSecDef
+                        iValDef = prm.mySqlprm.iNetWriteTimeoutSecDef
 
                     If sVal = prm.mySqlprm.iTimeOutMaxDef.ToString Then
                         sVal = sVal & " (no limit)"
@@ -513,11 +513,11 @@ Namespace DBReport
         End Sub
 
         Private Sub CreateTableReport(sb As StringBuilder, prm As clsPrmDBR,
-        schema As DatabaseSchemaReader.DataSchema.DatabaseSchema, bMySql As Boolean,
-        dicSqlTE As Dictionary(Of String, String),
-        dicSqlTC As Dictionary(Of String, String),
-        dicSqlCC As Dictionary(Of String, String),
-        dicTableLinks As SortDic(Of String, List(Of String)))
+                schema As DatabaseSchemaReader.DataSchema.DatabaseSchema, bMySql As Boolean,
+                dicSqlTE As Dictionary(Of String, String),
+                dicSqlTC As Dictionary(Of String, String),
+                dicSqlCC As Dictionary(Of String, String),
+                dicTableLinks As SortDic(Of String, List(Of String)))
 
             ' Lister les clés étrangères pour préciser :
             ' Build foreign key list to specify :
@@ -549,7 +549,7 @@ Namespace DBReport
                 Dim sTableTitle$ = table.Name
                 If toUpper Then sTableTitle = sTableTitle.ToUpper
                 If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(table.Description) AndAlso table.Description.Length > 0 Then _
-                sTableTitle &= " : " & table.Description
+                    sTableTitle &= " : " & table.Description
                 If bMySql Then
                     If prm.mySqlprm.bDisplayTableEngine AndAlso dicSqlTE.ContainsKey(table.Name) Then
                         Dim sTE$ = dicSqlTE(table.Name)
@@ -588,11 +588,11 @@ Namespace DBReport
                         sTitle &= " (" & sDisplay & ")"
                     End If
                     If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(col.Description) AndAlso col.Description.Length > 0 Then _
-                    sTitle &= " : " & col.Description
+                        sTitle &= " : " & col.Description
 
                     'If col.IsAutoNumber Then sAutonumberColName = sTitle ' 04/05/2024
                     If col.IsAutoNumber AndAlso bSQLite AndAlso
-                    String.IsNullOrEmpty(col.ForeignKeyTableName) Then sAutonumberColName = sTitle ' 24/05/2024
+                        String.IsNullOrEmpty(col.ForeignKeyTableName) Then sAutonumberColName = sTitle ' 24/05/2024
 
                     If col.IsAutoNumber AndAlso Not prm.bDisplayAutonumberAsPrimaryKey Then
                         sTitle &= " (autonumber)"
@@ -655,14 +655,14 @@ Namespace DBReport
                     ' 24/05/2024
                     Dim bIndexNameContainsPK = False
                     If bSQLite AndAlso bSQLiteAutoIndex AndAlso
-                    ind.Name = sSQLiteAutoIndex & table.PrimaryKey.TableName & "_1" Then bIndexNameContainsPK = True
+                        ind.Name = sSQLiteAutoIndex & table.PrimaryKey.TableName & "_1" Then bIndexNameContainsPK = True
 
                     If (Not IsNothing(table.PrimaryKey) AndAlso
                         (table.PrimaryKey.Name = ind.Name OrElse bIndexNameContainsPK OrElse
                         bPrimaryKeyEndsWithIndexName OrElse bTableNameIsIndexName)) OrElse
-                    (bSQLite AndAlso bSQLiteAutoIndex AndAlso
-                     Not IsNothing(table.PrimaryKeyColumn) AndAlso
-                     table.PrimaryKeyColumn.Name = ind.Columns(0).Name) Then ' 04/05/2024
+                        (bSQLite AndAlso bSQLiteAutoIndex AndAlso
+                        Not IsNothing(table.PrimaryKeyColumn) AndAlso
+                        table.PrimaryKeyColumn.Name = ind.Columns(0).Name) Then ' 04/05/2024
                         If sAutonumberColName.Length = 0 Then ' 24/05/2024 PrimaryKey yet found
                             sPrimary = ", Primary"
                             bPK = True
@@ -707,11 +707,11 @@ Namespace DBReport
                         If toUpper Then sIndexName = sIndexName.ToUpper ' 10/05/2025
 
                         sb.AppendLine("    Index   : " & sIndexName & sPrimary & sUnique & sComma &
-                    ind.Columns.Count & " fields" & " :")
+                            ind.Columns.Count & " fields" & " :")
                         For Each fld In ind.Columns
                             sWarnNF = ""
                             If ind.IsUnique AndAlso hsNullablesCol.Contains(fld.Name) Then _
-                            sWarnNF = sWarnNFTxt
+                                sWarnNF = sWarnNFTxt
                             Dim sFieldName$ = fld.Name
                             If toUpper Then sFieldName = sFieldName.ToUpper ' 10/05/2025
                             sb.AppendLine("      field : " & sFieldName & sWarnNF)
@@ -725,8 +725,8 @@ Namespace DBReport
                 ' This one is not sorted:
                 ' prm.bDisplayIndexName: Except sAutonumberColName
                 If prm.bDisplayAutonumberAsPrimaryKey AndAlso
-                Not bIndexAutonumberDisplayed AndAlso
-                Not String.IsNullOrEmpty(sAutonumberColName) Then ' 04/05/2024
+                    Not bIndexAutonumberDisplayed AndAlso
+                    Not String.IsNullOrEmpty(sAutonumberColName) Then ' 04/05/2024
                     sb.AppendLine("    Index   : " & sAutonumberColName & ", Primary, Unique")
                 End If
 
@@ -747,8 +747,8 @@ Namespace DBReport
         End Sub
 
         Private Sub CreateLinkReport(sb As StringBuilder, prm As clsPrmDBR,
-        schema As DatabaseSchemaReader.DataSchema.DatabaseSchema,
-        dicTableLinks As SortDic(Of String, List(Of String)))
+                schema As DatabaseSchemaReader.DataSchema.DatabaseSchema,
+                dicTableLinks As SortDic(Of String, List(Of String)))
 
             ' Relationships between tables
 
@@ -770,7 +770,7 @@ Namespace DBReport
                 Dim sTableTitle$ = table.Name
                 If toUpper Then sTableTitle = sTableTitle.ToUpper ' 10/05/2025
                 If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(table.Description) AndAlso table.Description.Length > 0 Then _
-                sTableTitle &= " : " & table.Description
+                    sTableTitle &= " : " & table.Description
 
                 Dim lst As New List(Of String)
 
@@ -780,7 +780,7 @@ Namespace DBReport
                     Dim sLinkTable$ = fk.RefersToTable
                     Dim iCount% = 1
                     Dim sKey$ = sLinkTable & " : " & sId
-Retry:          ' 04/09/2016 A constraint may be duplicated
+Retry:              ' 04/09/2016 A constraint may be duplicated
                     If iCount > 1 Then
                         sKey = sLinkTable & " : " & sId & ":" & iCount
                     End If
@@ -822,10 +822,10 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
                     'Const sRestrict$ = "RESTRICT"
                     Dim sRestrictDef$ = prm.sForeignKeyDeleteRuleDef
                     If fk.DeleteRule <> sRestrictDef Then sDelRule = " (Delete rule : " &
-                    CStr(IIf(String.IsNullOrEmpty(fk.DeleteRule), "undefined", fk.DeleteRule)) & ")"
+                        CStr(IIf(String.IsNullOrEmpty(fk.DeleteRule), "undefined", fk.DeleteRule)) & ")"
                     sRestrictDef = prm.sForeignKeyUpdateRuleDef
                     If Not IsNothing(fk.UpdateRule) AndAlso fk.UpdateRule <> sRestrictDef Then sUpdRule = " (Update rule : " &
-                    CStr(IIf(String.IsNullOrEmpty(fk.UpdateRule), "undefined", fk.UpdateRule)) & ")"
+                        CStr(IIf(String.IsNullOrEmpty(fk.UpdateRule), "undefined", fk.UpdateRule)) & ")"
 
                     Dim sLine$ = sLinkTable & " : " &
                     sId & sCount & sLinkName & sDelRule & sUpdRule
@@ -847,8 +847,8 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
 #Region "MySql parameters"
 
         Public Function bGetMySqlParameters(sMySQLConnectionString$, sDbName$,
-        dicMySqlPrm As Dictionary(Of String, String), lstMySqlPrm As List(Of String),
-        sMsgErr$, sMsgErrPossibleCause$) As Boolean
+                dicMySqlPrm As Dictionary(Of String, String), lstMySqlPrm As List(Of String),
+                sMsgErr$, sMsgErrPossibleCause$) As Boolean
 
             ShowMsg("Loading MySql parameters...")
             Try
@@ -876,10 +876,10 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
                     lstMySqlPrm.Add("DEFAULT_COLLATION_NAME")
 
                     lstSQL.Add("SHOW VARIABLES WHERE Variable_Name IN (" &
-                    "'version', 'version_comment', 'protocol_version', 'sql_mode', " &
-                    "'foreign_key_checks', 'innodb_strict_mode', 'net_read_timeout', 'net_write_timeout');")
+                        "'version', 'version_comment', 'protocol_version', 'sql_mode', " &
+                        "'foreign_key_checks', 'innodb_strict_mode', 'net_read_timeout', 'net_write_timeout');")
                     lstSQL.Add("SELECT 'DEFAULT_COLLATION_NAME', DEFAULT_COLLATION_NAME FROM " &
-                    "information_schema.SCHEMATA WHERE schema_name = '" & sDbName & "';")
+                        "information_schema.SCHEMATA WHERE schema_name = '" & sDbName & "';")
                     lstSQL.Add("SHOW VARIABLES LIKE 'collation_server'")
 
                     Dim iNbRecords% = 0
@@ -917,8 +917,8 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
         End Function
 
         Public Sub GetMySqlTablesCollationAndEngine(sMySQLConnectionString$, sDbName$,
-        dicMySqlTE As Dictionary(Of String, String),
-        dicMySqlTC As Dictionary(Of String, String))
+                dicMySqlTE As Dictionary(Of String, String),
+                dicMySqlTC As Dictionary(Of String, String))
 
             ShowMsg("Loading MySql tables collation...")
             Try
@@ -929,8 +929,8 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
 
                     Dim lstSQL As New List(Of String)
                     lstSQL.Add("SELECT TABLE_NAME, ENGINE, COLLATION_NAME FROM information_schema.`TABLES` T," &
-                    " information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA" &
-                    " WHERE CCSA.collation_name = T.table_collation AND T.table_schema = '" & sDbName & "';")
+                        " information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA" &
+                        " WHERE CCSA.collation_name = T.table_collation AND T.table_schema = '" & sDbName & "';")
 
                     Dim iNbRecords% = 0
                     For Each sSQL In lstSQL
@@ -963,7 +963,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
         End Sub
 
         Public Sub GetMySqlColumnsCollation(sMySQLConnectionString$, sDbName$,
-        dicMySqlCC As Dictionary(Of String, String))
+                dicMySqlCC As Dictionary(Of String, String))
 
             ShowMsg("Loading MySql columns collation...")
             Try
@@ -974,7 +974,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
 
                     Dim lstSQL As New List(Of String)
                     lstSQL.Add("SELECT table_name, C.column_name, COLLATION_NAME FROM " &
-                    "information_schema.`COLUMNS` C WHERE table_schema = '" & sDbName & "';")
+                        "information_schema.`COLUMNS` C WHERE table_schema = '" & sDbName & "';")
 
                     Dim iNbRecords% = 0
                     For Each sSQL In lstSQL

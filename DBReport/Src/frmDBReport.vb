@@ -55,18 +55,18 @@ Namespace DBReport
         Private Const sMsgDBServer$ = "Name of the server (e.g. 'localhost' or '127.0.0.1')"
         Private Const sMsgDBName$ = "Name of the database for which you want to export the structure"
         Private Const sMsgUserName$ =
-        "Login name (e.g. 'root', a registered user that can view the database structure)"
+            "Login name (e.g. 'root', a registered user that can view the database structure)"
         Private Const sMsgUserPassword$ =
-        "Login password for the selected user (leave blank if no password is set for this user)"
+            "Login password for the selected user (leave blank if no password is set for this user)"
         Private Const sMsgDBReport$ = "Click 'DB report' to create the database report"
         Private Const sMsgResetSettings$ = "Click to restore default display settings of the database report"
         Private Const sMsgDisplayLinksBelowEachTable$ = "Display links below each table (otherwise display links in the second part of the report)"
         Private Const sMsgSortTables$ = "Sort tables"
         Private Const sMsgSortColumns$ = "Sort columns of each table"
         Private Const sMsgSortIndexes$ =
-        "Sort indexes of each table (to make the database structure comparison easier)"
+            "Sort indexes of each table (to make the database structure comparison easier)"
         Private Const sMsgSortLinks$ =
-        "Sort links between tables (to make the database structure comparison easier)"
+            "Sort links between tables (to make the database structure comparison easier)"
         Private Const sMsgDisplayFieldDefaultValue$ = "Display default value of each field"
         Private Const sMsgDisplayFieldType$ = "Display field type of each field"
         Private Const sMsgDisplayLinkName$ = "Display the name of links between two tables"
@@ -182,7 +182,7 @@ Namespace DBReport
                 My.Settings.RenameSQLiteMultipleIndex = True
                 My.Settings.DisplaySQLiteSimpleIndexName = False
                 My.Settings.UseUpperCaseIdentifiers = False ' 10/05/2025
-                My.Settings.DisplayDateTime = True ' 29/06/2025
+                My.Settings.DisplayDateTime = False ' 29/06/2025
             End If
 
         End Sub
@@ -304,12 +304,12 @@ Namespace DBReport
         End Sub
 
         Private Sub ShowMessageDeleg(sender As Object, e As clsMsgEventArgs) _
-        Handles m_delegMsg.EvShowMessage
+                Handles m_delegMsg.EvShowMessage
             Me.ShowMessage(e.sMessage)
         End Sub
 
         Private Sub ShowLongMessageDeleg(sender As Object, e As clsMsgEventArgs) _
-        Handles m_delegMsg.EvShowLongMessage
+                Handles m_delegMsg.EvShowLongMessage
             Me.ShowLongMessage(e.sMessage)
         End Sub
 
@@ -326,10 +326,10 @@ Namespace DBReport
 
             Dim sDBProvider$ = Me.tbDBProvider.Text
             Dim sConnection$ =
-            "server=" & sServer & "; " &
-            "userid=" & sUserLogin & "; " &
-            "password=" & sPW & "; " &
-            "database=" & sDBName & ";"
+                "server=" & sServer & "; " &
+                "userid=" & sUserLogin & "; " &
+                "password=" & sPW & "; " &
+                "database=" & sDBName & ";"
 
             Activation(bActivate:=False)
             m_delegMsg.m_bCancel = False

@@ -2,9 +2,9 @@
 ' File modConst.vb
 ' ----------------
 
-Module _modConst
+Public Module _modConst
 
-    Public Const sAppDate$ = "29/06/2025"
+    Public Const sAppDate$ = "06/07/2025"
 
 #If DEBUG Then
     Public Const bDebug As Boolean = True

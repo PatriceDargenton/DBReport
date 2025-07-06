@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DBReport", "DBReport\DBReport.vbproj", "{1A374995-286A-43BB-A8FF-461A0970BB8F}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DBReport.Tests", "DBReport.Tests\DBReport.Tests.vbproj", "{9482DF10-7CCD-421F-B9DA-2EB99BB1590A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1A374995-286A-43BB-A8FF-461A0970BB8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A374995-286A-43BB-A8FF-461A0970BB8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A374995-286A-43BB-A8FF-461A0970BB8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9482DF10-7CCD-421F-B9DA-2EB99BB1590A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9482DF10-7CCD-421F-B9DA-2EB99BB1590A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9482DF10-7CCD-421F-B9DA-2EB99BB1590A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9482DF10-7CCD-421F-B9DA-2EB99BB1590A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
