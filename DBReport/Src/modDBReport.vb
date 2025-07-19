@@ -102,6 +102,165 @@ Namespace DBReport
 
         End Enum
 
+        ' https://en.wikipedia.org/wiki/SQL#SQL_data_types
+        Public Enum enumSqlStandardType
+
+            ''' <summary>
+            ''' BINARY
+            ''' </summary>
+            <Description("BINARY")>
+            Binary
+
+            ''' <summary>
+            ''' Bit (Sqlite) -> BINARY
+            ''' </summary>
+            <Description("BINARY")>
+            Bit
+
+            'Binary varying (VARBINARY)
+
+            ''' <summary>
+            ''' SmallInt
+            ''' </summary>
+            <Description("SMALLINT")>
+            SmallInt
+
+            ''' <summary>
+            ''' TinyInt (MySql) -> SmallInt
+            ''' </summary>
+            <Description("SMALLINT")>
+            TinyInt
+
+            ''' <summary>
+            ''' Integer
+            ''' </summary>
+            <Description("INTEGER")>
+            [Integer]
+
+            ''' <summary>
+            ''' Int, Int(10) (MySql) -> INTEGER
+            ''' </summary>
+            <Description("INTEGER")>
+            Int
+
+            ''' <summary>
+            ''' BigInt
+            ''' </summary>
+            <Description("BIGINT")>
+            BigInt
+
+            ''' <summary>
+            ''' FLOAT (Approximate numeric types)
+            ''' </summary>
+            <Description("FLOAT")>
+            Float
+
+            ''' <summary>
+            ''' REAL (Approximate numeric types)
+            ''' </summary>
+            <Description("REAL")>
+            Real
+
+            ''' <summary>
+            ''' DOUBLE PRECISION (Approximate numeric types)
+            ''' </summary>
+            <Description("DOUBLE PRECISION")>
+            DoublePrecision
+
+            'DECIMAL(p, s) = NUMERIC(p, s)
+
+            ''' <summary>
+            ''' Money (Sqlite) -> DECIMAL
+            ''' </summary>
+            <Description("DECIMAL(18, 4)")>
+            Money
+
+            ''' <summary>
+            ''' Currency (Oracle) -> DECIMAL
+            ''' </summary>
+            <Description("DECIMAL(18, 4)")>
+            Currency
+
+            'Exact numeric types (NUMERIC, DECIMAL, SMALLINT, INTEGER, BIGINT)
+            'Decimal floating-point type (DECFLOAT)
+
+            ''' <summary>
+            ''' Binary large object (BLOB)
+            ''' </summary>
+            <Description("BLOB")>
+            Blob
+
+            ''' <summary>
+            ''' Image (Sqlite) -> BLOB
+            ''' </summary>
+            <Description("BLOB")>
+            Image
+
+            'Character (CHAR)
+            'Character varying (VARCHAR)
+
+            ''' <summary>
+            ''' Character large object (CLOB)
+            ''' </summary>
+            <Description("CLOB")>
+            Clob
+
+            ''' <summary>
+            ''' NText (SQLite) -> CLOB
+            ''' </summary>
+            <Description("CLOB")>
+            NText
+
+            ''' <summary>
+            ''' LongText (MySQL) -> CLOB
+            ''' </summary>
+            <Description("CLOB")>
+            LongText
+
+            ''' <summary>
+            ''' MediumText (MySQL) -> CLOB
+            ''' </summary>
+            <Description("CLOB")>
+            MediumText
+
+            ''' <summary>
+            ''' National character (NCHAR)
+            ''' </summary>
+            <Description("NCHAR")>
+            NChar
+
+            ''' <summary>
+            ''' National character varying (NCHAR VARYING)
+            ''' </summary>
+            <Description("NCHAR VARYING")>
+            NCharVarying
+
+            ''' <summary>
+            ''' National character large object (NCLOB)
+            ''' </summary>
+            <Description("NCLOB")>
+            NClob
+
+            ''' <summary>
+            ''' DATETIME (Sqlite) -> TIMESTAMP
+            ''' </summary>
+            <Description("TIMESTAMP")>
+            DateTime
+
+            ''' <summary>
+            ''' DATE
+            ''' </summary>
+            <Description("DATE")>
+            [Date]
+
+            ''' <summary>
+            ''' TIME (Hour)
+            ''' </summary>
+            <Description("TIME")>
+            Time
+
+        End Enum
+
         Public Class clsPrmDBR
 
             Public DBProvider As enumDBProvider ' 21/06/2024
@@ -131,6 +290,7 @@ Namespace DBReport
             Public bDisplayLinksBelowEachTable As Boolean ' 31/05/2024
             Public bUseUpperCaseIdentifiers As Boolean ' 10/05/2025
             Public bDisplayDateTime As Boolean ' 29/06/2025
+            Public bDisplayStandardSqlType As Boolean ' 19/07/2025
 
         End Class
 
@@ -225,10 +385,11 @@ Namespace DBReport
                         sVersion = fvi.FileVersion.ToString
                         sMySqlConnectorVersion = sVersion
                     End If
+                End If
 
+                If bMySql Then
                     Dim dbConnection As New MySql.Data.MySqlClient.MySqlConnection(prm.sConnection)
                     m_dbReader = New DatabaseSchemaReader.DatabaseReader(dbConnection)
-
                 End If
 
                 ' 10/04/2024 Oracle
@@ -300,6 +461,7 @@ Namespace DBReport
 
                 'm_dbReader = New DatabaseSchemaReader.DatabaseReader(prm.sConnection, prm.sDBProvider)
                 If prm.DBProvider = enumDBProvider.OracleClient Then m_dbReader.Owner = prm.sDBName ' 22/08/2016
+                If prm.DBProvider = enumDBProvider.MySqlClient Then m_dbReader.Owner = prm.sDBName ' 19/07/2025
 
                 ShowMsg("Reading database schema...")
                 If delegMsg.m_bCancel Then Return False
@@ -538,11 +700,17 @@ Namespace DBReport
                 ' 18/06/2025 Ignore PostgreSQL system tables
                 If table.Name.ToUpper.StartsWith("PG_") Then Continue For
                 If table.Name.ToUpper.StartsWith("SQL_") Then Continue For
-                dicTables.Add(table.Name, table)
+                ' 19/07/2025 Check if not already in dictionary
+                If Not dicTables.ContainsKey(table.Name) Then dicTables.Add(table.Name, table)
             Next
 
             Dim sTableSorting$ = ""
             If prm.bSortTables Then sTableSorting = "Name"
+
+            Dim sqlTypesDictionary As Dictionary(Of String, String) =
+                [Enum].GetValues(GetType(enumSqlStandardType)).
+                Cast(Of enumSqlStandardType)().
+                ToDictionary(Function(t) t.ToString().ToUpper(), Function(t) t.ToDescription())
 
             Dim toUpper = prm.bUseUpperCaseIdentifiers
             For Each table In dicTables.Sort(sTableSorting)
@@ -580,14 +748,26 @@ Namespace DBReport
                     'If Not String.IsNullOrEmpty(col.DefaultValue) Then bDefVal = True
                     If Not IsNothing(col.DefaultValue) Then bDefVal = True
 
-                    If prm.bDisplayFieldType Then sTitle &= " (" & col.DbDataType.TrimEnd & ")" ' 04/05/2024
+                    If prm.bDisplayFieldType Then
+                        Dim sType$ = col.DbDataType.TrimEnd
+                        If prm.bDisplayStandardSqlType Then ' 19/07/2025
+                            sType = sType.Replace(" ", "") ' Remove spaces
+                            sType = sType.ToUpper
+                            sType = sType.Replace("UNSIGNED", "") ' Not in SQL standard
+                            sType = sType.Replace("INT(10)", "INT") ' (10) is used only to display, it is not in SQL standard
+                            sType = sType.Replace("SMALLINT(5)", "SMALLINT") ' (5) is used only to display, it is not in SQL standard
+                            sType = sType.Replace("TINYINT(5)", "TINYINT") ' (5) is used only to display, it is not in SQL standard
+                            If sqlTypesDictionary.ContainsKey(sType) Then sType = sqlTypesDictionary(sType)
+                        End If
+                        sTitle &= " (" & sType & ")" ' 04/05/2024
+                    End If
 
                     If prm.bDisplayFieldDefaultValue AndAlso bDefVal Then
                         Dim sDisplay$ = col.DefaultValue
                         If sDisplay.Length = 0 Then sDisplay = "''" ' ' 23/10/2016
                         sTitle &= " (" & sDisplay & ")"
-                    End If
-                    If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(col.Description) AndAlso col.Description.Length > 0 Then _
+                        End If
+                        If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(col.Description) AndAlso col.Description.Length > 0 Then _
                         sTitle &= " : " & col.Description
 
                     'If col.IsAutoNumber Then sAutonumberColName = sTitle ' 04/05/2024
@@ -758,7 +938,8 @@ Namespace DBReport
                 ' 18/06/2025 Ignore PostgreSQL system tables
                 If table.Name.ToUpper.StartsWith("PG_") Then Continue For
                 If table.Name.ToUpper.StartsWith("SQL_") Then Continue For
-                dicTables.Add(table.Name, table)
+                ' 19/07/2025 Check if not already in dictionary
+                If Not dicTables.ContainsKey(table.Name) Then dicTables.Add(table.Name, table)
             Next
 
             Dim sTableSorting$ = ""

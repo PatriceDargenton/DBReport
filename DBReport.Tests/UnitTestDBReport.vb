@@ -22,7 +22,7 @@ Namespace DBReportVB.Tests
             Dim prm As New DBReport.clsPrmDBR()
             prm.sServer = fullPath
             prm.sDBName = "northwindEF.db"
-            prm.sDBReportVersion = "1.24" ' _modConst.sAppVersion
+            prm.sDBReportVersion = "1.25" ' _modConst.sAppVersion
             prm.sDBProvider = "System.Data.SQLite" 'DBReport.DBReport.enumDBProvider.SQLiteClient.ToDescription()
             prm.DBProvider = DBReport.enumDBProvider.SQLiteClient
             prm.bDisplayFieldType = True
@@ -55,6 +55,7 @@ Namespace DBReportVB.Tests
             Assert.AreEqual(exists2, True)
 
             Dim expected As String = File.ReadAllText(expectedReportFullPath)
+            'Debug.WriteLine(expected)
             Assert.AreEqual(content, expected)
 
         End Sub

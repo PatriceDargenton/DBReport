@@ -4,6 +4,10 @@ All notable changes to the DBReport project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.25] - 2025-07-19
+### Added
+- Option DisplayStandardSqlType to standardize the data type.
+
 ## [1.24] - 2025-07-06
 ### Added
 - Test project: Test northwindEF.db report sample: DBReport_northwindEF_db_ok.txt
