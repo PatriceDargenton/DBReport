@@ -5,7 +5,7 @@
 'Imports System.Data.Common ' NuGet MySqlConnector 2.2.5: DbProviderFactories
 Imports System.ComponentModel
 Imports System.Text ' StringBuilder
-Imports MySqlConnector
+'Imports MySqlConnector
 
 Public Module modDBReport
 
@@ -14,8 +14,8 @@ Public Module modDBReport
     Public Const sMsgDBOff$ = "Could not connect to database !" & vbCrLf &
         "Possible cause : the database server has not been started," & vbCrLf &
         " or wrong database name or account used."
-    Public Const sMsgCompoMySQLNotInst$ =
-        "Possible cause : mysql-connector-net-6.9.x.msi is not installed"
+    'Public Const sMsgCompoMySQLNotInst$ =
+    '    "Possible cause : mysql-connector-net-6.9.x.msi is not installed"
 
     Private Const iNoDefaultTimeOut% = -1
 
@@ -272,6 +272,7 @@ Public Module modDBReport
 
             m_dbReader = New DatabaseSchemaReader.DatabaseReader(prm.sConnection, prm.sDBProvider)
             If prm.DBProvider = enumDBProvider.OracleClient Then m_dbReader.Owner = prm.sDBName ' 22/08/2016
+            If prm.DBProvider = enumDBProvider.MySqlClient Then m_dbReader.Owner = prm.sDBName ' 20/07/2025
 
             ShowMsg("Reading database schema...")
             If delegMsg.m_bCancel Then Return False
@@ -508,7 +509,7 @@ Public Module modDBReport
             ' 18/06/2025 Ignore PostgreSQL system tables
             If table.Name.ToUpper.StartsWith("PG_") Then Continue For
             If table.Name.ToUpper.StartsWith("SQL_") Then Continue For
-            dicTables.Add(table.Name, table)
+            If Not dicTables.ContainsKey(table.Name) Then dicTables.Add(table.Name, table)
         Next
 
         Dim sTableSorting$ = ""
@@ -728,7 +729,7 @@ Public Module modDBReport
             ' 18/06/2025 Ignore PostgreSQL system tables
             If table.Name.ToUpper.StartsWith("PG_") Then Continue For
             If table.Name.ToUpper.StartsWith("SQL_") Then Continue For
-            dicTables.Add(table.Name, table)
+            If Not dicTables.ContainsKey(table.Name) Then dicTables.Add(table.Name, table)
         Next
 
         Dim sTableSorting$ = ""
@@ -806,9 +807,9 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
                 End If
                 lst.Add(sLine)
 
-                Next
+            Next
 
-                dicTableLinks.Add(sTableTitle, lst)
+            dicTableLinks.Add(sTableTitle, lst)
 
         Next
 
@@ -823,7 +824,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
         ShowMsg("Loading MySql parameters...")
         Try
 
-            Using oConnMySQL As New MySqlConnection
+            Using oConnMySQL As New MySql.Data.MySqlClient.MySqlConnection
                 oConnMySQL.ConnectionString = sMySQLConnectionString
                 oConnMySQL.Open()
 
@@ -854,8 +855,8 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
 
                 Dim iNbRecords% = 0
                 For Each sSQL In lstSQL
-                    Using cmd2 As New MySqlCommand(sSQL, oConnMySQL)
-                        Using reader As MySqlDataReader = cmd2.ExecuteReader()
+                    Using cmd2 As New MySql.Data.MySqlClient.MySqlCommand(sSQL, oConnMySQL)
+                        Using reader As MySql.Data.MySqlClient.MySqlDataReader = cmd2.ExecuteReader()
                             If reader.HasRows Then
                                 Do While reader.Read()
                                     iNbRecords += 1
@@ -893,7 +894,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
         ShowMsg("Loading MySql tables collation...")
         Try
 
-            Using oConnMySQL As New MySqlConnection
+            Using oConnMySQL As New MySql.Data.MySqlClient.MySqlConnection
                 oConnMySQL.ConnectionString = sMySQLConnectionString
                 oConnMySQL.Open()
 
@@ -904,8 +905,8 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
 
                 Dim iNbRecords% = 0
                 For Each sSQL In lstSQL
-                    Using cmd2 As New MySqlCommand(sSQL, oConnMySQL)
-                        Using reader As MySqlDataReader = cmd2.ExecuteReader()
+                    Using cmd2 As New MySql.Data.MySqlClient.MySqlCommand(sSQL, oConnMySQL)
+                        Using reader As MySql.Data.MySqlClient.MySqlDataReader = cmd2.ExecuteReader()
                             If reader.HasRows Then
                                 Do While reader.Read()
                                     iNbRecords += 1
@@ -938,7 +939,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
         ShowMsg("Loading MySql columns collation...")
         Try
 
-            Using oConnMySQL As New MySqlConnection ' MySql.Data.MySqlClient.MySqlConnection
+            Using oConnMySQL As New MySql.Data.MySqlClient.MySqlConnection ' MySql.Data.MySqlClient.MySqlConnection
                 oConnMySQL.ConnectionString = sMySQLConnectionString
                 oConnMySQL.Open()
 
@@ -948,8 +949,8 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
 
                 Dim iNbRecords% = 0
                 For Each sSQL In lstSQL
-                    Using cmd2 As New MySqlCommand(sSQL, oConnMySQL)
-                        Using reader As MySqlDataReader = cmd2.ExecuteReader()
+                    Using cmd2 As New MySql.Data.MySqlClient.MySqlCommand(sSQL, oConnMySQL)
+                        Using reader As MySql.Data.MySqlClient.MySqlDataReader = cmd2.ExecuteReader()
                             If reader.HasRows Then
                                 Do While reader.Read()
                                     iNbRecords += 1

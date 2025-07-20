@@ -390,7 +390,9 @@ Public Class frmDBReport
 
         prm.mySqlprm.sforeign_key_checksDef = "ON" ' 04/03/2022
 
-        If bCreateDBReport(prm, m_delegMsg, sMsgDBOff, sMsgCompoMySQLNotInst, sb) Then
+        'Dim sMsgErrPossibleCause = sMsgCompoMySQLNotInst
+        Dim sMsgErrPossibleCause = "" ' 20/07/2025
+        If bCreateDBReport(prm, m_delegMsg, sMsgDBOff, sMsgErrPossibleCause, sb) Then
             sDBName = sDBName.Replace(".", "_") ' 27/04/2024
             Dim sPath$ = Application.StartupPath & "\DBReport_" & sDBName & ".txt"
             If Not bWriteFile(sPath, sb) Then GoTo Fin
