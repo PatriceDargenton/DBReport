@@ -200,6 +200,7 @@ Public Module modDBReport
             Dim sMySqlConnectorVersion$ = "" ' 04/05/2024
             Dim bMySql As Boolean = False
             If prm.DBProvider = enumDBProvider.MySqlClient Then bMySql = True
+            If prm.DBProvider = enumDBProvider.MariaDbClient Then bMySql = True
             If bMySql AndAlso prm.bDisplayMySqlParameters Then
                 If Not bGetMySqlParameters(prm.sConnection, prm.sDBName, dicSqlPrm, lstMySqlPrm,
                     sMsgErr, sMsgErrPossibleCause) Then Return False
@@ -207,7 +208,8 @@ Public Module modDBReport
                 GetMySqlColumnsCollation(prm.sConnection, prm.sDBName, dicSqlCC)
 
                 ' 04/05/2024
-                Const sDllMySql$ = "MySqlConnector.dll" '"MySQL.Data.dll"
+                Dim sDllMySql$ = "MySQL.Data.dll"
+                If prm.DBProvider = enumDBProvider.MariaDbClient Then sDllMySql = "MySqlConnector.dll"
                 Dim sDllFullPath = Application.StartupPath & "\" & sDllMySql
                 Dim sDllPath = ""
                 If bFileExists(sDllFullPath) Then sDllPath = sDllMySql
@@ -273,6 +275,7 @@ Public Module modDBReport
             m_dbReader = New DatabaseSchemaReader.DatabaseReader(prm.sConnection, prm.sDBProvider)
             If prm.DBProvider = enumDBProvider.OracleClient Then m_dbReader.Owner = prm.sDBName ' 22/08/2016
             If prm.DBProvider = enumDBProvider.MySqlClient Then m_dbReader.Owner = prm.sDBName ' 20/07/2025
+            If prm.DBProvider = enumDBProvider.MariaDbClient Then m_dbReader.Owner = prm.sDBName ' 20/07/2025
 
             ShowMsg("Reading database schema...")
             If delegMsg.m_bCancel Then Return False
@@ -939,7 +942,7 @@ Retry:          ' 04/09/2016 A constraint may be duplicated
         ShowMsg("Loading MySql columns collation...")
         Try
 
-            Using oConnMySQL As New MySql.Data.MySqlClient.MySqlConnection ' MySql.Data.MySqlClient.MySqlConnection
+            Using oConnMySQL As New MySql.Data.MySqlClient.MySqlConnection
                 oConnMySQL.ConnectionString = sMySQLConnectionString
                 oConnMySQL.Open()
 
