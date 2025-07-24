@@ -132,6 +132,12 @@ Namespace DBReport
             TinyInt
 
             ''' <summary>
+            ''' Int2 (PostgreSql) -> SMALLINT
+            ''' </summary>
+            <Description("SMALLINT")>
+            Int2
+
+            ''' <summary>
             ''' Integer
             ''' </summary>
             <Description("INTEGER")>
@@ -144,10 +150,22 @@ Namespace DBReport
             Int
 
             ''' <summary>
+            ''' Int4 (PostgreSql) -> INTEGER
+            ''' </summary>
+            <Description("INTEGER")>
+            Int4
+
+            ''' <summary>
             ''' BigInt
             ''' </summary>
             <Description("BIGINT")>
             BigInt
+
+            ''' <summary>
+            ''' Int8 (PostgreSql) -> BIGINT
+            ''' </summary>
+            <Description("BIGINT")>
+            Int8
 
             ''' <summary>
             ''' FLOAT (Approximate numeric types)
@@ -166,6 +184,18 @@ Namespace DBReport
             ''' </summary>
             <Description("DOUBLE PRECISION")>
             DoublePrecision
+
+            ''' <summary>
+            ''' DOUBLE (Approximate numeric types)
+            ''' </summary>
+            <Description("DOUBLE PRECISION")>
+            [Double]
+
+            ''' <summary>
+            ''' Float8 (PostgreSql) -> DOUBLE (Approximate numeric types)
+            ''' </summary>
+            <Description("DOUBLE PRECISION")>
+            Float8
 
             'DECIMAL(p, s) = NUMERIC(p, s)
 
@@ -197,7 +227,12 @@ Namespace DBReport
             Image
 
             'Character (CHAR)
-            'Character varying (VARCHAR)
+
+            ''' <summary>
+            ''' Text (PostgreSql) -> Character varying VARCHAR
+            ''' </summary>
+            <Description("VARCHAR")>
+            Text
 
             ''' <summary>
             ''' Character large object (CLOB)
