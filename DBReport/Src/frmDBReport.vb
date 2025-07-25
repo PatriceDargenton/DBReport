@@ -189,6 +189,7 @@ Namespace DBReport
                 My.Settings.UseUpperCaseIdentifiers = False ' 10/05/2025
                 My.Settings.DisplayDateTime = False ' 29/06/2025
                 My.Settings.DisplayStandardSqlType = False ' 19/07/2025
+                My.Settings.DisplayFieldLength = True ' 25/07/2025
             End If
 
         End Sub
@@ -392,6 +393,7 @@ Namespace DBReport
             prm.bUseUpperCaseIdentifiers = My.Settings.UseUpperCaseIdentifiers ' 10/05/2025
             prm.bDisplayDateTime = My.Settings.DisplayDateTime ' 29/06/2025
             prm.bDisplayStandardSqlType = My.Settings.DisplayStandardSqlType ' 19/07/2025
+            prm.bDisplayFieldLength = My.Settings.DisplayFieldLength ' 25/07/2025
 
             prm.mySqlprm.sSQLModeDef = My.Settings.MySqlSQLMode
             prm.mySqlprm.sInnodbStrictModeDef = My.Settings.MySqlInnodbStrictMode

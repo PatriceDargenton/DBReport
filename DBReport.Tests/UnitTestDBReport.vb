@@ -36,6 +36,7 @@ Namespace DBReportVB.Tests
             prm.sForeignKeyDeleteRuleDef = "NO ACTION"
             prm.sForeignKeyUpdateRuleDef = "NO ACTION"
             prm.bDisplayDateTime = False
+            prm.bDisplayFieldLength = True ' 25/07/2025
 
             Dim delegMsg As New clsDelegMsg()
             Dim msgErr As String = ""

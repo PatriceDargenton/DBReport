@@ -327,6 +327,11 @@ Namespace DBReport
             Public bDisplayDateTime As Boolean ' 29/06/2025
             Public bDisplayStandardSqlType As Boolean ' 19/07/2025
 
+            ''' <summary>
+            ''' Ex.: VARCHAR(255) -> VARCHAR
+            ''' </summary>
+            Public bDisplayFieldLength As Boolean ' 25/07/2025
+
         End Class
 
         Public Class clsPrmMySql
@@ -776,6 +781,7 @@ Namespace DBReport
                 For Each col In table.Columns
                     Dim sTitle$ = col.Name
                     If toUpper Then sTitle = sTitle.ToUpper ' 10/05/2025
+                    Dim sColumnName$ = sTitle ' 25/07/2025
                     If col.Nullable Then hsNullablesCol.Add(sTitle)
                     Dim bDefVal As Boolean = False
 
@@ -794,6 +800,12 @@ Namespace DBReport
                             sType = sType.Replace("TINYINT(5)", "TINYINT") ' (5) is used only to display, it is not in SQL standard
                             If sqlTypesDictionary.ContainsKey(sType) Then sType = sqlTypesDictionary(sType)
                         End If
+                        If Not prm.bDisplayFieldLength Then ' Ex.: VARCHAR(255) -> VARCHAR
+                            If sType.Contains("(") Then
+                                Dim iIndex = sType.IndexOf("(")
+                                sType = sType.Substring(0, iIndex) ' Remove field length
+                            End If
+                        End If
                         sTitle &= " (" & sType & ")" ' 04/05/2024
                     End If
 
@@ -807,7 +819,10 @@ Namespace DBReport
 
                     'If col.IsAutoNumber Then sAutonumberColName = sTitle ' 04/05/2024
                     If col.IsAutoNumber AndAlso bSQLite AndAlso
-                        String.IsNullOrEmpty(col.ForeignKeyTableName) Then sAutonumberColName = sTitle ' 24/05/2024
+                        String.IsNullOrEmpty(col.ForeignKeyTableName) Then
+                        'sAutonumberColName = sTitle ' 24/05/2024
+                        sAutonumberColName = sColumnName ' 25/07/2025
+                    End If
 
                     If col.IsAutoNumber AndAlso Not prm.bDisplayAutonumberAsPrimaryKey Then
                         sTitle &= " (autonumber)"

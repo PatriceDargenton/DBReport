@@ -4,8 +4,12 @@ All notable changes to the DBReport project will be documented in this file.
 
 ## [Unreleased]
 
-## [1.25] - 2025-07-19
+## [1.25] - 2025-07-25
+### Updated
+- Autonumber column name: no need to display its data type.
+
 ### Added
+- Option DisplayFieldLength to display or not the field length.
 - Option DisplayStandardSqlType to standardize the data type.
 
 ## [1.24] - 2025-07-06
