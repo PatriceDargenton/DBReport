@@ -190,6 +190,7 @@ Namespace DBReport
                 My.Settings.DisplayDateTime = False ' 29/06/2025
                 My.Settings.DisplayStandardSqlType = False ' 19/07/2025
                 My.Settings.DisplayFieldLength = True ' 25/07/2025
+                My.Settings.DisplayBigIntAndSmallIntAsInteger = False ' 01/08/2025
             End If
 
         End Sub

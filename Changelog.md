@@ -9,6 +9,7 @@ All notable changes to the DBReport project will be documented in this file.
 - Autonumber column name: no need to display its data type.
 
 ### Added
+- Option DisplayBigIntAndSmallIntAsInteger to simplify integer types.
 - Option DisplayFieldLength to display or not the field length.
 - Option DisplayStandardSqlType to standardize the data type.
 

@@ -344,6 +344,11 @@ Namespace DBReport
             ''' </summary>
             Public bDisplayFieldLength As Boolean ' 25/07/2025
 
+            ''' <summary>
+            ''' BigInt, SmallInt -> Integer
+            ''' </summary>
+            Public bDisplayBigIntAndSmallIntAsInteger As Boolean ' 01/08/2025
+
         End Class
 
         Public Class clsPrmMySql
@@ -817,6 +822,10 @@ Namespace DBReport
                                 Dim iIndex = sType.IndexOf("(")
                                 sType = sType.Substring(0, iIndex) ' Remove field length
                             End If
+                        End If
+                        If prm.bDisplayBigIntAndSmallIntAsInteger Then
+                            sType = sType.Replace("SMALLINT", "INTEGER")
+                            sType = sType.Replace("BIGINT", "INTEGER")
                         End If
                         sTitle &= " (" & sType & ")" ' 04/05/2024
                     End If
