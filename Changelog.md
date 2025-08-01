@@ -4,7 +4,7 @@ All notable changes to the DBReport project will be documented in this file.
 
 ## [Unreleased]
 
-## [1.25] - 2025-07-25
+## [1.25] - 2025-08-01
 ### Updated
 - Autonumber column name: no need to display its data type.
 

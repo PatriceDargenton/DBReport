@@ -226,6 +226,12 @@ Namespace DBReport
             <Description("BLOB")>
             Image
 
+            ''' <summary>
+            ''' Bytea (PostgreSql) -> Binary large object (BLOB)
+            ''' </summary>
+            <Description("BLOB")>
+            Bytea
+
             'Character (CHAR)
 
             ''' <summary>
@@ -233,6 +239,12 @@ Namespace DBReport
             ''' </summary>
             <Description("VARCHAR")>
             Text
+
+            ''' <summary>
+            ''' BpChar (blank-padded CHAR, PostgreSql) -> Character varying VARCHAR
+            ''' </summary>
+            <Description("VARCHAR")>
+            BpChar
 
             ''' <summary>
             ''' Character large object (CLOB)
@@ -813,8 +825,8 @@ Namespace DBReport
                         Dim sDisplay$ = col.DefaultValue
                         If sDisplay.Length = 0 Then sDisplay = "''" ' ' 23/10/2016
                         sTitle &= " (" & sDisplay & ")"
-                        End If
-                        If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(col.Description) AndAlso col.Description.Length > 0 Then _
+                    End If
+                    If prm.bDisplayTableAndFieldDescription AndAlso Not IsNothing(col.Description) AndAlso col.Description.Length > 0 Then _
                         sTitle &= " : " & col.Description
 
                     'If col.IsAutoNumber Then sAutonumberColName = sTitle ' 04/05/2024
