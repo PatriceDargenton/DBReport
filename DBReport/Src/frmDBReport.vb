@@ -395,6 +395,7 @@ Namespace DBReport
             prm.bDisplayDateTime = My.Settings.DisplayDateTime ' 29/06/2025
             prm.bDisplayStandardSqlType = My.Settings.DisplayStandardSqlType ' 19/07/2025
             prm.bDisplayFieldLength = My.Settings.DisplayFieldLength ' 25/07/2025
+            prm.bDisplayBigIntAndSmallIntAsInteger = My.Settings.DisplayBigIntAndSmallIntAsInteger ' 26/09/2025
 
             prm.mySqlprm.sSQLModeDef = My.Settings.MySqlSQLMode
             prm.mySqlprm.sInnodbStrictModeDef = My.Settings.MySqlInnodbStrictMode
