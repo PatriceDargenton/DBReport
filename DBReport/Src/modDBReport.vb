@@ -982,8 +982,10 @@ Namespace DBReport
                 End If
 
                 If prm.bDisplayLinksBelowEachTable Then ' 31/05/2024
-                    If dicTableLinks.ContainsKey(table.Name) Then
-                        Dim lst = dicTableLinks(table.Name)
+                    Dim sTableName$ = table.Name
+                    If prm.bUseUpperCaseIdentifiers Then sTableName = sTableName.ToUpper
+                    If dicTableLinks.ContainsKey(sTableName) Then
+                        Dim lst = dicTableLinks(sTableName)
                         For Each sLine In lst
                             sb.AppendLine(sLine)
                         Next
